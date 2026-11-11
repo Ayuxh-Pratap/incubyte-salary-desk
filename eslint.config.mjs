@@ -6,6 +6,10 @@ export default defineConfig([
   ...nextTypescript,
   globalIgnores([
     ".next/**",
+    ".vercel/**",
+    ".agents/**",
+    ".codex/**",
+    "artifacts/**",
     "coverage/**",
     "playwright-report/**",
     "test-results/**",

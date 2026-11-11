@@ -12,10 +12,11 @@ Salary means current annual base salary, with explicit currency and annual perio
 
 ## Workflows
 
-1. Employees: search by name or employee number; filter by country, department, role and currency; allowlisted sorting and database pagination.
-2. Employee detail: inspect current compensation and safely edit salary. Show update metadata, preserve input after failure, and reject conflicting stale edits.
-3. Salary overview: headcount, total, minimum, maximum and median for the entire filtered population, grouped by country, department or role. Label currency, period, filters and sample sizes. Never infer pay fairness.
-4. After the core: explain a metric with definitions and matching employees; preview salary changes with exact absolute and rounded percentage differences.
+1. Dashboard: organization headcounts and graphical current-pay comparisons in one selected currency, with clear paths into the workspace. No historical activity or mixed-currency monetary total.
+2. Employees: search by name or employee number; filter by country, department, role and currency; allowlisted sorting and database pagination.
+3. Employee detail: inspect current compensation and safely edit salary. Show update metadata, preserve input after failure, and reject conflicting stale edits.
+4. Salary overview: headcount, total, minimum, maximum and median for the entire filtered population, grouped by country, department or role. Label currency, period, filters and sample sizes. Never infer pay fairness.
+5. After the core: explain a metric with definitions and matching employees; preview salary changes with exact absolute and rounded percentage differences.
 
 ## Acceptance criteria
 

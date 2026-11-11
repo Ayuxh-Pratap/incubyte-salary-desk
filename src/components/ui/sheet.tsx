@@ -9,12 +9,14 @@ export function Sheet({
   title,
   description,
   children,
+  closeLabel = "Close panel",
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void | boolean;
   title: string;
   description: string;
   children: ReactNode;
+  closeLabel?: string;
 }) {
   return (
     <Dialog.Root
@@ -46,7 +48,7 @@ export function Sheet({
               }
             >
               <X />
-              <span className="sr-only">Close employee panel</span>
+              <span className="sr-only">{closeLabel}</span>
             </Dialog.Close>
           </header>
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-6">

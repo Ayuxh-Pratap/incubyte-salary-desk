@@ -3,17 +3,32 @@
 :root {
   --brand-green: #014d43;
   --brand-lime: #d3fe73;
-  --canvas: #fbfaf9;
-  --surface: #f4f4f3;
+  --canvas: #f5f5f4;
+  --surface: #fafafa;
   --paper: #ffffff;
-  --ink: #1c1917;
-  --secondary-text: #57534e;
-  --muted-text: #6b655f;
-  --dark-canvas: #111a18;
-  --dark-surface: #18231f;
-  --dark-paper: #213029;
+  --ink: #1c1d1b;
+  --secondary-text: #44483f;
+  --muted-text: #5c6058;
+  --inset-base: #f0f0ef;
+  --table-head-base: #e7e7e5;
+  --row-hover-base: #f5f5f3;
+  --row-selected-base: #e7eddf;
+  --border-base: #c5c8c2;
+  --control-border-base: #787d73;
+  --action: #27513b;
+  --dark-canvas: #101112;
+  --dark-surface: #18191b;
+  --dark-paper: #232427;
   --dark-text: #f4f4f5;
-  --dark-muted: #b0beb5;
+  --dark-secondary-text: #d4d5d9;
+  --dark-muted: #b6b7bc;
+  --dark-inset: #1d1e21;
+  --dark-table-head: #303135;
+  --dark-row-hover: #2a2b2f;
+  --dark-row-selected: #30392a;
+  --dark-border: #4c4e53;
+  --dark-control-border: #7c7e86;
+  --dark-action-text: #1c2710;
   --success-base: #06734f;
   --warning-base: #875700;
   --danger-base: #b91c35;
@@ -23,38 +38,80 @@
   --background: var(--canvas);
   --muted: var(--surface);
   --card: var(--paper);
+  --inset: var(--inset-base);
+  --table-head: var(--table-head-base);
+  --row-hover: var(--row-hover-base);
+  --row-selected: var(--row-selected-base);
   --foreground: var(--ink);
   --foreground-2: var(--secondary-text);
   --muted-foreground: var(--muted-text);
-  --primary: var(--brand-green);
+  --primary: var(--action);
   --primary-foreground: var(--paper);
-  --ring: var(--brand-green);
-  --border: color-mix(in srgb, var(--ink) 14%, transparent);
+  --primary-hover: color-mix(in srgb, var(--primary) 92%, var(--foreground));
+  --ring: var(--action);
+  --border: var(--border-base);
+  --control-border: var(--control-border-base);
   --success: var(--success-base);
   --warning: var(--warning-base);
   --destructive: var(--danger-base);
-  --shadow-button:
-    inset 0 1px 0 color-mix(in srgb, var(--paper) 20%, transparent),
-    0 1px 2px color-mix(in srgb, var(--ink) 12%, transparent);
+  --sh-panel: 0 1px 2px rgb(0 0 0 / 4%);
+  --sh-button:
+    inset 0 1px 0 rgb(255 255 255 / 80%), 0 1px 2px rgb(0 0 0 / 7%),
+    0 0 0 1px rgb(0 0 0 / 8%);
+  --sh-button-hover:
+    inset 0 1px 0 rgb(255 255 255 / 85%), 0 2px 4px -1px rgb(0 0 0 / 12%),
+    0 0 0 1px rgb(0 0 0 / 12%);
+  --sh-button-pressed:
+    inset 0 1px 2px rgb(0 0 0 / 14%), 0 0 0 1px rgb(0 0 0 / 12%);
+  --sh-primary:
+    inset 0 1px 0 rgb(255 255 255 / 22%), 0 1px 2px rgb(0 0 0 / 12%);
+  --sh-primary-hover:
+    inset 0 1px 0 rgb(255 255 255 / 26%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+  --sh-well: inset 0 1px 2px rgb(0 0 0 / 5%);
 }
 .dark {
   --background: var(--dark-canvas);
   --muted: var(--dark-surface);
   --card: var(--dark-paper);
+  --inset: var(--dark-inset);
+  --table-head: var(--dark-table-head);
+  --row-hover: var(--dark-row-hover);
+  --row-selected: var(--dark-row-selected);
   --foreground: var(--dark-text);
-  --foreground-2: var(--dark-muted);
+  --foreground-2: var(--dark-secondary-text);
   --muted-foreground: var(--dark-muted);
   --primary: var(--brand-lime);
-  --primary-foreground: var(--brand-green);
+  --primary-foreground: var(--dark-action-text);
   --ring: var(--brand-lime);
-  --border: color-mix(in srgb, var(--dark-text) 18%, transparent);
+  --border: var(--dark-border);
+  --control-border: var(--dark-control-border);
   --success: var(--dark-success);
   --warning: var(--dark-warning);
   --destructive: var(--dark-danger);
+  --sh-panel: 0 1px 2px rgb(0 0 0 / 20%);
+  --sh-button:
+    inset 0 1px 0 rgb(255 255 255 / 9%), 0 1px 2px rgb(0 0 0 / 30%),
+    0 0 0 1px rgb(0 0 0 / 16%);
+  --sh-button-hover:
+    inset 0 1px 0 rgb(255 255 255 / 12%), 0 2px 4px -1px rgb(0 0 0 / 40%),
+    0 0 0 1px rgb(0 0 0 / 20%);
+  --sh-button-pressed:
+    inset 0 1px 2px rgb(0 0 0 / 40%), 0 0 0 1px rgb(255 255 255 / 6%);
+  --sh-primary:
+    inset 0 1px 0 rgb(255 255 255 / 22%), 0 1px 2px rgb(0 0 0 / 30%);
+  --sh-primary-hover:
+    inset 0 1px 0 rgb(255 255 255 / 30%), 0 2px 4px -1px rgb(0 0 0 / 40%);
+  --sh-well: inset 0 1px 2px rgb(0 0 0 / 25%);
 }
 @theme inline {
   --color-background: var(--background);
   --color-muted: var(--muted);
+  --color-inset: var(--inset);
+  --color-table-head: var(--table-head);
+  --color-row-hover: var(--row-hover);
+  --color-row-selected: var(--row-selected);
+  --color-control-border: var(--control-border);
+  --color-primary-hover: var(--primary-hover);
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-foreground-2: var(--foreground-2);
@@ -76,7 +133,13 @@
   --text-ui--line-height: 1.5;
   --text-meta: 0.75rem;
   --text-meta--line-height: 1.5;
-  --shadow-button: var(--shadow-button);
+  --shadow-panel: var(--sh-panel);
+  --shadow-button: var(--sh-button);
+  --shadow-button-hover: var(--sh-button-hover);
+  --shadow-button-pressed: var(--sh-button-pressed);
+  --shadow-button-primary: var(--sh-primary);
+  --shadow-button-primary-hover: var(--sh-primary-hover);
+  --shadow-well: var(--sh-well);
 }
 @layer base {
   * {
@@ -107,7 +170,10 @@
   }
   :focus-visible {
     outline: 2px solid var(--ring);
-    outline-offset: 3px;
+    outline-offset: 0;
+  }
+  [role="dialog"]:focus-visible {
+    outline-offset: -2px;
   }
   ::selection {
     background: var(--primary);
@@ -135,4 +201,9 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+@utility scroll-lean {
+  scrollbar-width: thin;
+  scrollbar-color: var(--control-border) transparent;
 }

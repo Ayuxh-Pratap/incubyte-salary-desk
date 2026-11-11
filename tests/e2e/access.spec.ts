@@ -20,6 +20,8 @@ test("evaluator access, themes and narrow-screen shell", async ({
     throw new Error("Configure evaluator credentials for authenticated E2E.");
   await page.getByLabel("Evaluator access code").fill(password);
   await page.getByRole("button", { name: "Open workspace" }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await page.getByRole("link", { name: "Employees", exact: true }).click();
   await expect(page).toHaveURL(/\/employees$/);
   await expect(
     page.getByRole("heading", { name: "Employees", exact: true }),
@@ -59,6 +61,7 @@ test("employee data endpoints reject anonymous callers", async ({
 }) => {
   for (const url of [
     "/api/employees",
+    "/api/dashboard?currency=USD",
     "/api/catalog",
     "/api/analysis?currency=USD",
   ]) {
@@ -99,6 +102,9 @@ test("tampered sessions and foreign-origin authenticated writes are rejected", a
     data: { amount: "100", currency: "USD", period: "annual", version: 1 },
   });
   expect(mutation.status()).toBe(403);
+  expect((await request.get("/api/dashboard?currency=INVALID")).status()).toBe(
+    400,
+  );
   const invalidAnalysis = await request.get("/api/analysis");
   expect(invalidAnalysis.status()).toBe(400);
 });

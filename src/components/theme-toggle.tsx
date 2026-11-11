@@ -1,19 +1,27 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
+import { Popover } from "@base-ui/react/popover";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { Button } from "./ui/button";
 const subscribe = () => () => {};
-export function ThemeToggle() {
+export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const mounted = useSyncExternalStore(
     subscribe,
     () => true,
     () => false,
   );
   const { theme, setTheme } = useTheme();
-  return (
+  const Icon =
+    mounted && theme === "dark"
+      ? Moon
+      : mounted && theme === "light"
+        ? Sun
+        : Monitor;
+  const controls = (
     <div
-      className="inline-flex rounded-xl border bg-card p-1"
+      role="group"
+      className="inline-flex rounded-lg bg-inset p-0.5 shadow-well"
       aria-label="Color theme"
     >
       {(
@@ -30,11 +38,31 @@ export function ThemeToggle() {
           aria-label={value + " theme"}
           aria-pressed={mounted && theme === value}
           onClick={() => setTheme(value)}
-          className="aria-pressed:bg-muted aria-pressed:text-foreground"
+          className="rounded-md aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:shadow-panel"
         >
-          <Icon />
+          <Icon aria-hidden />
         </Button>
       ))}
     </div>
+  );
+  if (!compact) return controls;
+  return (
+    <Popover.Root>
+      <Popover.Trigger
+        render={<Button variant="ghost" size="icon" aria-label="Appearance" />}
+      >
+        <Icon aria-hidden />
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Positioner side="right" sideOffset={12} className="z-50">
+          <Popover.Popup className="rounded-xl border bg-card p-2 text-foreground shadow-panel">
+            <Popover.Title className="px-2 pt-1 pb-2 text-meta font-medium">
+              Appearance
+            </Popover.Title>
+            {controls}
+          </Popover.Popup>
+        </Popover.Positioner>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

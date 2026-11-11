@@ -24,7 +24,7 @@ export function LoginForm() {
         setError(body.error);
         return;
       }
-      router.push("/employees");
+      router.push("/dashboard");
       router.refresh();
     } catch {
       setError("Connection failed. Please try again.");

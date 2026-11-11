@@ -228,3 +228,17 @@ it("allows exactly one of two simultaneous writes with the same version", async 
       );
   }
 });
+import {dashboardData} from '../../src/server/dashboard/queries';
+it('Dashboard counts the organization once and keeps compensation in one currency',async()=>{
+ const records=syntheticEmployees();
+ for(const currency of ['USD','JPY','KWD']){
+  const result=await dashboardData(db,currency);
+  expect(result.population.headcount).toBe(10000);
+  for(const dimension of ['countries','departments','currencies'] as const)expect(result.population[dimension].reduce((n,g)=>n+g.count,0)).toBe(10000);
+  expect(result.population.countries).toHaveLength(6);
+  expect(result.compensation.currency).toBe(currency);
+  expect(result.compensation.summary).toEqual(summarize(records.filter(e=>e.currency===currency).map(e=>e.salaryMinor.toString())));
+  expect(result.population).not.toHaveProperty('total');
+ }
+ await expect(dashboardData(db,'NOT-A-CURRENCY')).rejects.toThrow();
+});
