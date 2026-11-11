@@ -127,6 +127,8 @@
   --font-mono: var(--font-geist-mono);
   --text-title: 1.5rem;
   --text-title--line-height: 1.25;
+  --text-title-lg: 1.875rem;
+  --text-title-lg--line-height: 1.2;
   --text-heading: 1.125rem;
   --text-heading--line-height: 1.4;
   --text-ui: 0.875rem;

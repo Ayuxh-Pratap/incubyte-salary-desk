@@ -54,9 +54,12 @@ export function EmployeeCardsSkeleton({ rows = 5 }: { rows?: number }) {
     </ul>
   );
 }
-export function MetricSkeleton() {
+export function MetricSkeleton({ className }: { className?: string }) {
   return (
-    <div className="min-h-36 rounded-xl border bg-card p-4" aria-hidden>
+    <div
+      className={cn("min-h-36 rounded-xl border bg-card p-4", className)}
+      aria-hidden
+    >
       <Skeleton className="h-3 w-2/3" />
       <Skeleton className="mt-5 h-6 w-4/5" />
       <Skeleton className="mt-4 h-2.5 w-1/2" />

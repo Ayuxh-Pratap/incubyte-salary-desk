@@ -49,11 +49,11 @@ Surface roles: background is the outer canvas/sidebar, muted is the inset conten
 
 ## Typography and data
 
-Packaged Geist; 24px page title, 18px section title, 14px interface, 12px metadata. Counts and money use tabular numerals; numeric columns align right. Salary cells retain full currency and annual-base units; long names wrap or have an accessible full value. Country is independent of pay currency. No chart may add currencies or imply historical change/fairness.
+Packaged Geist; 24px page title (30px desktop), 18px section title, 14px interface, 12px metadata. Counts and money use tabular numerals; numeric columns align right. Salary cells retain full currency and annual-base units; long names wrap or have an accessible full value. Country is independent of pay currency. No chart may add currencies or imply historical change/fairness.
 
 ## Shell and responsive composition
 
-Desktop: 224px collapsible navigation (64px collapsed), fixed viewport frame, 12px top inset. The main panel has top/left edges and rounded top-left corner, flush right/bottom. It is the primary scroller. Content uses full available width with 16px mobile/24px desktop internal gutters; reading text/dialogs alone may cap width. Navigation distinguishes Dashboard and Workspace (Employees, Salary overview); footer groups compact appearance/logout and a concise assessment disclaimer. No promotional block.
+Desktop: 224px collapsible navigation (64px collapsed), fixed viewport frame, 12px top inset. The main panel has top/left edges and rounded top-left corner, flush right/bottom. It is the primary scroller. Content uses full available width with 16px mobile/24px desktop internal gutters; reading text/dialogs alone may cap width. Navigation distinguishes Dashboard and Workspace (Employees, Salary overview); footer groups compact appearance/logout and a concise assessment disclaimer. Mobile appearance/logout sit in the header so long result lists do not hide them. No promotional block.
 
 At >=1280px, a 224px filter rail sticks beside results inside the main scroller. Its own overflow activates only when height requires it; native keyboard scrolling and focus reach all controls. Below that, filters move into a labelled modal sheet, preserving capabilities and draft state. Mobile navigation has three destinations; data uses readable cards below 768px and intentional labelled horizontal table scrolling above. Minimum 44px targets and 320px body-width safety apply.
 

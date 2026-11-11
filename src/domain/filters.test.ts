@@ -20,3 +20,34 @@ it("requires a currency for monetary ordering", () => {
     "salary-desc",
   );
 });
+import { applyFilterDraft } from "./filters";
+it("applies filter drafts atomically, resets the page and removes incompatible salary sorting", () => {
+  const current = parseFilters({
+    currency: "USD",
+    sort: "salary-desc",
+    page: 7,
+    pageSize: 50,
+  });
+  expect(
+    applyFilterDraft(current, {
+      q: "  Zoë  ",
+      country: "US",
+      department: "",
+      role: "",
+      currency: "",
+      sort: "salary-desc",
+      pageSize: "100",
+      groupBy: "department",
+    }),
+  ).toMatchObject({
+    q: "Zoë",
+    country: "US",
+    sort: "name-asc",
+    page: 1,
+    pageSize: 100,
+  });
+  expect(
+    applyFilterDraft(current, { currency: "", sort: "salary-desc" }).currency,
+  ).toBeUndefined();
+  expect(current.page).toBe(7);
+});

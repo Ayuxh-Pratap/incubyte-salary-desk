@@ -68,6 +68,11 @@ const pairs = [
   ["success", "card"],
   ["warning", "card"],
   ["destructive", "card"],
+  ["muted-foreground", "card"],
+  ["muted-foreground", "table-head"],
+  ["muted-foreground", "row-hover"],
+  ["muted-foreground", "row-selected"],
+  ["foreground-2", "inset"],
 ];
 for (const [name, theme] of [
   ["light", root],
@@ -90,12 +95,28 @@ for (const [name, theme] of [
         " below 4.5",
     );
   }
-  for (const surface of ["background", "card"])
+  for (const surface of [
+    "background",
+    "card",
+    "muted",
+    "inset",
+    "table-head",
+    "row-selected",
+  ])
     assert(
       contrast(resolve("ring", theme), resolve(surface, theme)) >= 3,
       name + " focus ring contrast below 3",
     );
+  for (const surface of ["card", "inset"])
+    assert(
+      contrast(resolve("control-border", theme), resolve(surface, theme)) >= 3,
+      name + " field boundary contrast below 3",
+    );
 }
+assert(
+  !/--(shadow-[a-z-]+):\s*var\(--\1\)/.test(css),
+  "Self-referencing elevation token",
+);
 function walk(dir) {
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, item.name);

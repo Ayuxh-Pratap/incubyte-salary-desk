@@ -2,6 +2,7 @@
 import type { Employee } from "@/domain/employee";
 import { useRemote } from "./use-remote";
 import { SalaryEditor } from "./salary-editor";
+import { DetailSkeleton } from "./skeletons";
 import { Button } from "./ui/button";
 export function EmployeeDetail({
   id,
@@ -15,9 +16,9 @@ export function EmployeeDetail({
   const current = useRemote<Employee>("/api/employees/" + id);
   if (current.loading)
     return (
-      <div role="status" className="space-y-3">
-        <p>Loading current compensation…</p>
-        <div className="h-40 animate-pulse rounded-xl bg-muted" />
+      <div role="status" aria-busy="true">
+        <span className="sr-only">Loading current compensation…</span>
+        <DetailSkeleton />
       </div>
     );
   if (current.error)

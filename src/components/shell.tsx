@@ -196,25 +196,36 @@ export function Shell({ children }: { children: ReactNode }) {
               </>
             ) : (
               <>
-                Fictional ACME · Assessment concept
+                Fictional ACME · Assessment
                 <br />
-                <span>Not an Incubyte internal system.</span>
+                <span>Not an Incubyte system.</span>
               </>
             )}
           </p>
         </div>
       </aside>
       <header className="shrink-0 border-b px-4 pt-3 lg:hidden">
-        <Link
-          href="/dashboard"
-          className="inline-flex min-h-11 items-center gap-2 font-semibold"
-        >
-          <Layers className="size-5 text-primary" aria-hidden />
-          Salary Desk
-          <span className="text-meta font-normal text-muted-foreground">
-            ACME
-          </span>
-        </Link>
+        <div className="flex items-center justify-between gap-2">
+          <Link
+            href="/dashboard"
+            className="inline-flex min-h-11 items-center gap-2 font-semibold"
+          >
+            <Layers className="size-5 text-primary" aria-hidden />
+            Salary Desk
+            <span className="text-meta font-normal text-muted-foreground">
+              ACME
+            </span>
+          </Link>
+          <div className="flex shrink-0 items-center">
+            <ThemeToggle compact side="bottom" />
+            {logout(true)}
+          </div>
+        </div>
+        {error && (
+          <p role="alert" className="pb-2 text-meta text-destructive">
+            {error}
+          </p>
+        )}
         <nav aria-label="Main navigation" className="mt-1 flex gap-1 pb-2">
           {navigation.map(({ href, label, icon: Icon }) => (
             <Link
@@ -242,13 +253,6 @@ export function Shell({ children }: { children: ReactNode }) {
           <span className="w-full">
             Fictional ACME · Independent assessment concept
           </span>
-          <ThemeToggle />
-          {logout()}
-          {error && (
-            <p role="alert" className="w-full text-destructive">
-              {error}
-            </p>
-          )}
         </footer>
       </main>
     </motion.div>

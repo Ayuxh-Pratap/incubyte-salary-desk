@@ -5,7 +5,13 @@ import { Popover } from "@base-ui/react/popover";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { Button } from "./ui/button";
 const subscribe = () => () => {};
-export function ThemeToggle({ compact = false }: { compact?: boolean }) {
+export function ThemeToggle({
+  compact = false,
+  side = "right",
+}: {
+  compact?: boolean;
+  side?: "right" | "bottom";
+}) {
   const mounted = useSyncExternalStore(
     subscribe,
     () => true,
@@ -54,7 +60,7 @@ export function ThemeToggle({ compact = false }: { compact?: boolean }) {
         <Icon aria-hidden />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Positioner side="right" sideOffset={12} className="z-50">
+        <Popover.Positioner side={side} sideOffset={12} className="z-50">
           <Popover.Popup className="rounded-xl border bg-card p-2 text-foreground shadow-panel">
             <Popover.Title className="px-2 pt-1 pb-2 text-meta font-medium">
               Appearance

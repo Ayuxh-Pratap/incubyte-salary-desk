@@ -41,10 +41,12 @@ test("evaluator access, themes and narrow-screen shell", async ({
     path: "test-results/foundation-mobile-dark.png",
     fullPage: true,
   });
+  await page.getByRole("button", { name: "Appearance", exact: true }).click();
   await page
     .getByRole("button", { name: "light theme", exact: true })
     .last()
     .click();
+  await page.keyboard.press("Escape");
   await page.setViewportSize({ width: 1440, height: 960 });
   await page.screenshot({
     path: "test-results/foundation-desktop-light.png",

@@ -50,3 +50,17 @@ export function parseFilters(input: Record<string, unknown>): Filters {
     throw new Error("Choose one currency before sorting by salary.");
   return parsed;
 }
+export function applyFilterDraft(
+  current: Filters,
+  draft: Record<string, string>,
+): Filters {
+  return parseFilters({
+    ...current,
+    ...draft,
+    page: 1,
+    sort:
+      !draft.currency && draft.sort?.startsWith("salary-")
+        ? "name-asc"
+        : draft.sort,
+  });
+}
