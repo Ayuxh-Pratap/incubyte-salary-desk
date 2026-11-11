@@ -1,6 +1,6 @@
 # Final focused review — Salary Desk
 
-Subsequent Presentation revision: the case study is now one continuous full-width story with connected SVG flows (source `39f40eb`). This report retains its earlier functional measurements and original UI descriptions; current case-study verification is a separate field in `verification.json`, with screenshots in `docs/review/case-study`.
+Subsequent Presentation revision: dedicated full-width assessment-report pages now cover overview, scope, implementation, decisions and verification (source `f1a7dca`), retaining the connected SVG flows. The earlier continuous-page interpretation (`39f40eb`) was superseded after user clarification. This report retains its earlier functional measurements and original UI descriptions; current case-study verification is a separate field in `verification.json`, with screenshots in `docs/review/case-study`.
 
 This report concerns the unpublished `codex/visual-quality` branch. The public baseline remains `3c6ff79`; production has not changed. Navigation/SQL/edit evidence was collected against application source `730076b` on a localhost production build, Windows/Node 24/Chromium, an India client and a purpose-marked isolated Neon US East test database. The corrected idle probe uses `79f3c64`; final UI/assets and production-browser verification use `b3e2106`. Later changes refine Presentation content/semantics/navigation and a clipped label, plus measurement capture timing; no salary-query/domain code changed. Historical reports remain historical.
 

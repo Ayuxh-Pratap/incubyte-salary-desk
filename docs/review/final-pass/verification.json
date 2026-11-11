@@ -72,5 +72,21 @@
     "isolation": "No salary API reads, canvas or Chart.js chunk during case-study-only capture",
     "unchanged": "Domain, API/query, database and cache policy untouched",
     "evidence": "docs/review/case-study/visual-verification.json"
+  },
+  "reportRevision": {
+    "source": "f1a7dcafd8eac57be17f75ff175c2ee793216311",
+    "recordedAt": "2026-11-11T17:29:35.948Z",
+    "status": "Verified locally; unpublished",
+    "checks": {
+      "organization": "Five independent assessment-report routes; scoped content and previous/next navigation",
+      "unit": "42 passed",
+      "browser": "31 passed; one optional Workspace screenshot matrix skipped",
+      "responsive": "8 report/diagram combinations: light/dark at 390, 768, 1366 and 1920px",
+      "static": "Lint, types, 216-value design check and credential-free production build passed",
+      "readIsolation": "No salary API reads, canvas or Chart.js chunk during report-only capture",
+      "functionalScope": "Salary rules, queries, database and cache policy unchanged"
+    },
+    "evidence": "docs/review/assessment-report/visual-verification.json",
+    "publication": "Local review only; production and default branch unchanged"
   }
 }
