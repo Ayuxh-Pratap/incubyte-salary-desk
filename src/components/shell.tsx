@@ -75,19 +75,19 @@ export function Shell({ children }: { children: ReactNode }) {
         aria-label="Desktop navigation"
         className="hidden min-h-0 flex-col overflow-y-auto p-2 transition-colors duration-200 lg:flex"
       >
-        <div
-          className={cn(
-            "flex min-h-14 items-center gap-1",
-            collapsed ? "flex-col py-2" : "px-2",
-          )}
-        >
+        <div className="flex min-h-14 items-center gap-1">
           <Link
             href="/dashboard"
             aria-label="Salary Desk dashboard"
-            className="flex min-h-11 min-w-0 flex-1 items-center gap-2 rounded-lg"
+            aria-hidden={collapsed || undefined}
+            tabIndex={collapsed ? -1 : undefined}
+            className={cn(
+              "flex min-h-11 min-w-0 flex-1 items-center gap-2 overflow-hidden rounded-lg transition-opacity duration-200",
+              collapsed && "invisible opacity-0",
+            )}
             title="Salary Desk · Fictional ACME assessment"
           >
-            <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
+            <span className="ml-2 grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
               <Layers className="size-4" aria-hidden />
             </span>
             <motion.span
@@ -126,7 +126,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 <p
                   className={cn(
                     "mt-5 mb-2 px-3 text-meta text-muted-foreground",
-                    collapsed && "sr-only",
+                    collapsed && "opacity-0",
                   )}
                 >
                   Workspace
@@ -138,8 +138,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 aria-current={pathname === href ? "page" : undefined}
                 title={collapsed ? label : undefined}
                 className={cn(
-                  "flex min-h-11 items-center rounded-lg px-3 text-ui font-medium text-foreground-2 transition-colors duration-200 hover:bg-inset hover:text-foreground",
-                  collapsed ? "justify-center" : "gap-3",
+                  "flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-4 text-ui font-medium text-foreground-2 transition-colors duration-200 hover:bg-inset hover:text-foreground",
                   pathname === href && "bg-inset text-foreground",
                 )}
               >

@@ -17,9 +17,27 @@ test("review shell uses full width, collapses accessibly and reports logout fail
   await expect(main).toBeVisible();
   const bounds = await main.boundingBox();
   expect(Math.round(bounds!.x + bounds!.width)).toBe(1920);
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  const icon = page
+    .getByRole("link", { name: "Employees", exact: true })
+    .locator("svg");
+  const initialIcon = await icon.boundingBox();
   await page
     .getByRole("button", { name: "Collapse navigation", exact: true })
     .click();
+  const iconPositions = await icon.evaluate(async (element) => {
+    const positions = [];
+    for (let frame = 0; frame < 22; frame++) {
+      await new Promise(requestAnimationFrame);
+      const { x, y } = element.getBoundingClientRect();
+      positions.push({ x, y });
+    }
+    return positions;
+  });
+  for (const position of iconPositions) {
+    expect(Math.abs(position.x - initialIcon!.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(position.y - initialIcon!.y)).toBeLessThanOrEqual(1);
+  }
   await expect(
     page.getByRole("button", { name: "Expand navigation", exact: true }),
   ).toHaveAttribute("aria-expanded", "false");
@@ -51,7 +69,9 @@ test("Dashboard is the default and separates global headcounts from single-curre
   await expect(
     page.getByRole("heading", { name: "Dashboard", exact: true }),
   ).toBeVisible();
-  await expect(page.getByTestId("global-headcount")).toContainText("10,000", {timeout:20000});
+  await expect(page.getByTestId("global-headcount")).toContainText("10,000", {
+    timeout: 20000,
+  });
   await page.getByLabel("Dashboard pay currency").selectOption("USD");
   await expect(page).toHaveURL(/\/dashboard$/);
   await page
