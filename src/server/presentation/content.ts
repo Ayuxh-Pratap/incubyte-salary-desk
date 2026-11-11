@@ -8,6 +8,30 @@ export const readPresentation = cache(() =>
   readFile(path.join(process.cwd(), "docs/PRESENTATION.md"), "utf8"),
 );
 const artifactLoaders = {
+  "final-report": cache(() =>
+    readFile(path.join(process.cwd(), "docs/FINAL_PASS.md"), "utf8"),
+  ),
+  "query-plans": cache(() =>
+    readFile(
+      path.join(process.cwd(), "docs/review/final-pass/read-query-plans.json"),
+      "utf8",
+    ),
+  ),
+  "edit-evidence": cache(() =>
+    readFile(
+      path.join(
+        process.cwd(),
+        "docs/review/final-pass/edit-cache-measurement.json",
+      ),
+      "utf8",
+    ),
+  ),
+  "ui-runtime": cache(() =>
+    readFile(
+      path.join(process.cwd(), "docs/review/final-pass/ui-runtime.json"),
+      "utf8",
+    ),
+  ),
   requirements: cache(() =>
     readFile(path.join(process.cwd(), "REQUIREMENTS.md"), "utf8"),
   ),

@@ -142,6 +142,15 @@ if (phase === "after") {
   await observe("currency-draft");
   await p.getByRole("button", { name: "Apply currency", exact: true }).click();
   await expect(p).toHaveURL(/currency=INR/);
+  await expect
+    .poll(
+      () =>
+        requests.filter((r) => r.path === "/api/dashboard?currency=INR").length,
+    )
+    .toBe(1);
+  await expect(
+    p.getByText("Employees paid in INR", { exact: true }),
+  ).toBeVisible();
   await expect(p.locator('[aria-busy="true"]')).toHaveCount(0);
   await expect(p.locator("canvas")).toHaveCount(3);
   await observe("accepted-currency-change");

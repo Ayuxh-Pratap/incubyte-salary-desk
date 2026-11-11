@@ -29,7 +29,7 @@ const navigation = [
   ...workspace,
   ...PRESENTATION_SECTIONS.map((section) => ({
     href: presentationHref(section.slug),
-    label: section.title,
+    label: section.slug === "decisions" ? "Decisions and AI" : section.title,
     icon: BookOpen,
   })),
 ];

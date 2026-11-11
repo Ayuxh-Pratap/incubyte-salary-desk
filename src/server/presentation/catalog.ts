@@ -3,6 +3,31 @@ export const REPOSITORY =
 export const PUBLISHED_COMMIT = "3c6ff79a9997829a655a295ec325d93594e3fb8a";
 // Only these reviewed files may be shown. Never enumerate a directory or accept a path from the URL.
 export const ARTIFACTS = {
+  "final-report": {
+    file: "docs/FINAL_PASS.md",
+    title: "Final focused-pass report",
+    status: "Current local review; measured outcomes and release gates",
+    format: "markdown",
+  },
+  "query-plans": {
+    file: "docs/review/final-pass/read-query-plans.json",
+    title: "Current SQL execution evidence",
+    status:
+      "Current local isolated database; n=5 WAN reads and one plan per query",
+    format: "json",
+  },
+  "edit-evidence": {
+    file: "docs/review/final-pass/edit-cache-measurement.json",
+    title: "Salary save and invalidation",
+    status: "Current after-only isolated write, original amount restored",
+    format: "json",
+  },
+  "ui-runtime": {
+    file: "docs/review/final-pass/ui-runtime.json",
+    title: "Feedback and Presentation asset evidence",
+    status: "Current local production observation; see sample limits",
+    format: "json",
+  },
   requirements: {
     file: "REQUIREMENTS.md",
     title: "One-page requirements",

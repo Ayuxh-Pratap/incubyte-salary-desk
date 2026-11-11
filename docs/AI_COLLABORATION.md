@@ -169,3 +169,11 @@ A cache notification regression failed before implementation; subscribers now li
 - Before the production pass: 39 unit cases, lint, types and the 216-value design consistency check passed. Browser/production evidence is recorded separately when completed.
 
 The first Presentation production build warned that a dynamic filesystem helper would trace the whole project. Replaced it with literal, explicitly selected file loaders; rebuilt without warnings and inspected route traces for private inputs/environment files. This was a real correction found during build review, not a pre-existing guarantee.
+
+### Final runtime observations
+
+- The production browser suite passed 29 checks (optional matrix skipped); all 12 PostgreSQL cases and 39 deterministic unit cases passed. The current source/environment is recorded in the final verification artifact, not substituted with hosted baseline CI.
+- Three after navigation samples still returned 25 employees, with zero API/SQL work on fresh cached returns. Direct SQL plans measured 4.334ms list / 6.716ms analysis / 26.164ms Dashboard, while WAN-inclusive reads were approximately 290–327ms. No speculative schema/index/pool change was justified.
+- A single native-click probe separated immediate pending feedback from route and final data readiness. A fresh Presentation-only context made zero salary API requests and loaded zero chart chunks; observed external origins were empty.
+- A screenshot initially caught mid-transition theme colors; the capture harness now waits for the existing theme transition to settle. No application delay was added. A too-early currency probe was corrected to wait for the INR request and actual displayed population before recording its snapshot.
+- First-process Dashboard and warm samples are reported separately; warm initial Dashboard was slower after this pass, so no blanket speedup or percentile claim is made. Narrated video, review publication/CI/deployment and candidate submission remain pending.

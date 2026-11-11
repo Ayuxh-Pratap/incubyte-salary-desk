@@ -79,3 +79,9 @@ Open the deployed app in a clean browser at approximately 1440 × 900, close unr
 Published baseline source and production are complete, with hosted CI passing. The visual-quality review remains local until its separate review/CI/release gates in UI_REVIEW.md are completed. Complete the candidate-narrated video against the approved release and replay it before submission. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
 
 Windows recording: authenticate first; press Win + Shift + R, select the browser area, choose Start and enable microphone narration if offered. Follow the four-minute story, stop and replay the saved MP4. If your recorder lacks microphone input, use a recorder with screen-plus-microphone support. See [Microsoft’s recording instructions](https://support.microsoft.com/en-us/windows/apps/use-snipping-tool-to-capture-screenshots).
+
+## Final focused local review
+
+`FINAL_PASS.md` records the final chart/control fixes, current measurements, protected Presentation and remaining release gates. Start the evaluator review at `/presentation`; its five sections link to the working Workspace and allowlisted source/evidence. The canonical narrative is `PRESENTATION.md`. Exact current check counts/source are in `review/final-pass/verification.json`. Old CI/test totals above are historical baseline evidence.
+
+Current release remains **pending candidate review and authorized publication/deployment**. No production update occurred during this pass. The candidate-narrated video and share link remain **pending**; the silent reference does not complete them. After release, follow the recording steps above and demonstrate the same coherent HR story. Candidate review should include the Presentation's salary-update diagram and source viewer so the explanation connects to actual implementation.

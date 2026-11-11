@@ -3,6 +3,10 @@ const config: NextConfig = {
   outputFileTracingIncludes: {
     "/presentation/**": [
       "./docs/PRESENTATION.md",
+      "./docs/FINAL_PASS.md",
+      "./docs/review/final-pass/read-query-plans.json",
+      "./docs/review/final-pass/edit-cache-measurement.json",
+      "./docs/review/final-pass/ui-runtime.json",
       "./docs/presentation-diagrams.json",
       "./REQUIREMENTS.md",
       "./docs/ENGINEERING.md",

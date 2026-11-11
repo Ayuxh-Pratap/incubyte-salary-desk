@@ -97,12 +97,7 @@ const chartChunks = fs
         .readFileSync(".next/static/chunks/" + name, "utf8")
         .includes("doughnut"),
   );
-const loadedPresentationScripts = await page.evaluate(() =>
-  performance
-    .getEntriesByType("resource")
-    .filter((r) => r.initiatorType === "script")
-    .map((r) => r.name),
-);
+
 // A fresh context isolates Presentation-only script loading from the previously opened Dashboard.
 const clean = await context
   .browser()
@@ -153,6 +148,7 @@ for (const theme of ["dark", "light"])
       "data-theme",
       theme,
     );
+    await page.waitForTimeout(300); // Let the actual 200/240ms theme transitions settle for still evidence.
     await page.screenshot({
       path: `docs/review/final-pass/dashboard-${theme}-${width}.png`,
     });
@@ -174,6 +170,8 @@ for (const theme of ["dark", "light"])
       await doc
         .getByRole("button", { name: theme + " theme", exact: true })
         .click();
+    await expect(doc.locator("html")).toHaveClass(new RegExp(theme));
+    await doc.waitForTimeout(300);
     await doc.screenshot({
       path: `docs/review/final-pass/presentation-${theme}-${width}.png`,
     });

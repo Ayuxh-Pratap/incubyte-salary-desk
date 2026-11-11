@@ -112,3 +112,38 @@ test("Presentation is readable across phone, tablet and desktop in both themes",
       });
     }
 });
+
+test("reviewed artifact and source links resolve inside the protected application", async ({
+  page,
+}) => {
+  await signIn(page);
+  await page.goto("/presentation/quality");
+  const links = await page
+    .locator('main a[href^="/presentation/artifacts/"]')
+    .evaluateAll((items) => [
+      ...new Set(items.map((item) => item.getAttribute("href"))),
+    ]);
+  expect(links.length).toBeGreaterThan(10);
+  for (const href of links) {
+    await page.goto(href!);
+    await expect(page.locator("h1")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Page not found", exact: true }),
+    ).toHaveCount(0);
+    await expect(page.locator("main")).not.toContainText(
+      "Internal Server Error",
+    );
+  }
+  for (const key of [
+    "money",
+    "queries",
+    "salary",
+    "chart",
+    "cache",
+    "freshness",
+    "schema",
+  ]) {
+    await page.goto("/presentation/source/" + key);
+    await expect(page.locator("pre code")).not.toBeEmpty();
+  }
+});

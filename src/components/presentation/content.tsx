@@ -8,7 +8,6 @@ import {
   ARTIFACTS,
   SOURCES,
   REPOSITORY,
-  PUBLISHED_COMMIT,
   artifactKey,
   sourceKey,
 } from "@/server/presentation/catalog";
