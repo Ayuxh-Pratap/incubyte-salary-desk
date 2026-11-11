@@ -1,0 +1,35 @@
+{
+  "source": "730076b5ea3bc8af811cfc734c7648a801fcd7f0",
+  "recordedAt": "2026-11-11T16:30:46.219Z",
+  "samples": 1,
+  "method": "Production localhost, same isolated Neon test environment; warm exact employee analysis, navigate/edit +1 minor unit, return through existing workspace link without reload; original salary restored in finally. After-only observation, not a baseline speed comparison. API records attributed to request initiation phase.",
+  "saveConfirmationMs": 1418,
+  "returnToPreviouslyCachedAnalysisMs": 897,
+  "updatedAmountObserved": true,
+  "apiRequests": [
+    {
+      "phase": "save",
+      "at": 1794414643936,
+      "path": "/api/employees/10000",
+      "method": "PATCH",
+      "bytes": 359,
+      "status": 200
+    },
+    {
+      "phase": "save",
+      "at": 1794414644890,
+      "path": "/api/employees",
+      "method": "GET",
+      "bytes": 342,
+      "status": 200
+    },
+    {
+      "phase": "return-analysis",
+      "at": 1794414645393,
+      "path": "/api/analysis",
+      "method": "GET",
+      "bytes": 429,
+      "status": 200
+    }
+  ]
+}

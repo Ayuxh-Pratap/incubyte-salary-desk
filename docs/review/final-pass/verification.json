@@ -1,1 +1,61 @@
-{"status":"pending","source":"f9a20e0","note":"Current final-pass verification is being collected. Historical results are not counted as current checks."}
+{
+  "status": "Verified locally; review release pending",
+  "applicationSource": "b3e2106741bd5a898b4bca287b43d05a23e16b51",
+  "recordedAt": "2026-11-11T16:42:23.836Z",
+  "environment": "Windows / Node 24 / Chromium; localhost production build; isolated purpose-marked Neon US East test database, client India",
+  "checks": {
+    "unit": "39 passed, deterministic/no network",
+    "postgres": "12 passed; unchanged domain/SQL modules throughout the later Presentation-only changes",
+    "browser": "30 passed, one optional screenshot-matrix test skipped",
+    "build": "credential-free production build passed without warnings",
+    "lint": "passed, no warnings",
+    "types": "passed",
+    "design": "216 Job Desk values/mappings and contrast checks passed",
+    "productionDependencyAudit": "0 vulnerabilities"
+  },
+  "runtimeEvidence": {
+    "navigationBeforeSource": "ebcbd912910000a5ccb3ea95668419693863fcbf",
+    "navigationAfterSource": "730076b5ea3bc8af811cfc734c7648a801fcd7f0",
+    "navigationSamplesPerJourney": 3,
+    "idleSource": "79f3c640c5cf6b73742164c35b0e6fcc3ab6ba8a",
+    "idle": "Three real active expiry intervals, hidden expiry/resume, currency and route changes; retained canvases acquired their context once",
+    "screenshots": "Dashboard and Presentation: both themes at 390/768/1366px, plus 200% root-text probe",
+    "uiSource": "b3e2106741bd5a898b4bca287b43d05a23e16b51",
+    "feedbackMs": [
+      {
+        "kind": "click",
+        "afterClickMs": 0
+      },
+      {
+        "kind": "link-pending",
+        "afterClickMs": 1.3
+      },
+      {
+        "kind": "route-ready",
+        "afterClickMs": 58.8
+      },
+      {
+        "kind": "results-pending",
+        "afterClickMs": 58.8
+      },
+      {
+        "kind": "data-ready",
+        "afterClickMs": 670.9
+      }
+    ]
+  },
+  "release": {
+    "publishedBaseline": "3c6ff79a9997829a655a295ec325d93594e3fb8a",
+    "productionChanged": false,
+    "reviewPublished": false,
+    "hostedReviewCI": "pending",
+    "narratedVideo": "pending; only silent/reference recordings found",
+    "assessmentSubmitted": false
+  },
+  "limitations": [
+    "No SLA or controlled Neon cold-start inference from small samples",
+    "No hosted timing claim for this unpublished revision",
+    "Physical devices, non-Chromium and complete assistive-technology/forced-colors/zoom coverage remain unverified",
+    "Candidate-approved business definitions await external clarification"
+  ]
+}

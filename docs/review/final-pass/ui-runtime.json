@@ -1,0 +1,124 @@
+{
+  "source": "b3e2106741bd5a898b4bca287b43d05a23e16b51",
+  "recordedAt": "2026-11-11T16:42:05.055Z",
+  "method": "One warm production navigation; native click and DOM mutation timestamps, not an SLA. Presentation asset check uses a fresh authenticated browser context; decoded resource bytes. Six Dashboard and six Presentation screenshots plus a 200%-root-font probe.",
+  "feedback": [
+    {
+      "kind": "click",
+      "afterClickMs": 0
+    },
+    {
+      "kind": "link-pending",
+      "afterClickMs": 1.3
+    },
+    {
+      "kind": "route-ready",
+      "afterClickMs": 58.8
+    },
+    {
+      "kind": "results-pending",
+      "afterClickMs": 58.8
+    },
+    {
+      "kind": "data-ready",
+      "afterClickMs": 670.9
+    }
+  ],
+  "presentation": {
+    "apiReads": [],
+    "loadedChartChunks": [],
+    "resources": [
+      {
+        "name": "/_next/static/media/GeistMono_Variable.p.2vtemngyy8z-u.woff2",
+        "decodedBytes": 71212,
+        "type": "link"
+      },
+      {
+        "name": "/_next/static/media/Geist_Variable-s.p.43azbxi7zpibd.woff2",
+        "decodedBytes": 69488,
+        "type": "link"
+      },
+      {
+        "name": "/_next/static/chunks/31ccuderj9941.css",
+        "decodedBytes": 42278,
+        "type": "link"
+      },
+      {
+        "name": "/_next/static/chunks/0-o38y6wyw0u1.js",
+        "decodedBytes": 13402,
+        "type": "link"
+      },
+      {
+        "name": "/_next/static/chunks/2rv5jvl35qh22.js",
+        "decodedBytes": 30356,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/2c7fqfns8tiv2.js",
+        "decodedBytes": 160170,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/05ad7rj6pslxy.js",
+        "decodedBytes": 229288,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+        "decodedBytes": 11199,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/0_shif7rxv2nv.js",
+        "decodedBytes": 27722,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/27nrbqkhzz-mh.js",
+        "decodedBytes": 16578,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/1bvhuho7qqb1-.js",
+        "decodedBytes": 27797,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/2-8q-y-45hwjq.js",
+        "decodedBytes": 13176,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/3f04pdq23_cr5.js",
+        "decodedBytes": 27489,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/1bylbj9vf95kl.js",
+        "decodedBytes": 24944,
+        "type": "script"
+      },
+      {
+        "name": "/_next/static/chunks/1kpjzzzgpnjh6.js",
+        "decodedBytes": 221105,
+        "type": "script"
+      }
+    ]
+  },
+  "enlargedText": {
+    "selector": {
+      "x": 32,
+      "y": 3321.03125,
+      "width": 155.5625,
+      "height": 88
+    },
+    "button": {
+      "x": 32,
+      "y": 3425.03125,
+      "width": 246.171875,
+      "height": 88
+    },
+    "horizontalOverflow": false
+  },
+  "externalOrigins": []
+}
