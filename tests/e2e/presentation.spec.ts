@@ -147,3 +147,11 @@ test("reviewed artifact and source links resolve inside the protected applicatio
     await expect(page.locator("pre code")).not.toBeEmpty();
   }
 });
+
+test('case study uses the full content width and explains connected success/conflict flows',async({page})=>{
+ await signIn(page);await page.setViewportSize({width:1920,height:1080});await page.goto('/presentation');
+ await expect(page.getByRole('heading',{name:'Salary Desk',exact:true})).toBeVisible();
+ const article=page.locator('article[data-case-study]');await expect(article).toBeVisible();
+ const sizes=await article.evaluate(el=>({width:el.getBoundingClientRect().width,parent:el.parentElement!.getBoundingClientRect().width,padding:parseFloat(getComputedStyle(el.parentElement!).paddingLeft)+parseFloat(getComputedStyle(el.parentElement!).paddingRight)}));expect(Math.abs(sizes.width-(sizes.parent-sizes.padding))).toBeLessThan(2);
+ const salary=page.getByRole('figure',{name:'Salary-update sequence',exact:true});await expect(salary.getByRole('img')).toBeVisible();await expect(salary).toContainText('409 conflict');await expect(salary).toContainText('200 confirmed');
+});
