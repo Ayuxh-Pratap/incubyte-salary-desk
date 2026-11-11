@@ -1,148 +1,121 @@
-# Engineering decisions and walkthroughs
+# Architecture and engineering decisions
 
-## Product boundary and change handling
+This describes the implemented system. [Local setup](LOCAL_SETUP.md), [interview walkthrough](INTERVIEW.md), [assessment report](PRESENTATION.md) and [delivery checklist](DELIVERY.md) serve different reading needs. Historical performance reports retain their original sources; current release checks are recorded separately.
 
-Current annual base salary, positive values, explicit currency and annual period, single-currency analysis, current-value edits only. These are candidate-approved working definitions pending Incubyte clarification. No FX, payroll, creation/deletion, history, scheduled changes or product LLM.
+## Product boundary
 
-When clarification arrives, trace its impact before changing code:
-
-| Clarification                  | Affected implementation                                                                       |
-| ------------------------------ | --------------------------------------------------------------------------------------------- |
-| Base versus total compensation | REQUIREMENTS, schema/components, validation, seed, aggregation and tests                      |
-| Monthly or mixed pay periods   | Period constraints, normalization policy, calculation/display rules and fixtures              |
-| FX comparison                  | Approved rates/as-of policy, normalization model, aggregates and labels; currently prohibited |
-| History/effective dates        | Data model/migrations, update use case, UI and concurrency/integration tests                  |
-| Employee operations/access     | API authorization, schema rules, interaction and acceptance checks                            |
+ACME's HR Manager can browse employees, inspect and correct current annual base salary, and analyze a defined population in one currency. These are candidate-approved working definitions **pending external clarification**, not employer approval. No reply text has been supplied for this release. Bonuses, equity, benefits, deductions, payroll, FX, employee creation/deletion, history and future-effective changes are excluded.
 
 ## Modular monolith
 
 ```mermaid
 flowchart LR
- HR[HR browser] --> UI[React workspace]
- UI --> API[Next routes: session + origin + validation]
- API --> Domain[Pure money and salary use case]
- API --> Queries[Drizzle parameterized queries]
- Domain --> Adapter[Versioned salary repository]
- Adapter --> DB[(PostgreSQL on Neon)]
- Queries --> DB
- API --> Dashboard[Dashboard bounded headcounts + financial aggregates + histogram]
- Dashboard --> DB
- Seed[Explicit synthetic seed command] --> DB
+  HR[HR browser] --> UI[Next.js React workspace]
+  UI --> API[Authenticated route handlers]
+  API --> Rules[Pure domain rules]
+  API --> Queries[Server queries and salary repository]
+  Queries --> PG[(Persistent PostgreSQL)]
+  Report[Server-rendered Presentation] --> Files[Explicitly reviewed Markdown and source files]
 ```
 
-src/domain contains money, filters, analysis definitions and the salary-update use case. src/server/db owns schema/connection; employees and analysis modules own SQL; HTTP routes adapt transport and enforce access. Components own drafts and interaction, never direct DB access. The salary use case depends on two small repository operations; no generic service/repository framework or separate backend.
+| Boundary | Responsibility and code |
+| --- | --- |
+| Domain | Exact money, salary proposals, filters and statistics; `src/domain/` has no React/HTTP dependency |
+| HTTP | Session, origin and request validation; `src/server/http.ts`, `src/server/auth.ts`, `src/app/api/` |
+| Persistence | Drizzle schema, purpose-checked pool, parameterized queries and version-checked updates; `src/server/db/`, `src/server/employees/`, `src/server/analysis/`, `src/server/dashboard/` |
+| Workspace | Draft controls, pending/error states, exact labels and confirmed saves; `src/components/` |
+| Browser reads | Session-scoped bounded cache, deduplication and invalidation; `src/lib/read-cache.ts`, `remote-provider.tsx`, `use-remote.ts` |
+| Report | Selected file catalog and literal loaders; `src/server/presentation/`. Does not read employee data or load Chart.js |
 
-## Exact money and schema
+## Relational model
 
-Six tables: employees, countries, currencies, departments, roles, and a singleton environment marker. Foreign keys, unique employee numbers, positive salary/version checks and an annual-period constraint protect persisted data. An unused role/department mapping was removed with a real migration because metadata editing is excluded.
+```mermaid
+erDiagram
+  COUNTRIES ||--o{ EMPLOYEES : country
+  CURRENCIES ||--o{ EMPLOYEES : pay_currency
+  DEPARTMENTS ||--o{ EMPLOYEES : department
+  ROLES ||--o{ EMPLOYEES : role
+  EMPLOYEES {
+    integer id PK
+    text employee_number UK
+    text name
+    bigint salary_minor
+    text period
+    integer version
+    timestamptz updated_at
+    text updated_by
+  }
+```
 
-Salary is BIGINT minor units, capped at 9,000,000,000,000,000,000 (below PostgreSQL's signed ceiling). USD/EUR/GBP/INR use two decimals, JPY zero, KWD three. Country and pay currency are independent. Decimal strings are parsed directly into BigInt; excess precision, ambiguous notation, non-positive and out-of-range amounts are rejected. Money crosses JSON boundaries as strings. No unsafe Number conversion.
+Lookup foreign keys prevent invalid references. Salary must be positive and bounded; period is explicitly annual; versions are positive. A separate environment-purpose singleton protects development/test/demo/preview operations. See `src/server/db/schema.ts` and committed Drizzle migrations. No schema change or data reset is needed for this release.
 
-SQL totals use numeric arithmetic and text serialization. Median ranks the entire population and sums its one or two middle values, retaining denominator one or two. An even median can include half a minor unit; the explanation shows it exactly. Display rounding is half up; signed changes round half away from zero, and percentages have two decimals. There is no floating-point percentile calculation or cross-currency monetary total.
+## Exact money and analysis
 
-## Lists, populations and safe writes
+Amounts enter as strings and become **BIGINT minor units**. USD/EUR/GBP/INR have two decimal places, JPY zero, KWD three. Parsing rejects extra precision, invalid syntax, zero/negative and amounts above `9_000_000_000_000_000_000` minor units. JSON carries monetary strings, never unsafe JavaScript numbers.
 
-One employeeWhere predicate applies literal wildcard escaping and parameterized country/department/role/currency filters to lists, counts and analysis. Sorting is allowlisted with an id tie-breaker; salary sorting requires a currency. Pages are 25/50/100 records. Normal count/list and full analysis branches share single-statement snapshots; out-of-range pagination has a deliberate count/clamped-page fallback. Drill-down retains the same filters. Unknown or unavailable lookup labels retain active codes rather than claiming All.
+PostgreSQL NUMERIC supports exact aggregate arithmetic. An even median retains its rational half-unit rather than truncating it; display rounding is deliberate, half away from zero. Totals, min/max, medians and salary-change previews have deterministic rule tests. Counts may become chart numbers; money labels/tooltips retain exact formatted values. No mixed-currency salary total or comparison is offered. Annual-base labels, currency and population remain explicit.
 
-Salary edits validate immutable currency/period and parse the amount on the server. UPDATE checks both id and expected version, increments the version and writes server metadata atomically. No returned row means conflict. The UI retains the proposal after validation, network or persistence failure; conflict review rebases it explicitly against the latest snapshot. Success is shown only after a confirmed response. A network failure after commit is treated as uncertain and resolved by rereading/version checks.
+Employee lists and analysis share `employeeWhere` filter semantics, including literal escaping of search wildcards. PostgreSQL applies filtering, allowlisted sorting and stable ID tie-breaking. Pages are bounded to 25/50/100. Salary sorting requires one currency. A window count returns a normal page and total in one statement; an out-of-range offset has a focused count fallback. Analysis uses one statement for overall and grouped results from the same filtered population. Dashboard derives global headcounts and one-currency summary/eight histogram bins server-side, without returning employee rows to charts.
 
-## Access and environments
+## Read and save flows
 
-A shared evaluator identity uses an eight-hour encrypted iron-session cookie: HttpOnly, Secure in production, SameSite Strict. Server layout and every data API check the session; mutations also validate origins. Trust comes from explicit APP_ORIGIN and Vercel-issued deployment variables, never request Host or forwarded headers. Health exposes no employee data. Unexpected API failures return a reference and log only method/path, error kind and a sanitized database code.
+```mermaid
+sequenceDiagram
+  participant HR
+  participant UI as Salary editor
+  participant API as Protected PATCH
+  participant DB as PostgreSQL
+  HR->>UI: Inspect current value and propose change
+  UI->>UI: Exact preview, keep expected version
+  UI->>API: Amount string, currency, annual period, version
+  API->>API: Session + trusted-origin + Zod/domain checks
+  API->>DB: UPDATE WHERE id AND version; increment version
+  alt Version matches
+    DB-->>API: Updated employee and metadata
+    API-->>UI: Confirmed result
+    UI->>UI: Invalidate dependent reads, retain confirmed detail
+  else Another edit won
+    DB-->>API: No matching update
+    API-->>UI: 409 conflict
+    UI->>HR: Preserve draft; review newer salary
+  end
+```
 
-Development, test, demo and preview use separate PostgreSQL databases with purpose markers. Runtime/migration checks reject mismatches; Vercel preview requires purpose preview and production requires demo. Tests reject development/demo/preview connection identities, including pooled/direct aliases, and browser writes first assert the server's test-purpose header. CI uses disposable PostgreSQL 17; local development needs no Docker.
+The database conditional update is the concurrency boundary, not a client-only check. Validation, failure, conflict and uncertain network outcomes preserve the draft; success requires confirmation. Server metadata is authoritative. See `salary-update.ts`, `salary-repository.ts`, salary API handler and `salary-editor.tsx`.
 
-Neon's account-free project was used initially. The candidate has claimed it into a Free account; account access and all four 10,000-row databases were verified. Claiming rotated the database password, so only connection URLs were refreshed and deployment credentials updated. Data, evaluator secrets and business scope were preserved. No paid resources.
+## Cache ownership and freshness
 
-Vercel Hobby, Node 24 and region iad1; Neon aws-us-east-2. Runtime uses pooled node-postgres with attachDatabasePool, max three connections; migrations use direct URLs. Connection/query waits are bounded; statement timeout is eight seconds. Seed/reset are explicit operator commands, never build/request hooks. Production builds are verified with runtime credentials absent. The reviewed Windows/Turbopack development reload loop is avoided using supported Webpack development; default production builds pass independently.
+Each authenticated login has a random encrypted session scope. The provider owns at most **24 in-memory entries**, with no salary payloads in localStorage and no shared public response cache. Keys include the endpoint's canonical filter/sort/page/size/currency and provider scope. Active list/analysis/dashboard reads are fresh for 30 seconds, detail for 15 seconds, lookups for 300 seconds; retained stale data has a bounded additional window. Inspect `src/lib/read-cache.ts` for the authoritative per-endpoint policy.
 
-## UI foundation and brand
+Concurrent same-key requests deduplicate. Generation checks and abort handling stop superseded responses from overwriting newer state. Hidden-tab expiry defers network work until visible; focus does not refetch a fresh entry. Unchanged background responses retain the current data reference. Saves invalidate dependent lists, analyses, Dashboard and detail, then seed the confirmed detail; cross-tab invalidation uses BroadcastChannel. Sign-out and unauthorized responses clear protected entries. Explicit Refresh/Retry remains available. This is short-lived reuse, not permanent offline storage or a real-time multi-user subscription.
 
-| Job Desk reference      | Selective adaptation                                                                         |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| DESIGN / globals.css    | Neutral surfaces, compact type, semantic roles, hairlines and tactile controls               |
-| Base UI/shadcn wrappers | Small button/input/sheet patterns; corrected focus contrast, touch size and overlay behavior |
-| Providers/fonts         | next-themes, packaged Geist and Animate UI reduced-motion preference                         |
-| Shell/sidebar           | Recombined Employees/Salary overview navigation; responsive cards/table                      |
-| Design checker          | Document-to-CSS palette checks, resolved theme contrast and semantic color checks            |
+Same-route query navigation uses browser history and the cache rather than an unnecessary RSC round trip followed by JSON. New routes still pass server access checks. Filters apply as one accepted draft, never on every draft select change. Cached returns avoid a forced skeleton; uncached reads preserve controls and acknowledge pending work immediately.
 
-No job domain, personal data, integrations, Blob sync, PWA/service worker, all-record client index, dev instrumentation or Git history was copied. Applicable notices are retained. Sheet review caught generic-dialog motion and missing close-event cancellation; both were corrected and browser tested.
+## Chart lifecycle
 
-The locked visual source is now Job Desk DESIGN.md plus its actual runtime implementation. docs/design-foundation.json vendors 216 palette/semantic/type/radius/elevation/motion values with the inspected source commit. No lime/green brand overrides remain. Source documentation/runtime discrepancies and accessibility adaptations are explicit in DESIGN.md. No sibling folder dependency or private Job Desk domain data was introduced.
+Chart.js is scoped to Dashboard. The earlier replay defect came from destroying/recreating chart instances when arrays/callbacks changed identity and when broad root mutations fired. The correction keeps one instance per mounted canvas/type/orientation, keeps event callbacks current through refs, and updates changed data/theme in place. Unchanged revalidation does not restart entry animation. A narrow resolved-theme signal replaces the broad observer; reduced motion is respected. Unmounting legitimately destroys the instance. The shared lifecycle also covers the histogram. Historical before/after idle observations and focused browser regression checks document this distinction.
 
-## Evidence and practical performance
+## Access, environments and deployment
 
-27 deterministic unit cases, eight hosted PostgreSQL integration cases, and six production browser checks passed. Coverage includes precision/bounds, exact large aggregates, odd/even/empty medians, literal search, shared intersections, constraints, seed preservation and a simultaneous-write race with one winner. Controlled UI failures are distinguished from live persistence evidence. Deployed checks confirm authentication, bounded 10,000-record browsing, invalid/stale rejection, save/reload, analysis and persistence across redeployment; original synthetic amounts were restored. Production is published at https://incubyte-salary-desk.vercel.app and source at https://github.com/Ayuxh-Pratap/incubyte-salary-desk, with candidate approval. Hosted CI independently passed all 27/8/6 checks on disposable PostgreSQL. See deployment-checks.json.
+Eight-hour encrypted HttpOnly evaluator sessions protect both server pages and API handlers; production cookies are Secure with SameSite Strict. Mutations validate configured trusted origin, not an untrusted Host header. Request boundaries reject invalid parameters and sanitize server errors. A shared evaluator identity is suitable for this synthetic assessment, not a complete HR identity/audit system.
 
-Measured 2026-11-11: 10,000 employees; Node 24.19/Windows; client in India; Neon US East; TLS verified, pooled max 3; five sequential samples after ANALYZE. Median transactions: name page 1,330.55 ms; USD salary page 1,204.66 ms; country/department page 1,202.63 ms; Unicode search 1,317.06 ms; full USD analysis 1,529.07 ms. These include WAN and transaction round trips, not deployment latency or cold starts. EXPLAIN execution: indexed currency/salary page 0.034 ms, name search 0.513 ms, overall analysis 2.086 ms. Raw observations/plans are in performance.json. Five samples do not establish an SLA.
+Development, test, demo and preview have distinct connections and database-purpose markers. Test preparation fails closed if its URL aliases a configured development/demo/preview database. Runtime/migration purpose mismatches are rejected. The pool is reused per process, capped at three connections with bounded idle/connect timeouts; Vercel lifecycle integration releases idle connections. Vercel uses the package's supported Node 24 runtime in `iad1`, near the persistent Neon US East database. Salary data is not stored on an ephemeral deployment filesystem. Production secrets and evaluator codes stay in private configuration. Preview must use its own purpose-marked database.
 
-Indexes cover name/id, currency/salary/id, country/department and department/role. Retain this small set based on the measured workload; no external search service, replicas or speculative infrastructure.
+## Decisions and observed limits
 
-## Protected read flow and bounded session caching
+| Choice | Why; alternative deliberately deferred |
+| --- | --- |
+| Next.js modular monolith | One deployable with explicit backend modules; a separate service adds no assessment value |
+| PostgreSQL + Drizzle | Persistent relational constraints and server aggregates; ephemeral SQLite is unsuitable here |
+| Minor-unit BIGINT plus rational aggregate values | Avoid binary floating-point money; arbitrary FX/history policy is outside agreed scope |
+| Offset pagination | Simple and stable for 10,000 records; cursor pagination needs a demonstrated scale/use-case benefit |
+| Small session cache | Fast visited views without Redis, public caching or an additional query framework |
+| No product LLM | HR workflows are deterministic; AI assistance is demonstrated honestly through development artifacts |
 
-Every data API still authenticates and returns private, no-store. The server layout verifies the session before mounting RemoteProvider. A new random scope is stored in the encrypted session at login; the provider owns its own memory map. React cache memoizes session reads during a render/request where applicable, without a cross-request protected data cache. No public CDN/full-route salary cache or shared ORM result cache is enabled.
+Historical focused measurements on source `730076b` found 25-row responses around 6.7 KB, cached returns around 56–60 ms without an API call, and uncached list observations around 908–939 ms. These are small local-production samples, not new release timings or an SLA. One list SQL plan executed in 4.334 ms; pooled WAN reads and new-pool setup were materially slower than SQL execution. See [historical final-pass report](FINAL_PASS.md) and its raw, source-labeled artifacts. No load/failover SLA, full assistive-technology audit or production HR security certification is claimed.
 
-| Read                                  | Fresh TTL  | Policy                                                                                                |
-| ------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- |
-| Directory page / analysis / Dashboard | 30 seconds | Canonical URL including all filters, sort, page, page size, grouping and currency, under access scope |
-| Employee detail                       | 15 seconds | Employee id under the same scope                                                                      |
-| Lookup catalog                        | 5 minutes  | Small ordered lookup arrays, same authenticated scope                                                 |
+If clarification changes the business rules, identify affected requirements, schema/migrations, domain parsing/analysis, API validation, seed fixtures, tests and UI/docs before changing them. Keep canonical policy small rather than adding a speculative policy engine.
 
-In-flight reads deduplicate. Capacity is 24 insertion-ordered query keys, not every possible employee page. Fresh returns render immediately; stale same-key values may remain visible during revalidation for at most 120 additional seconds. Beyond that they are discarded. Active views revalidate at expiry and on window focus/visibility. Errors expose Retry; explicit refresh forces a read and shows pending feedback while retaining same-key values. No data is stored in localStorage/sessionStorage/IndexedDB. A failed validation response never populates the cache.
+## Evidence and authorship
 
-Successful salary saves atomically retain the confirmed detail and invalidate every other salary-bearing result, including pages, analyses and Dashboard. The current list refreshes, a revisited analysis reads again, and scoped BroadcastChannel events invalidate other tabs. Events include document identity to prevent self-delivery. Sign-out clears/denies memory and notifies other tabs; 401 responses fail closed and erase cached data. A new login gets a fresh scope. This remains a short browser snapshot: external editors can be seen at revalidation, and an ambiguous network failure is handled through reread/version conflict rules.
-
-Within a workspace route, installed Next.js history integration updates useSearchParams immediately for filters/pagination/currency, eliminating the RSC-then-JSON waterfall. Different route navigation retains authenticated server layout checks and bounded prefetch of the three workspace destinations. LinkPending acknowledges clicks independently of data completion. Draft controls apply together; exact-key loading skeletons never show rows under another population's labels. Abort/generation guards prevent invalidated or obsolete responses from winning. Router Back/Forward restores the URL and reuses a matching fresh entry.
-
-## Query and Dashboard decisions
-
-Normal employee pages use COUNT OVER with stable allowlisted order and LIMIT/OFFSET, selecting only visible directory fields. Full detail/update metadata is fetched for the editor. Normal directory, analysis and Dashboard requests each make one environment-marker check plus one read statement. Lookup catalog now uses a single small ordered JSON aggregate statement rather than four pooled queries. The original measured fan-out caused late lookup responses on first arrival. No N+1 or 10000-record browser materialization was found. The narrow fallback for an offset past the population can use an additional count/read; tests preserve clamping and empty results.
-
-Analysis reuses the same employee predicate and exact summary SQL for the overall and grouped populations in one UNION statement. Dashboard combines headcount partitions, those financial summaries, and a bounded histogram in one statement snapshot. Histogram bins cover observed min..max in exact integer minor units with at most eight inclusive, disjoint ranges; tied/small ranges use fewer bins; empty currencies return no bins. PostgreSQL NUMERIC avoids BIGINT overflow in calculations. No schema/index change was justified by the measured 10000-row workload.
-
-Only counts become JavaScript chart numbers. Salary boundaries remain exact strings in labels/tooltips/tables. Chart.js 4.6.1 is dynamically imported solely by the Dashboard, registering bar/doughnut controllers, elements, category/linear scales and tooltips. Country doughnut answers composition; horizontal department bars compare headcount with readable labels; the annual-base histogram answers distribution for one selected currency. Global charts explicitly cover all currencies; money never crosses currencies. The country legend sits beside its doughnut and supplies keyboard-accessible population links; screen-reader headcount text accompanies the department chart, with equivalent keyboard filtering in Employees. The histogram retains its exact-band table. Country/department/currency drill-downs accompany the canvas. No historical trends or fairness conclusions are invented.
-
-Current measurement evidence, reproduction commands and limitations are in [fidelity/performance review](FIDELITY_PERFORMANCE.md). Prior P1 review is historical and superseded visually. Published main/production remain the earlier baseline until release approval.
-
-## Four interview walkthroughs
-
-1. **An amount:** domain/money.ts turns INR 1200000.01 into 120000001n. Input is never rounded. JSON carries a string. Middle values 101/102 USD minor units yield 203/2; display USD 1.02, explanation USD 1.015.
-2. **A query:** domain/filters.ts validates URL input; server/employees/queries.ts creates the shared predicate, stable order and bounded page. server/analysis/queries.ts applies that predicate to the full population and ranked middle rows, independent of the current page.
-3. **An API request:** PATCH app/api/employees/[id]/route.ts passes through server/http.ts for session/origin checks, validates id/JSON, then calls domain/salary-update.ts. server/employees/salary-repository.ts performs the version-conditional update. A race yields HTTP 409.
-4. **A save:** components/salary-editor.tsx keeps a separate draft and snapshot, computes the preview, submits its version and handles confirmed success, retained failure and explicit conflict review. Employee detail is an accessible controlled sheet; dirty closure requires a discard decision.
-
-The defensible tradeoff is a small complete current-salary tool with exact arithmetic and transparent populations. History, FX and full IAM require additional business decisions and are deliberately excluded.
-
-Sources: [Incubyte website](https://incubyte.co/), [Neon plans](https://neon.com/docs/introduction/plans), [Vercel Hobby](https://vercel.com/docs/plans/hobby), [Vercel Node runtime](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions). Provider/account observations were checked during setup; current account is Free/Hobby.
-
-## Final compact composition
-
-The two headcount cards share a 256px plot area and stretch equally in the desktop grid. Country legend/count links sit to the right of the doughnut; the former disclosure footers are removed. Theme segments use compact 28px controls within a 32px well; the remaining controls preserve their existing targets. Directory table headers have square inner edges beneath the result header. Salary Overview shows four financial cards: total, median, minimum and maximum. Population count remains visible above them and in the grouped analysis; no aggregate rule or API field was removed.
-
-## Protected engineering presentation (local review)
-
-A full-width server-rendered assessment report with five dedicated pages under `/presentation` exposes an explicitly reviewed narrative, diagrams, source excerpts and an artifact index. The canonical narrative is `docs/PRESENTATION.md`; diagram text lives in `docs/presentation-diagrams.json`. The reader uses React Markdown/GFM on the server with no raw HTML/MDX execution. Exact source/artifact catalogs reject unknown keys; they never accept a filesystem path from a request. Selected files are explicitly included in Next's deployment trace. The same workspace layout enforces evaluator access. These routes do not call employee APIs or initialize Chart.js. Sidebar workspace prefetch is disabled while reading the Presentation, avoiding unrelated workspace asset loading.
-
-Public links identify the published baseline. Review-only source is inspectable through protected source routes instead of pretending unpublished GitHub commits are available. Historical evidence remains labeled. The current verification artifact is pending until actual final checks are recorded; the final narrated video remains pending.
-
-## Final focused polish and Presentation
-
-See FINAL_PASS.md for the current local review and its explicit measurement limits. Chart instances now survive unchanged revalidation; currency controls align normally and the country doughnut is smaller. The protected Presentation reads selected canonical Markdown, diagrams, actual code excerpts and curated evidence. It makes no employee reads or chart initialization on documentation-only navigation. The published baseline and its CI are labeled separately from this branch.
-
-Reproduce current measurements with the isolated production harness: start `npx tsx scripts/perf-server.ts`, then run `node scripts/measure-journeys.mjs after docs/review/final-pass`, `npx tsx scripts/measure-read-plans.ts docs/review/final-pass`, `npx tsx scripts/measure-edit-journey.mjs docs/review/final-pass`, `node scripts/measure-final-ui.mjs` and `node scripts/measure-chart-idle.mjs after` sequentially. The edit probe verifies the test-environment header and restores its amount. The idle probe takes several real intervals; do not run it against the public demo. Keep private server logs ignored. Fresh runtime evidence belongs to the measured source/environment, not a hosted performance guarantee.
-
-## Earlier case-study composition revision (superseded layout)
-
-The canonical narrative now renders as one continuous case study. Chapter aliases redirect to `/presentation#…`; the server workspace access boundary still applies before rendering. Shared shell/sidebar/tokens stay independent of the reference portfolio. SVG diagrams are static server output from the selected JSON graph definitions (nodes, named edges and explicit branches). Unit checks catch missing endpoints, clipped node bounds, branchless decisions and an incorrect environment-marker FK. Source excerpts remain generated from actual files and have adjacent explanations. Recorded performance tables read their existing allowlisted artifacts and retain the original measurement sources; they do not query salary data. The 216-value foundation manifest and product/backend behavior are unchanged.
-
-Use `node scripts/capture-case-study.mjs` with the isolated local production server for current case-study screenshots and asset/read isolation. The prior `measure-final-ui.mjs` and final-pass screenshots describe the earlier Presentation layout; do not overwrite that historical evidence to imply it verifies the case-study revision.
-
-## Assessment report organization
-
-The user clarified that the reference is inspiration, and the deliverable should read as a proper assessment report plus a documented case study. The five Presentation sections now render independently at their original URLs rather than redirecting into one page. Metadata, canonical Markdown titles, page navigation and the sidebar share one section catalog. Overview frames the assessment; Requirements distinguishes the brief from provisional business choices; Architecture retains connected diagrams and actual code; Decisions records the real history/AI process; Verification maps deliverables to evidence and marks pending submission items. Full width, tokens, access protection and server-only content rendering are retained.
-
-Use `node scripts/capture-assessment-report.mjs` against the isolated local production server for current responsive evidence. Earlier case-study captures describe the superseded continuous-page layout. Domain, API/database rules and cache policy are unchanged.
-
-Report text uses a conventional vertical reading order: heading, prose, then supporting diagram or source. Source explanations sit below the code rather than in a parallel column. This is a presentation-only adjustment; the shared shell, full-width figures, routes and business behavior remain unchanged.
-
-The report now renders on a shared paper-like document surface. Navigation and app actions stay outside; letterhead, section title, body and running footer sit inside responsive margins. The surface uses existing card/border/shadow roles and is capped at 1280px on wide displays. The same sheet frames the protected appendix/source readers. This changes presentation only, not print/PDF pagination or business behavior.
+[AI collaboration](AI_COLLABORATION.md) records actual instructions, accepted/revised suggestions and corrections. Git history preserves the real sequence; later documentation is not evidence of a fictional test-first cycle. Job Desk's reviewed visual foundation was adapted independently with third-party notices; its private data/integrations were not copied. [DESIGN.md](../DESIGN.md) documents the runtime tokens and consistency check.

@@ -3,6 +3,9 @@ const config: NextConfig = {
   outputFileTracingIncludes: {
     "/presentation/**": [
       "./docs/PRESENTATION.md",
+      "./README.md",
+      "./docs/LOCAL_SETUP.md",
+      "./docs/INTERVIEW.md",
       "./docs/FINAL_PASS.md",
       "./docs/review/final-pass/read-query-plans.json",
       "./docs/review/final-pass/edit-cache-measurement.json",
@@ -13,7 +16,7 @@ const config: NextConfig = {
       "./docs/AI_COLLABORATION.md",
       "./docs/DELIVERY.md",
       "./docs/FIDELITY_PERFORMANCE.md",
-      "./docs/review/final-pass/verification.json",
+      "./docs/release-verification.json",
       "./docs/review/final-pass/chart-idle-before.json",
       "./docs/review/final-pass/chart-idle-after.json",
       "./docs/review/final-pass/performance-before.json",

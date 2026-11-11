@@ -8,7 +8,7 @@ import {
   markdownSection,
 } from "@/lib/presentation";
 import { readPresentation } from "@/server/presentation/content";
-import { REPOSITORY } from "@/server/presentation/catalog";
+import { REPOSITORY, repositoryFile } from "@/server/presentation/catalog";
 import { PresentationBody } from "@/components/presentation/content";
 import { ReportSheet } from "@/components/presentation/report-sheet";
 import { LinkPending } from "@/components/link-pending";
@@ -48,7 +48,7 @@ export default async function PresentationPage({
             href={REPOSITORY}
             className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-meta text-foreground-2 hover:bg-inset"
           >
-            Published baseline source
+            Source repository
             <ArrowUpRight aria-hidden className="size-4" />
           </a>
         </div>
@@ -97,14 +97,19 @@ export default async function PresentationPage({
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-meta text-muted-foreground">
             <span>Organization: Fictional ACME</span>
             <span>Data: Synthetic</span>
-            <span>Status: Local review · Unpublished revision</span>
+            <span>Status: Released application · Final video pending</span>
           </div>
         </header>
         <PresentationBody content={markdownSection(narrative, section.title)} />
         <footer className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-meta text-muted-foreground">
           <p>
-            Independent assessment concept · Canonical report:
-            docs/PRESENTATION.md
+            Independent assessment concept ·{" "}
+            <a
+              className="underline underline-offset-4"
+              href={repositoryFile("docs/PRESENTATION.md")}
+            >
+              Canonical report on GitHub
+            </a>
           </p>
           <p className="tabular-nums">
             Section {index + 1} of {PRESENTATION_SECTIONS.length}

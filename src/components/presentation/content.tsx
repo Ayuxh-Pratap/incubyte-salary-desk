@@ -209,7 +209,7 @@ export function ArtifactIndex() {
         className="rounded-xl bg-card p-4 text-ui underline underline-offset-4"
         href={REPOSITORY}
       >
-        Public repository · published baseline ↗
+        Public repository ↗
       </a>
       <a
         className="rounded-xl bg-card p-4 text-ui underline underline-offset-4"
@@ -219,9 +219,9 @@ export function ArtifactIndex() {
       </a>
       <a
         className="rounded-xl bg-card p-4 text-ui underline underline-offset-4"
-        href="https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517"
+        href="https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/workflows/ci.yml"
       >
-        Historical baseline CI ↗
+        Hosted verification workflow ↗
       </a>
     </div>
   );

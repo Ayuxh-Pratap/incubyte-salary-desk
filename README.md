@@ -1,84 +1,77 @@
 # Salary Desk
 
-A focused salary workspace for an HR Manager at fictional **ACME**: find employees, safely correct current annual base salary, and understand a defined compensation population. This is an independent assessment concept, not an Incubyte internal system.
+Employee salary management for an HR Manager at fictional **ACME**. Find a person, safely correct current annual base pay, and answer compensation questions for a defined population of **10,000 synthetic employees**.
 
-**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. [Live application](https://incubyte-salary-desk.vercel.app) · [Public repository](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [Passing hosted CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517). Enter the privately shared evaluator code; no Vercel account is required. The core product, deployed persistence and production-browser workflow are verified. The candidate’s final narrated video remains pending; see [Delivery](docs/DELIVERY.md).
+[Live application](https://incubyte-salary-desk.vercel.app/) · [Assessment report](https://incubyte-salary-desk.vercel.app/presentation) · [Public source](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/workflows/ci.yml)
 
-**Local fidelity/performance review:** codex/visual-quality now matches the locked Job Desk foundation, uses accessible animated dropdowns, bounded session-memory caching and Dashboard-only Chart.js series. Review changes remain unpublished; live/main CI above are the earlier baseline. See [measured causes, caching policy, screenshots and release gates](docs/FIDELITY_PERFORMANCE.md).
+## Evaluator entry point
 
-## Try the workflow
+1. Open the live application and enter the evaluator code supplied privately in the submission email. **No Vercel account is needed.** The code is deliberately absent from this repository. If it was omitted, request it from the candidate.
+2. Dashboard separates global headcount from annual-base statistics in one currency. Open Employees, search/filter/page through bounded results, and inspect a person's compensation.
+3. Preview a salary correction. Only a confirmed, version-checked save shows success; stale edits require review and failed saves retain the draft.
+4. Salary Overview summarizes **every matching employee**, across all pages. Explain a number and follow its matching population.
+5. Presentation is the assessment report: scope, connected architecture/data/update/cache diagrams, actual code, decisions, AI collaboration and versioned evidence. Its appendix/source views link to canonical files on GitHub.
 
-1. Enter the privately shared evaluator code. Dashboard separates global headcounts from current annual-base pay in one currency, with graphical comparisons and workspace links. Open Employees to browse 10,000 employees using search, country/department/role/currency filters, stable sorting and bounded pages.
-2. Open an employee. Enter a positive annual base amount; review the exact amount and percentage change before saving. A stale version requires review rather than overwriting another edit. Failed saves retain input.
-3. Open Salary overview, select one currency and define a population. Inspect totals, extremes and median across **all** matching employees. Explain a number or drill into a group without changing filter semantics.
+**Video: final recording/share link pending.** Earlier silent reference footage is not represented as the final narrated demo. The brief permits any video demo; the candidate's final planned demonstration still needs recording and sharing. [Recording steps and submission checklist](docs/DELIVERY.md).
 
-No FX, payroll, employee creation/deletion, salary history, future scheduling or product chatbot. See the concise [requirements](REQUIREMENTS.md).
+## Documentation map
 
-## Stack and boundaries
+| Read | What it answers |
+| --- | --- |
+| [One-page requirements](REQUIREMENTS.md) | Goal, scope, acceptance criteria, exclusions; committed before implementation |
+| [Assessment report source](docs/PRESENTATION.md) | Reviewer-oriented scope, implementation, decisions and evidence |
+| [Architecture and decisions](docs/ENGINEERING.md) | Modules, data model, exact money, query/cache/update rules and tradeoffs |
+| [Local setup](docs/LOCAL_SETUP.md) | Fresh setup versus daily work, variables, migrations/seed and tests |
+| [Engineering/interview guide](docs/INTERVIEW.md) | Trace a read, save and calculation; explain choices and limitations |
+| [Delivery and readiness](docs/DELIVERY.md) | Requirement-to-evidence checklist, release gates, internal rubric and video script |
+| [Release verification](docs/release-verification.json) | Source/environment of current checks; earlier measurements remain historical |
+| [AI collaboration](docs/AI_COLLABORATION.md) | Real instructions, accepted/revised proposals, corrections and verification |
+| [Design foundation](DESIGN.md) | Shared tokens, accessibility adaptations and paper report treatment |
+| [Historical performance](docs/FINAL_PASS.md) | Payloads, SQL/network timings and chart-replay diagnosis with original sources |
 
-Node 24 LTS; Next.js App Router/TypeScript; PostgreSQL 17; Drizzle; Zod; Vitest; Playwright; scoped Chart.js; Tailwind; reviewed Base UI/Animate UI primitives. Modular monolith with pure money/use-case rules, server queries and access checks, thin HTTP routes and interactive React screens. [Architecture, decisions and four code walkthroughs](docs/ENGINEERING.md). [Design tokens and reuse](DESIGN.md). [Actual AI collaboration](docs/AI_COLLABORATION.md).
+## Run locally
 
-## Local setup — hosted PostgreSQL, no Docker prerequisite
+Node **24.x** and npm (lockfile checked with npm **11.17.0**). Persistent relational PostgreSQL; hosted development is sufficient, with no local Docker prerequisite.
 
-Use Node 24 and npm. On a fresh checkout:
-
-```sh
+```powershell
+git clone https://github.com/Ayuxh-Pratap/incubyte-salary-desk.git
+cd incubyte-salary-desk
 npm ci
+Copy-Item .env.example .env.local
 ```
 
-Create ignored .env.local from [.env.example](.env.example). Configure a **pooled development URL**, **direct migration URL**, DATABASE_PURPOSE=development, APP_ORIGIN=http://localhost:3000, a random 32+ character SESSION_SECRET and a distinct 16+ character EVALUATOR_PASSWORD. Never commit credentials or paste them into chat. Neon URLs should verify TLS (sslmode=verify-full).
+Edit `.env.local`: your own development pooled/direct PostgreSQL URLs, `DATABASE_PURPOSE=development`, `APP_ORIGIN=http://localhost:3000`, and distinct random session/evaluator secrets. Never commit or share these values. Then, **on your fresh designated development database**:
 
-```sh
+```powershell
 npm run db:migrate
 npm run db:seed
 npm run dev
 ```
 
-Open http://localhost:3000. Development uses the supported Webpack mode because a Windows/Turbopack connected-view reload loop was reproduced; production builds use the default compiler and are independently tested. Production rehearsal: npm run build then npm start.
+Open `http://localhost:3000` and sign in with **your own** `EVALUATOR_PASSWORD`. Daily development is just `npm run dev`; no reset or reseed is required. The explicit insert-only seed preserves salary edits and checks exactly 10,000 employees. Reset is a separate destructive operator command.
 
-Migration marks a database's purpose; subsequent migration/runtime operations reject a mismatch. Configure **separate databases** for test, demo and preview. Normal seeds are explicit, deterministic, exactly 10,000 rows, insert-only on conflicts, and preserve existing salary edits. They never run on build/request. The seed has six countries/currencies, 0/2/3-decimal cases, tied values, varied names, a three-person group, and same-currency populations across countries. All ranges are illustrative, not market data.
-
-## Verification
-
-```sh
-npm test                    # fast deterministic rules; no database required
+```powershell
+npm test
 npm run lint
 npm run typecheck
 npm run design:check
-npm run build:verify         # build without runtime secrets
-npm run test:prepare         # only the explicitly isolated test DB
-npm run test:integration     # real PostgreSQL; seeds test DB, never demo
-npm run test:e2e:live        # production build, real HR workflow, isolated test DB
-npm run ui:capture           # opt-in 30-case live test-DB visual matrix
-npm run test:e2e             # access and controlled UI-failure tests; live case skips unless enabled
-npm run perf:measure         # actual development query timings and plans
+npm run build:verify
 ```
 
-TEST_DATABASE_URL and TEST_DATABASE_PURPOSE=test are mandatory for database tests. The harness rejects development/demo/preview connection identities and checks the server's database-purpose header before browser writes. Fixture-based UI checks are labelled separately from live persistence evidence. Browser tests build and start a production server on port 3100, with no server reuse. CI uses disposable PostgreSQL 17; it introduces no local Docker prerequisite. [Verification status and limitations](docs/DELIVERY.md).
+For isolated PostgreSQL/full production-browser tests, configure a **different** `TEST_DATABASE_URL` / `TEST_DATABASE_PURPOSE=test`, then follow [complete test and production-rehearsal commands](docs/LOCAL_SETUP.md). Never point tests at the public demo.
 
-## Deployment operations and safe reset
+## Business scope and clarification
 
-Configure DEMO_DATABASE_URL / DEMO_DATABASE_DIRECT_URL and separate PREVIEW_DATABASE_URL / PREVIEW_DATABASE_DIRECT_URL in the ignored operator environment. Then:
+While awaiting clarification, the candidate approved current **annual base pay**, explicit currency/period and single-currency analysis. No employer clarification reply is present in the supplied assessment material; unanswered choices are not employer-approved.
 
-```sh
-npm run db:environment -- demo migrate
-npm run db:environment -- demo seed
-npm run db:environment -- preview migrate
-npm run db:environment -- preview seed
-```
+Bonuses, equity, benefits, deductions, tax and payroll are excluded. Amounts are positive and currency-precision aware; missing values never become zero. Country and pay currency are independent. There is **no FX conversion or mixed-currency monetary total**. Supported operations are browse/search/filter/sort/page, detail, current-salary update and descriptive analysis. No employee creation/deletion, history or future-effective changes. Figures do not establish fairness or explain pay differences.
 
-For reset, deliberately enable ALLOW_DEMO_RESET=true and pass the exact purpose confirmation, for example npm run db:environment -- test reset --confirm=RESET-SYNTHETIC-test. **Reset discards all salary edits in that synthetic environment.** The flag and purpose marker are checked before truncation. Normal reseeding never performs a reset.
+## Engineering approach
 
-Vercel runtime needs only its environment's pooled DATABASE_URL, DATABASE_PURPOSE (demo for production, preview for previews), SESSION_SECRET and EVALUATOR_PASSWORD. Secrets stay server-side. Vercel-issued deployment origins are allowlisted from platform variables; APP_ORIGIN is required locally and for a custom canonical domain. Preview writes are rejected unless the database is marked preview. Migrate and seed explicitly before deploy; do not configure build hooks to run them. Node 24 and the iad1 function region are configured for the Neon US East project. No paid resources or upgrades.
+Next.js App Router/TypeScript modular monolith; PostgreSQL/Drizzle; Zod; Vitest/Playwright; Tailwind/Base UI/Animate UI/Motion. Chart.js is scoped to bounded Dashboard series. No product LLM or external cache service.
 
-The prepared Neon project has been claimed into the candidate’s verified Free account. All four databases and 10,000-row counts were rechecked after the claim; its rotated connection credentials were refreshed without reseeding. The preview passed edit/reload/redeploy checks. Production uses its own purpose-marked demo database, with independent evaluator/session secrets; runtime checks prevent preview writes to it. See [Delivery](docs/DELIVERY.md) for production verification and video status.
+Exact BIGINT minor units and string JSON preserve amounts; medians retain a denominator. Shared SQL predicates align directory and analysis. Conditional versions prevent lost writes. APIs stay authenticated/private/no-store; bounded session memory provides fresh reuse and explicit expiry/invalidation. One encrypted evaluator identity suits this synthetic assessment; full IAM/audit history are excluded.
 
-## Evidence and limitations
+The genuine incremental history includes corrections and UI revisions; it was not reconstructed or squashed into a fictional sequence. [Third-party notices](THIRD_PARTY_NOTICES.md) preserve reuse licenses. Correspondence, resume, credentials, evaluator codes and operational logs are excluded.
 
-Exact monetary minor units and rational medians are string-serialized; no floating-point money or mixed-currency total. A shared filter predicate drives lists and SQL analysis. [Measured observations and EXPLAIN plans](docs/performance.json) distinguish server execution from local WAN timings; no cold-start or SLA claim.
-
-One shared evaluator identity, eight-hour encrypted cookie sessions and origin-checked writes suit this synthetic assessment. Full IAM, individual HR accounts and an audit history are deliberately excluded. Small groups are labelled; descriptive statistics establish neither pay fairness nor its causes. Salary updates are current-value corrections only.
-
-[Third-party notices](THIRD_PARTY_NOTICES.md) preserve the selectively reused UI foundation and component/font licenses. Private assessment correspondence, resume, tailoring notes, credentials, logs and browser traces are excluded from source publication.
-
-The evaluator-protected `/presentation` section explains the scope, architecture, real development decisions and selected evidence. Its source is `docs/PRESENTATION.md`; the current local review report is `docs/FINAL_PASS.md`. Historical deployed/CI evidence and current unpublished measurements are explicitly separated. The final narrated candidate video remains pending.
+Production uses its existing purpose-marked demo database; previews/tests use separate databases. Current verification is linked above. Historical review reports retain their sources and limitations; they are not fresh benchmarks or an Incubyte rubric.

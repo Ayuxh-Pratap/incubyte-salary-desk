@@ -1,0 +1,27 @@
+{
+  "release": true,
+  "applicationSource": "release candidate based on 2fe05d5; final commit identified by hosted CI",
+  "applicationFilesSha256": "e846e0cc088ad4ebdd7ea256b3df2c633b85e9f514e270a6b570cf66b626da32",
+  "recordedAt": "2026-11-11T19:01:18.151Z",
+  "status": "Fresh local release gates passed; publication and production verification follow. Final video remains pending.",
+  "environment": "Windows, Node 24.19.0, npm 11.17.0; production-build Chromium suite against isolated hosted test PostgreSQL. Demo untouched.",
+  "checks": {
+    "lint": "Passed; no warnings",
+    "types": "Passed",
+    "design": "216 retained Job Desk token/mapping checks passed",
+    "unit": "42 passed across 10 files",
+    "postgresql": "12 passed; isolated test DB, 47.53 seconds",
+    "browser": "31 passed; one optional full Workspace screenshot matrix skipped; 1.7 minutes",
+    "build": "Credential-free production build passed as Playwright webServer prerequisite",
+    "links": "34 local Markdown links resolved; reviewed app artifact/source GitHub links asserted",
+    "productionBefore": "Public evaluator login without Vercel account; anonymous API 401; demo purpose, 10000 population, 25-row page; read-only salary/version checkpoint",
+    "hosted": "See exact-commit hosted workflow after push; not yet claimed by this record",
+    "video": "Candidate confirmed not recorded; final recording and share URL remain the submission blocker"
+  },
+  "limitations": [
+    "Historical performance figures are source-labeled, not rebenchmarked by these checks.",
+    "One optional Workspace screenshot matrix skipped; representative report/theme/viewport checks passed.",
+    "No load SLA, controlled cold-start, full assistive-technology or non-Chromium certification.",
+    "No clarification reply text supplied; candidate-approved scope is not employer approval."
+  ]
+}

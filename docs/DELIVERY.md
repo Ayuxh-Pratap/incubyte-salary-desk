@@ -1,89 +1,93 @@
-# Delivery, verification and demo
+# Delivery, evidence and submission readiness
 
-Status: core implementation verified; public source and production published with candidate approval; hosted CI passed; candidate narrated video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
+This is the current delivery checklist. Older UI/performance reports are historical observations at their named revisions, not verification of this release. [Release verification](release-verification.json) records the current check scope; the [hosted CI workflow](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/workflows/ci.yml) identifies each tested commit.
 
-**Current review branch:** the locked Job Desk foundation, protected read cache, consolidated queries and scoped Chart.js Dashboard are locally verified (35 unit / 12 PostgreSQL / 21 production-browser checks). Final viewport/measurement evidence is in [fidelity/performance review](FIDELITY_PERFORMANCE.md); earlier [UI review](UI_REVIEW.md) is historical. This version is intentionally unpublished/undeployed. Published handoff below describes main’s baseline.
+## Reviewer entry points
 
-## Completion checklist
+- [Live application](https://incubyte-salary-desk.vercel.app/) — evaluator code supplied privately; no Vercel account required.
+- [Assessment report](https://incubyte-salary-desk.vercel.app/presentation) — orientation, scope, architecture/flows, decisions/AI, quality/evidence.
+- [Public repository](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) — README is the entry point.
+- [Local setup](LOCAL_SETUP.md) and [engineering/interview walkthrough](INTERVIEW.md).
 
-- [x] Read assessment/supporting context; inspect independent Git boundary and UI reuse.
-- [x] Requirements and architecture committed before application code (initial documentation commit).
-- [x] Protected responsive UI, PostgreSQL migrations and deterministic synthetic seed.
-- [x] Bounded browsing, literal search, shared filters and stable sorting/pagination.
-- [x] Exact salary edits, preview, validation, retained drafts and optimistic conflicts.
-- [x] Full-population single-currency analysis, group drill-down and number explanations.
-- [x] 27 fast deterministic unit cases; 8 real hosted PostgreSQL cases; 6 production browser checks.
-- [x] Design/contrast, lint, type and production-build checks; Webpack development workflow verified.
-- [x] Seeded performance observations and EXPLAIN plans; fresh npm ci rehearsal.
-- [x] Separate development/test/demo/preview PostgreSQL databases, migrated and seeded explicitly.
-- [x] Final hardening browser rerun: six checks passed against a fresh production build.
-- [x] Deployed authentication, bounded browsing, edit/reload, analysis and redeployment persistence; synthetic amounts restored.
-- [x] Working protected review preview; Neon claimed into a verified Free account.
-- [x] Candidate-approved public repository and production publication; first hosted CI passed.
-- [x] Public production login/API checks, 320px dark UI and edit persistence across a fresh production redeployment; original salary restored.
-- [ ] Candidate's final narrated video and user-sent submission.
+## Requirement-to-evidence checklist
 
-Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. The candidate explicitly approved public source and production publication. No paid upgrade.
+The original brief requires **any video demo**, not specifically narration. The candidate has chosen a final narrated walkthrough; it is **not recorded and has no shareable URL**, confirmed in the release conversation. Earlier silent reference footage and a script are not labeled as the final submission video.
 
-## Published handoff
+| Deliverable | Evidence | Completion / limitation |
+| --- | --- | --- |
+| One-page requirements before building | [REQUIREMENTS.md](../REQUIREMENTS.md); initial documentation commit precedes application slices | Complete; original timing preserved in Git |
+| Functional UI and backend for HR salary management | Employees, safe salary editor and full-population Salary Overview; authenticated APIs | Implemented; release checks recorded separately |
+| Relational persistence | PostgreSQL/Drizzle schema, constraints, migrations; isolated save/reload tests | Implemented; no ephemeral database file |
+| Seed 10,000 employees | Deterministic synthetic seed; count and idempotence checks | Exactly 10,000; normal seed preserves edits; never on build/request |
+| Meaningful, fast deterministic unit tests | Money, analysis, filters, updates, cache and report catalog | Unit suite plus focused PostgreSQL/browser layers; no arbitrary coverage claim |
+| Genuine incremental commits | Actual foundation, rules, queries, workflows, fixes and verification sequence | Preserved; no backdating, reconstruction or public history rewrite |
+| Approach and AI artifacts | [ENGINEERING](ENGINEERING.md), [PRESENTATION](PRESENTATION.md), [AI_COLLABORATION](AI_COLLABORATION.md), design and source-labeled measurements | Committed selected artifacts; private inputs excluded |
+| Deployed working application and public source | Links above, release revision and CI | Operational release verification recorded in handoff/current evidence |
+| Reviewer access | Private evaluator code protects UI and API | Code belongs in private email/access note only |
+| Video demonstration | Recording instructions below | **Submission blocker: record, review and share the final video** |
 
-- Application: https://incubyte-salary-desk.vercel.app (application evaluator code required; no Vercel account).
-- Repository: https://github.com/Ayuxh-Pratap/incubyte-salary-desk (public, main branch, genuine incremental commits).
-- Hosted verification: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517.
-- Owner access: ignored .vercel/evaluator-access.md contains only the production application code and login instructions. The underlying value is EVALUATOR_PASSWORD in ignored .env.production.local. Share only the application code privately; never share database/session credentials or publish either private file. Production and preview codes are distinct.
-- Video: the silent reference exists; the candidate’s final narration and shareable recording link remain pending.
+Dashboard, Explain a Number, salary-change preview, session cache and the Presentation report are useful enhancements, not separately invented mandatory assessment requirements.
 
-## Requirement to evidence
+## Working scope and clarification status
 
-| Requirement / risk                         | Evidence                                                                                                |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| Product framing before build               | REQUIREMENTS.md, first Git commit                                                                       |
-| Full backend/UI + relational DB            | App routes, domain rules, server queries, Drizzle schema/migrations                                     |
-| Exactly 10,000 synthetic employees         | Seed verifies count transactionally; hosted development/test/demo/preview runs                          |
-| Repeat seed preserves edits                | Real PostgreSQL integration test; reset is a separate guarded command                                   |
-| Money precision and rounding               | money.test.ts; max-range SQL aggregate fixture; rational median explanation                             |
-| Complete populations, matching drill-down  | Shared employeeWhere predicate; list/analysis intersection and aggregate tests                          |
-| Lost-write protection                      | Use-case tests, conditional SQL update, actual simultaneous-write integration case                      |
-| Failure preserves input / no false success | Browser 503/409 interaction test; saved-success only on confirmed response                              |
-| UI + API protected                         | Server layout/session checks, tampered-session and foreign-origin browser checks                        |
-| 10,000-record behavior                     | Bounded page assertions; actual query plans/timings in performance.json                                 |
-| Reproducible delivery                      | Lockfile, env example, migration/seed/test commands and CI workflow                                     |
-| Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks                              |
-| Deployed persistence / final video         | deployment-checks.json verifies reload/redeploy; silent reference recorded; candidate narration pending |
+While awaiting clarification, development proceeded with candidate-approved documented definitions: **current annual base pay**, explicit currency and annual period, positive amounts, single-currency analysis without FX, browsing/search/filter/sort/pagination and safe current-salary updates. Bonuses, equity, benefits, deductions and payroll are excluded. No employee creation/deletion, salary history or future-effective changes are implemented. Current rows retain update metadata and optimistic conflict protection.
 
-Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; [Hosted GitHub CI passed](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517), including all 27 unit, eight PostgreSQL and six production-browser checks.
+No clarification reply text is available in the supplied context. This is not evidence that the employer approved the defaults, and no mailbox search is claimed. If their interpretation differs, identify and revise affected requirements/schema/domain/API/seed/tests/UI/docs deliberately.
 
-## Remaining limitations and decisions
+## Release verification and limitations
 
-- Working definitions await external clarification; use the impact map in Engineering before changing requirements, schema, parsing, queries, UI or tests.
-- One shared evaluator identity and current update metadata; full IAM and salary history are outside scope.
-- Descriptive compensation figures do not establish fairness, explain differences or represent market benchmarks. Seed ranges are illustrative.
-- The Windows/Turbopack development reload loop was reproduced; supported Webpack development and default production builds both passed the live workflow.
-- Production dependency audit has no advisories at the last check. Development tooling retains upstream moderate esbuild/minimatch advisories; no esbuild serve/studio endpoint is exposed. Automatic forced downgrade of Drizzle was rejected. ESLint 9 is retained for Next plugin peer compatibility; ESLint 10 conflicts with those current peer ranges.
-- Performance evidence distinguishes local WAN transaction timings from database execution. No production latency, cold-start or SLA claim yet.
+The current local gate covers lint, types, the design manifest, deterministic unit tests, isolated PostgreSQL integration tests, a production-build browser suite and credential-free production build. Hosted CI repeats its declared checks on the pushed commit. Exact outcomes, source and environment belong in [release-verification.json](release-verification.json), not an unversioned claim that earlier tests cover newer code.
 
-## A four-minute demo
+Production verification is read-only: unauthenticated protection, evaluator sign-in, Dashboard, Employees, Overview, Presentation, filters/pages, bounded responses, 10,000 count, selected document/source links and browser errors. Mutations and stale conflicts belong in the isolated test environment. Deployment does not migrate, reseed or reset demo data.
 
-1. **0:00–0:25 — Problem.** ACME has 10,000 people in multiple countries. HR needs careful current-pay corrections and answers for clearly defined comparable populations. Explain annual base salary and single-currency scope. Show Dashboard’s global headcount versus its selected-currency compensation, then enter the workspace.
-2. **0:25–1:20 — Workflow.** Search an employee number; show country/department/currency context. Enter an invalid amount, then a valid amount. Explain the change preview, save, and reload to demonstrate persistence.
-3. **1:20–2:15 — Insight.** Select USD, group by country or department, and explain the median. Show filters, full population and matching employees. Point out small samples and no FX/fairness inference.
-4. **2:15–3:15 — Engineering.** Show the tiny architecture diagram. Trace decimal input -> BigInt minor units -> string API -> PostgreSQL; explain the version-checked update and a conflict.
-5. **3:15–4:00 — Evidence and tradeoff.** Show fast unit results, PostgreSQL concurrency/aggregate checks and actual performance observations. Explain selective UI reuse and one AI correction you reviewed. State the provisional business definitions and deliberate exclusions.
+Historical performance: the focused pass measured three samples per representative journey, separated first-process from warm observations, and measured SQL/WAN behavior separately. Those numbers are not a new release benchmark or SLA. [FINAL_PASS.md](FINAL_PASS.md) and selected raw artifacts retain the method and source. Free-plan cold starts, sustained load, disaster recovery, physical devices, non-Chromium engines and a complete assistive-technology audit are not established by this evidence.
 
-Record this visual-quality version only after its approved release; the existing silent clip shows the baseline.
+## Internal readiness review
 
-## Recording and submission steps
+This is **our review rubric, not Incubyte's official score**. It evaluates demonstrated implementation and its limits; a high total cannot complete the missing video.
 
-Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A completed silent reference walkthrough is at artifacts/salary-desk-silent-walkthrough.webm. It is labelled AI-recorded reference footage and remains separate from the candidate’s narrated handoff.
+| Engineering dimension | Score | Evidence; remaining gap | Confidence |
+| --- | --- | --- | --- |
+| Domain and money | 24/25 | Exact minor units, rational median, currency separation and boundary tests; business scope still provisional | High for tested rules |
+| Backend/database/API | 18/20 | Shared parameterized predicates, bounded reads, constraints and conditional writes; broader workload not load-tested | High for core behavior |
+| Structure/maintainability | 14/15 | Modular monolith, separate domain/query/UI/report boundaries; cache lifecycle requires careful understanding | High |
+| Meaningful verification | 14/15 | Unit, real PostgreSQL race/aggregate and production-browser checks; not exhaustive cross-browser/AT coverage | High within declared scope |
+| Security/reliability | 8/10 | Protected UI/API, encrypted sessions, origin and environment guards; shared evaluator identity is not enterprise IAM/audit | Moderate |
+| Performance/operations | 8/10 | Bounded payloads, query evidence, session reuse, persistent deployment; small samples and uncontrolled cold starts | Moderate |
+| Docs/AI evidence | 5/5 | Requirements-first history, canonical report/code links, honest AI record and runnable instructions | High |
+| **Engineering total** | **91/100** | No percentile or production-certification claim | Internal assessment |
 
-Published baseline source and production are complete, with hosted CI passing. The visual-quality review remains local until its separate review/CI/release gates in UI_REVIEW.md are completed. Complete the candidate-narrated video against the approved release and replay it before submission. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
+| UI/interaction dimension | Score | Evidence; remaining gap | Confidence |
+| --- | --- | --- | --- |
+| Information/data presentation | 23/25 | Clear HR workflows, units/populations, report and chart explanations; broader user research not performed | Moderate-high |
+| Design-system consistency | 19/20 | Job Desk-derived token manifest and shared primitives, approved UI; not independent design research | High |
+| Responsive behavior | 18/20 | Representative phone/tablet/desktop browser coverage; physical devices not fully audited | Moderate-high |
+| Interaction/loading | 17/20 | Draft/apply model, pending states, cache return, chart regression; WAN/cold waits remain | Moderate-high |
+| Accessibility | 12/15 | Semantic controls, keyboard checks, focus and reduced motion; full AT/forced-color/zoom audit incomplete | Moderate |
+| **UI total** | **89/100** | Approved visual direction; no further redesign required | Internal assessment |
 
-Windows recording: authenticate first; press Win + Shift + R, select the browser area, choose Start and enable microphone narration if offered. Follow the four-minute story, stop and replay the saved MP4. If your recorder lacks microphone input, use a recorder with screen-plus-microphone support. See [Microsoft’s recording instructions](https://support.microsoft.com/en-us/windows/apps/use-snipping-tool-to-capture-screenshots).
+The relevant JD signals are readable TypeScript backend ownership, meaningful tests, explicit tradeoffs and intentional AI collaboration. The implementation provides inspectable evidence for these. An assessment application is not proof of every production-scale scenario or of unrelated AI-platform experience.
 
-## Final focused local review
+## Record the final demonstration (about four minutes)
 
-`FINAL_PASS.md` records the final chart/control fixes, current measurements, protected Presentation and remaining release gates. Start the evaluator review at `/presentation`; its five report pages link to the working Workspace and allowlisted source/evidence. The canonical narrative is `PRESENTATION.md`. Exact current check counts/source are in `review/final-pass/verification.json`. Old CI/test totals above are historical baseline evidence.
+1. Start the released application for read-only orientation, and your own local development/test environment for any salary write demonstration. Follow [LOCAL_SETUP.md](LOCAL_SETUP.md); do not reset the public demo.
+2. Authenticate **before recording** so the evaluator code is not captured. Close terminals, environment files, private tabs and notifications. Use a readable browser size around 1440 by 900 and increase text if needed.
+3. Use the screen recorder available on your computer (Windows screen recording or your existing recording tool). Select the browser window/region and **enable the microphone** for the planned narration. Make a short test, stop and replay it to confirm audio and readable text before the full take.
+4. Follow this story:
 
-Current release remains **pending candidate review and authorized publication/deployment**. No production update occurred during this pass. The candidate-narrated video and share link remain **pending**; the silent reference does not complete them. After release, follow the recording steps above and demonstrate the same coherent HR story. Candidate review should include the Presentation's salary-update diagram and source viewer so the explanation connects to actual implementation.
+| Time | Show and explain |
+| --- | --- |
+| 0:00–0:30 | HR problem, fictional 10,000-person ACME and the documented annual-base/single-currency scope |
+| 0:30–1:05 | Dashboard global headcount versus one-currency distribution; country/department drill-down |
+| 1:05–2:00 | Employees search/filter/page; inspect salary; in the isolated local environment preview and save a valid correction, reload to show persistence; briefly show invalid input |
+| 2:00–2:40 | Salary Overview uses the full matched population, currency and period; Explain a Number and matching employees |
+| 2:40–3:30 | Presentation architecture/update flow; one version-check code excerpt and exact-money test/median example |
+| 3:30–4:00 | Canonical docs/CI, honest AI collaboration, current limitations and pending clarification |
 
-The Presentation is a full-width multi-page assessment report with connected SVG explanations. `/presentation` is the overview; `/presentation/product`, `/presentation/architecture`, `/presentation/decisions` and `/presentation/quality` render dedicated report sections. Private source/artifact readers retain their exact routes. Current report images are in `docs/review/assessment-report`; earlier continuous case-study and final-pass image sets remain historical.
+5. Stop and replay the **whole** recording. Confirm audio, legibility, successful workflow, no secrets/notifications and no misleading claim that narration or tests prove production perfection.
+6. Upload the final file to your chosen sharing service. Set reviewer playback permissions, open its share URL in a signed-out/private browser and confirm it plays without requesting access. Supply that URL in the private draft, replacing the explicit pending-video note, and update the README/delivery status when the real video is available.
+7. Reply to the original assessment thread yourself using the private draft. Include live/source/report/video links and the evaluator code privately. No email or submission is sent by the agent.
+
+## Verdict
+
+The application release and its written engineering handoff can be completed independently. **The final assessment submission is not ready to send until the candidate records, reviews and shares the final video.** No further feature or redesign is required for this release. External clarification remains a documented policy limitation, not implied approval.

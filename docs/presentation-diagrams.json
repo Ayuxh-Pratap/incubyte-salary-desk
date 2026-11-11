@@ -544,7 +544,7 @@
   },
   "timeline": {
     "title": "Recorded development progression",
-    "description": "Commits are real milestones, not a reconstructed test-first story. Public baseline commits link to GitHub; review-only commits remain explicitly unpublished.",
+    "description": "Commits are real milestones, not a reconstructed test-first story. Original and review milestones are preserved in the public release history.",
     "kind": "timeline",
     "nodes": [
       {
@@ -579,15 +579,15 @@
       },
       {
         "title": "Measured read/UI revision",
-        "body": "Query/cache work and scoped charts; local review",
+        "body": "Query/cache work and scoped charts; review revision",
         "commit": "96b5a45",
-        "published": false
+        "published": true
       },
       {
         "title": "Chart lifecycle correction",
         "body": "Runtime reproduction, first-failing regressions, stable instances",
         "commit": "f9a20e0",
-        "published": false
+        "published": true
       }
     ]
   }

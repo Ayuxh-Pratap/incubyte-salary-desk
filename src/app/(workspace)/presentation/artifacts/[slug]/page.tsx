@@ -1,7 +1,11 @@
 import { ReportSheet } from "@/components/presentation/report-sheet";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ARTIFACTS, artifactKey } from "@/server/presentation/catalog";
+import {
+  ARTIFACTS,
+  artifactKey,
+  repositoryFile,
+} from "@/server/presentation/catalog";
 import { readArtifact } from "@/server/presentation/content";
 import { MarkdownBody } from "@/components/presentation/content";
 export default async function ArtifactPage({
@@ -25,7 +29,13 @@ export default async function ArtifactPage({
         <ReportSheet>
           <h1 className="mt-5 text-title font-semibold">{artifact.title}</h1>
           <p className="my-3 text-meta text-muted-foreground">
-            {artifact.status}
+            {artifact.status} ·{" "}
+            <a
+              className="underline underline-offset-4"
+              href={repositoryFile(artifact.file)}
+            >
+              Canonical file on GitHub ↗
+            </a>
           </p>
           {artifact.format === "markdown" ? (
             <MarkdownBody content={content} />

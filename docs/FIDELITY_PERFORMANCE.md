@@ -1,3 +1,5 @@
+> Historical review: measurements and statuses below belong to their recorded revisions. See [current delivery](DELIVERY.md) and [release verification](release-verification.json) for the final release.
+
 # Salary Desk — Job Desk fidelity and measured navigation
 
 Local review branch only. Reviewed application source: 406b4e2. Published main/production are unchanged. The later compact-layout request is included: equal-height headcount cards, legend beside the doughnut, no disclosure footers, compact theme well, square inner table header and four financial metric cards.

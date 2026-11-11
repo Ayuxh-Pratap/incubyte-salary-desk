@@ -1,7 +1,11 @@
 import { ReportSheet } from "@/components/presentation/report-sheet";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SOURCES, sourceKey } from "@/server/presentation/catalog";
+import {
+  SOURCES,
+  sourceKey,
+  repositoryFile,
+} from "@/server/presentation/catalog";
 import { readSource } from "@/server/presentation/content";
 export default async function SourcePage({
   params,
@@ -24,8 +28,13 @@ export default async function SourcePage({
         <ReportSheet>
           <h1 className="mt-5 text-title font-semibold">{source.title}</h1>
           <p className="my-3 break-all text-meta text-muted-foreground">
-            {source.file} · Actual local review source; not a claim that the
-            review is published.
+            {source.file} · Source packaged with this deployment.{" "}
+            <a
+              className="underline underline-offset-4"
+              href={repositoryFile(source.file)}
+            >
+              View on GitHub ↗
+            </a>
           </p>
           <pre
             tabIndex={0}

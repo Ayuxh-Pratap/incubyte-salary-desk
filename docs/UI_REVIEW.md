@@ -1,3 +1,5 @@
+> Historical review: measurements and statuses below belong to their recorded revisions. See [current delivery](DELIVERY.md) and [release verification](release-verification.json) for the final release.
+
 # Salary Desk visual-quality review
 
 **Historical P1 pass.** The candidate subsequently locked Job Desk’s existing palette and interaction system. Current source and evidence are in [Fidelity/performance review](FIDELITY_PERFORMANCE.md); P1 scorecards/captures below describe the previous review, not the current appearance.

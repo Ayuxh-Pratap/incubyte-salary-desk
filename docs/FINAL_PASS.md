@@ -1,3 +1,5 @@
+> Historical review: measurements and statuses below belong to their recorded revisions. See [current delivery](DELIVERY.md) and [release verification](release-verification.json) for the final release.
+
 # Final focused review — Salary Desk
 
 Subsequent Presentation revision: dedicated full-width assessment-report pages now cover overview, scope, implementation, decisions and verification (source `f1a7dca`), retaining the connected SVG flows. The earlier continuous-page interpretation (`39f40eb`) was superseded after user clarification. This report retains its earlier functional measurements and original UI descriptions; current case-study verification is a separate field in `verification.json`, with screenshots in `docs/review/case-study`.

@@ -138,6 +138,17 @@ test("reviewed artifact and source links resolve inside the protected applicatio
     await page.goto(href!);
     await expect(page.locator("h1")).toBeVisible();
     await expect(
+      page.getByRole("link", {
+        name: "Canonical file on GitHub ↗",
+        exact: true,
+      }),
+    ).toHaveAttribute(
+      "href",
+      new RegExp(
+        "^https://github[.]com/Ayuxh-Pratap/incubyte-salary-desk/blob/main/",
+      ),
+    );
+    await expect(
       page.getByRole("heading", { name: "Page not found", exact: true }),
     ).toHaveCount(0);
     await expect(page.locator("main")).not.toContainText(
@@ -155,6 +166,14 @@ test("reviewed artifact and source links resolve inside the protected applicatio
   ]) {
     await page.goto("/presentation/source/" + key);
     await expect(page.locator("pre code")).not.toBeEmpty();
+    await expect(
+      page.getByRole("link", { name: "View on GitHub ↗", exact: true }),
+    ).toHaveAttribute(
+      "href",
+      new RegExp(
+        "^https://github[.]com/Ayuxh-Pratap/incubyte-salary-desk/blob/main/src/",
+      ),
+    );
   }
 });
 

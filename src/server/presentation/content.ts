@@ -8,6 +8,13 @@ export const readPresentation = cache(() =>
   readFile(path.join(process.cwd(), "docs/PRESENTATION.md"), "utf8"),
 );
 const artifactLoaders = {
+  readme: cache(() => readFile(path.join(process.cwd(), "README.md"), "utf8")),
+  "local-setup": cache(() =>
+    readFile(path.join(process.cwd(), "docs/LOCAL_SETUP.md"), "utf8"),
+  ),
+  interview: cache(() =>
+    readFile(path.join(process.cwd(), "docs/INTERVIEW.md"), "utf8"),
+  ),
   "final-report": cache(() =>
     readFile(path.join(process.cwd(), "docs/FINAL_PASS.md"), "utf8"),
   ),
@@ -46,7 +53,7 @@ const artifactLoaders = {
   ),
   "current-verification": cache(() =>
     readFile(
-      path.join(process.cwd(), "docs/review/final-pass/verification.json"),
+      path.join(process.cwd(), "docs/release-verification.json"),
       "utf8",
     ),
   ),

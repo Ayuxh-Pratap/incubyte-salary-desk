@@ -23,7 +23,7 @@ This report separates scope, implementation, decisions and verification so an as
 3. [Decisions and AI collaboration](/presentation/decisions): recorded alternatives, corrections, tradeoffs and real commit progression.
 4. [Verification and delivery](/presentation/quality): requirement-to-evidence mapping, tests, measured performance, limitations and submission status.
 
-The functional application, public baseline repository and baseline deployment exist. This report revision is local and unpublished. The final candidate-narrated video remains pending.
+The approved application and this report are included in the public release. Final verification is source-labeled below. The candidate has confirmed that the final video is not recorded; recording and a shareable link remain the submission blocker.
 
 ### Assessment context
 
@@ -151,7 +151,7 @@ chart
 
 ### A real sequence, not a reconstructed story
 
-The milestones below come from actual commits. Published milestones link to the public baseline; local review commits are explicitly unpublished. The AI record identifies the test-first cycles that were actually observed, along with corrections to database harnesses, serializers, overflow, theme timing and measurement readiness.
+The milestones below come from actual commits. The public history preserves the original build and subsequent review revisions; linked milestones are actual commits. The AI record identifies the test-first cycles that were actually observed, along with corrections to database harnesses, serializers, overflow, theme timing and measurement readiness.
 
 Where a decision's timing was not recorded, its current rationale is not relabeled as historical evidence. The case study is another AI-assisted presentation revision, not an additional product capability.
 
@@ -168,15 +168,15 @@ timeline
 | Assessment deliverable                            | Evidence / implemented behavior                                            | Status                                              |
 | ------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
 | Requirements before implementation                | One-page REQUIREMENTS.md and initial commit                                | Complete; business definitions provisional          |
-| Working UI and backend                            | Dashboard, directory, safe salary editor and full-population analysis      | Functional baseline published; review changes local |
+| Working UI and backend                            | Dashboard, directory, safe salary editor and full-population analysis      | Included in released application |
 | Relational storage and 10,000 synthetic employees | PostgreSQL constraints, explicit deterministic seed and count verification | Complete; isolated verification                     |
 | Fast meaningful unit tests                        | Exact-money, filtering, update and cache cases                             | Recorded checks, with source versions below         |
 | Persistence and concurrent-edit protection        | PostgreSQL/live browser evidence, version-checked update                   | Verified on recorded sources                        |
 | Genuine development and AI evidence               | Incremental commits, decision notes, AI collaboration record               | Available; no reconstructed history                 |
-| Deployed application and repository               | Published baseline and historical hosted CI                                | Review release / hosted review CI pending           |
+| Deployed application and repository               | Public repository, deployment and source-specific hosted CI                                | See current release verification and CI           |
 | Video demonstration                               | Script and silent reference recording                                      | Candidate-narrated video and share link pending     |
 
-The technical evidence is separated from submission completion. Passing local tests does not complete a missing video, publish this revision or verify its deployed behavior.
+Technical verification is separate from submission completion. Passing tests does not complete the missing final video. See the [delivery checklist](/presentation/artifacts/delivery) and [local-running guide](/presentation/artifacts/local-setup).
 
 ### Measure the waiting, then change the cause
 
@@ -194,7 +194,7 @@ These are three samples per journey on a localhost production build, with an Ind
 
 Unit tests protect precision, bounds, median/rounding rules, filters, update outcomes and cache behavior. PostgreSQL tests exercise exact aggregates, constraints, stable pages, seed preservation and a simultaneous-write race. Browser tests cover a live HR save plus controlled delays, failure, conflict, history, access and responsive interaction.
 
-The baseline record below identifies the functional source it verifies. Case-study-specific verification is recorded separately in its revision field; earlier measurements do not silently become verification of a new layout.
+The release record below identifies its check scope and environment. Earlier measurements remain explicitly historical; they do not silently become new production evidence.
 
 ```evidence
 current
@@ -202,7 +202,7 @@ current
 
 ### Be clear about what remains
 
-The public repository, deployed application and hosted baseline CI exist. This review remains local until release is authorized. The final candidate-narrated video and shareable link are still pending; a silent reference recording and a script do not complete that deliverable. The agent does not email or submit the assessment.
+The approved source and application are released, with current checks and remaining limits recorded separately. The brief permits any video demo; the candidate's planned final narrated video and shareable link are still pending. Historical silent reference footage and a script are not labeled as that final artifact. The agent does not email or submit the assessment.
 
 Physical devices, non-Chromium browsers, full assistive-technology/forced-colors/zoom review, production load and controlled cold starts remain limited or unverified. External business clarification is also pending. The following selected records make those limits inspectable without exposing credentials, private correspondence or operational logs.
 

@@ -5,6 +5,7 @@ export async function EvidenceSummary() {
   const raw = await readArtifact("current-verification"),
     record = JSON.parse(raw) as {
       applicationSource: string;
+      release?: boolean;
       status: string;
       checks: Record<string, string>;
       caseStudyRevision?: { source: string; checks: Record<string, string> };
@@ -12,11 +13,13 @@ export async function EvidenceSummary() {
     };
   const revision = record.reportRevision ?? record.caseStudyRevision;
   const checks = revision?.checks ?? record.checks;
-  const label = record.reportRevision
-    ? "Assessment report revision"
-    : record.caseStudyRevision
-      ? "Case-study revision"
-      : "Functional baseline";
+  const label = record.release
+    ? "Release verification"
+    : record.reportRevision
+      ? "Assessment report revision"
+      : record.caseStudyRevision
+        ? "Case-study revision"
+        : "Functional baseline";
   return (
     <section
       aria-label="Recorded verification"

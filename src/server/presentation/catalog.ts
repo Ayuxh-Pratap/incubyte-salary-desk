@@ -1,31 +1,48 @@
 export const REPOSITORY =
   "https://github.com/Ayuxh-Pratap/incubyte-salary-desk";
-export const PUBLISHED_COMMIT = "3c6ff79a9997829a655a295ec325d93594e3fb8a";
 // Only these reviewed files may be shown. Never enumerate a directory or accept a path from the URL.
 export const ARTIFACTS = {
+  readme: {
+    file: "README.md",
+    title: "Reviewer README",
+    status: "Current entry point",
+    format: "markdown",
+  },
+  "local-setup": {
+    file: "docs/LOCAL_SETUP.md",
+    title: "Local setup",
+    status: "Fresh setup, daily work and isolated tests",
+    format: "markdown",
+  },
+  interview: {
+    file: "docs/INTERVIEW.md",
+    title: "Engineering walkthrough",
+    status: "Code-grounded read, update and calculation guide",
+    format: "markdown",
+  },
   "final-report": {
     file: "docs/FINAL_PASS.md",
     title: "Final focused-pass report",
-    status: "Current local review; measured outcomes and release gates",
+    status: "Historical focused-pass report; original source and sample limits",
     format: "markdown",
   },
   "query-plans": {
     file: "docs/review/final-pass/read-query-plans.json",
-    title: "Current SQL execution evidence",
+    title: "Recorded SQL execution evidence",
     status:
-      "Current local isolated database; n=5 WAN reads and one plan per query",
+      "Historical isolated database; n=5 WAN reads and one plan per query",
     format: "json",
   },
   "edit-evidence": {
     file: "docs/review/final-pass/edit-cache-measurement.json",
     title: "Salary save and invalidation",
-    status: "Current after-only isolated write, original amount restored",
+    status: "Historical after-only isolated write, original amount restored",
     format: "json",
   },
   "ui-runtime": {
     file: "docs/review/final-pass/ui-runtime.json",
     title: "Feedback and Presentation asset evidence",
-    status: "Current local production observation; see sample limits",
+    status: "Historical local production observation; see sample limits",
     format: "json",
   },
   requirements: {
@@ -49,13 +66,14 @@ export const ARTIFACTS = {
   delivery: {
     file: "docs/DELIVERY.md",
     title: "Delivery and recording guidance",
-    status: "Published baseline and remaining review gates are separate",
+    status: "Current assessment checklist and recording instructions",
     format: "markdown",
   },
   "current-verification": {
-    file: "docs/review/final-pass/verification.json",
-    title: "Final focused-pass verification",
-    status: "Current local evidence; check its recorded status and source",
+    file: "docs/release-verification.json",
+    title: "Release verification",
+    status:
+      "Current release checks; see source, environment and remaining video",
     format: "json",
   },
   "idle-before": {
@@ -67,7 +85,7 @@ export const ARTIFACTS = {
   "idle-after": {
     file: "docs/review/final-pass/chart-idle-after.json",
     title: "Chart lifecycle after correction",
-    status: "Current local evidence when recorded",
+    status: "Historical observation at its recorded source",
     format: "json",
   },
   "performance-before": {
@@ -79,7 +97,7 @@ export const ARTIFACTS = {
   "performance-after": {
     file: "docs/review/final-pass/performance-after.json",
     title: "Navigation after this pass",
-    status: "Current local evidence when recorded",
+    status: "Historical observation at its recorded source",
     format: "json",
   },
   "previous-review": {
@@ -136,3 +154,6 @@ export function sourceKey(slug: string) {
     ? (slug as keyof typeof SOURCES)
     : undefined;
 }
+
+export const repositoryFile = (file: string) =>
+  `${REPOSITORY}/blob/main/${file}`;
