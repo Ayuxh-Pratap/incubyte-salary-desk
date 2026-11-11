@@ -162,7 +162,7 @@ export function Diagram({ id }: { id: keyof typeof diagrams }) {
           role="img"
           aria-labelledby={`${id}-title ${id}-description`}
           viewBox={`0 0 ${graph.width} ${graph.height}`}
-          className="block w-full min-w-[1120px]"
+          className="block w-full min-w-[1120px] xl:min-w-0"
           style={{ fontFamily: "inherit" }}
         >
           <title id={`${id}-title`}>{diagram.title}</title>

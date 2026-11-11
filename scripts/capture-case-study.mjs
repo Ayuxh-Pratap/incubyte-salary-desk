@@ -62,6 +62,7 @@ for (const width of [390, 768, 1366, 1920])
       exact: true,
     });
     await diagram.scrollIntoViewIfNeeded();
+    await diagram.getByRole("region").evaluate((el) => (el.scrollLeft = 0));
     await diagram.screenshot({
       path: `${directory}/salary-flow-${theme}-${width}.png`,
     });
