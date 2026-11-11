@@ -35,17 +35,17 @@ const components: Components = {
     </h3>
   ),
   p: ({ children }) => (
-    <p className="my-3 max-w-[80ch] text-ui leading-relaxed text-foreground-2">
+    <p className="my-3 max-w-[80ch] text-body leading-relaxed text-foreground-2">
       {children}
     </p>
   ),
   ul: ({ children }) => (
-    <ul className="my-3 max-w-[80ch] list-disc space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
+    <ul className="my-3 max-w-[80ch] list-disc space-y-3 pl-5 text-body leading-relaxed text-foreground-2">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-3 max-w-[80ch] list-decimal space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
+    <ol className="my-3 max-w-[80ch] list-decimal space-y-3 pl-5 text-body leading-relaxed text-foreground-2">
       {children}
     </ol>
   ),
@@ -177,7 +177,7 @@ export async function SourceExcerpt({ id }: { id: keyof typeof SOURCES }) {
             {source.file} · actual source from this build
           </p>
         </div>
-        <ol className="max-w-[90ch] space-y-4 border-t p-5 text-ui leading-relaxed text-foreground-2 md:p-6">
+        <ol className="max-w-[90ch] space-y-4 border-t p-5 text-body leading-relaxed text-foreground-2 md:p-6">
           {sourceNotes[id].map((note, index) => (
             <li key={note} className="flex gap-3">
               <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-inset text-meta tabular-nums text-foreground">
@@ -287,7 +287,7 @@ export async function PresentationBody({ content }: { content: string }) {
     blocks.push(
       <section key={heading} className="my-8 md:my-10">
         <div className="space-y-3">
-          <h2 className="text-heading font-medium leading-snug tracking-tight md:text-title">
+          <h2 className="text-heading font-medium leading-snug tracking-tight">
             {heading}
           </h2>
           <div className="min-w-0 [&_p:first-child]:mt-0">

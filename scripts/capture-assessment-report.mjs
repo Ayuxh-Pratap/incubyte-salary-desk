@@ -4,7 +4,7 @@ import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 config({ path: ".env.local", quiet: true });
 const base = process.argv[2] || "http://localhost:3300",
-  directory = "docs/review/assessment-report";
+  directory = process.argv[3] || "docs/review/assessment-report";
 fs.mkdirSync(directory, { recursive: true });
 const browser = await chromium.launch(),
   context = await browser.newContext({

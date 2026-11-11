@@ -144,3 +144,5 @@ The user clarified that the reference is inspiration, and the deliverable should
 Use `node scripts/capture-assessment-report.mjs` against the isolated local production server for current responsive evidence. Earlier case-study captures describe the superseded continuous-page layout. Domain, API/database rules and cache policy are unchanged.
 
 Report text uses a conventional vertical reading order: heading, prose, then supporting diagram or source. Source explanations sit below the code rather than in a parallel column. This is a presentation-only adjustment; the shared shell, full-width figures, routes and business behavior remain unchanged.
+
+The report now renders on a shared paper-like document surface. Navigation and app actions stay outside; letterhead, section title, body and running footer sit inside responsive margins. The surface uses existing card/border/shadow roles and is capped at 1280px on wide displays. The same sheet frames the protected appendix/source readers. This changes presentation only, not print/PDF pagination or business behavior.

@@ -211,3 +211,7 @@ Final report revision `f1a7dca` passed the complete production-browser suite: 31
 The candidate disliked the split heading/prose columns. Updated the shared report renderer to stack each heading, prose and supporting material in reading order, with tighter section spacing. Source explanations now follow their snippets as well. Full-width figures, separate pages, tokens, report content and business behavior are preserved. This is a reversible presentation change; no new behavior tests or product features were added.
 
 The stacked-text revision `ede8ac6` passed six existing production report browser checks plus lint, types, design consistency and build. Direct screenshot/geometry inspection confirmed headings above left-aligned prose in light/dark at 390/1366px, and source explanations below snippets. Current evidence is isolated in `docs/review/report-text-layout`; prior report screenshots remain historical. No deployment or publication occurred.
+
+## Paper-like report presentation
+
+The candidate asked for the report to look like text on paper. Added a shared document sheet using existing semantic surfaces, a fine edge and restrained shadow; moved navigation/actions outside the sheet; added running assessment/section headers and footers; used document margins and the existing 15px reading / 18px heading roles. Appendix/source readers share the surface. No typing effect, new palette, PDF feature, data read or business behavior was introduced. The document is intentionally bounded on wide screens while figures use its available width.

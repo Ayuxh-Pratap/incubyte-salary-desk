@@ -1,3 +1,4 @@
+import { ReportSheet } from "@/components/presentation/report-sheet";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTIFACTS, artifactKey } from "@/server/presentation/catalog";
@@ -20,18 +21,24 @@ export default async function ArtifactPage({
       >
         ← Quality and evidence
       </Link>
-      <h1 className="mt-5 text-title font-semibold">{artifact.title}</h1>
-      <p className="my-3 text-meta text-muted-foreground">{artifact.status}</p>
-      {artifact.format === "markdown" ? (
-        <MarkdownBody content={content} />
-      ) : (
-        <pre
-          tabIndex={0}
-          className="my-5 overflow-x-auto rounded-xl bg-card p-4 text-meta leading-relaxed"
-        >
-          {content}
-        </pre>
-      )}
+      <div className="mt-5">
+        <ReportSheet>
+          <h1 className="mt-5 text-title font-semibold">{artifact.title}</h1>
+          <p className="my-3 text-meta text-muted-foreground">
+            {artifact.status}
+          </p>
+          {artifact.format === "markdown" ? (
+            <MarkdownBody content={content} />
+          ) : (
+            <pre
+              tabIndex={0}
+              className="my-5 overflow-x-auto rounded-lg bg-inset p-4 text-meta leading-relaxed"
+            >
+              {content}
+            </pre>
+          )}
+        </ReportSheet>
+      </div>
     </article>
   );
 }

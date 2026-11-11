@@ -10,6 +10,7 @@ import {
 import { readPresentation } from "@/server/presentation/content";
 import { REPOSITORY } from "@/server/presentation/catalog";
 import { PresentationBody } from "@/components/presentation/content";
+import { ReportSheet } from "@/components/presentation/report-sheet";
 import { LinkPending } from "@/components/link-pending";
 export default async function PresentationPage({
   params,
@@ -22,56 +23,39 @@ export default async function PresentationPage({
   if (!section) notFound();
   const index = PRESENTATION_SECTIONS.indexOf(section),
     previous = PRESENTATION_SECTIONS[index - 1],
-    next = PRESENTATION_SECTIONS[index + 1];
-  const narrative = await readPresentation();
+    next = PRESENTATION_SECTIONS[index + 1],
+    narrative = await readPresentation();
   return (
     <article
       data-case-study
       data-assessment-report
-      className="w-full min-w-0 pb-10"
+      className="w-full min-w-0 pb-6"
     >
-      <header className="pt-2 pb-7 md:pb-9">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-meta text-muted-foreground">
-          <p>Salary Desk · Assessment report and engineering case study</p>
-          <p>
-            Section {index + 1} of {PRESENTATION_SECTIONS.length} · Local review
-          </p>
-        </div>
-        <div className="mt-5 flex flex-wrap items-start justify-between gap-5">
-          <div>
-            <h1 className="text-title-lg font-medium tracking-tight">
-              {section.title}
-            </h1>
-            <p className="mt-3 max-w-[85ch] text-ui leading-relaxed text-foreground-2">
-              {section.summary}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              prefetch={false}
-              href="/dashboard?currency=USD"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
-            >
-              Open workspace
-              <ArrowRight aria-hidden className="size-4" />
-            </Link>
-            <a
-              href={REPOSITORY}
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-meta text-foreground-2 hover:bg-inset"
-            >
-              Published baseline source
-              <ArrowUpRight aria-hidden className="size-4" />
-            </a>
-          </div>
-        </div>
-        <p className="mt-4 text-meta text-muted-foreground">
-          Incubyte · Software Craftsperson / TypeScript II assessment ·
-          Fictional ACME · Synthetic data
+      <div className="mx-auto mb-5 flex w-full max-w-[1280px] flex-wrap items-center justify-between gap-3">
+        <p className="text-meta text-muted-foreground">
+          Presentation / Assessment report
         </p>
-      </header>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            prefetch={false}
+            href="/dashboard?currency=USD"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
+          >
+            Open workspace
+            <ArrowRight aria-hidden className="size-4" />
+          </Link>
+          <a
+            href={REPOSITORY}
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-meta text-foreground-2 hover:bg-inset"
+          >
+            Published baseline source
+            <ArrowUpRight aria-hidden className="size-4" />
+          </a>
+        </div>
+      </div>
       <nav
         aria-label="Presentation sections"
-        className="mb-8 flex flex-wrap gap-2 border-y py-3"
+        className="mx-auto mb-6 flex w-full max-w-[1280px] flex-wrap gap-2"
       >
         {PRESENTATION_SECTIONS.map((item, i) => (
           <Link
@@ -80,7 +64,7 @@ export default async function PresentationPage({
             href={presentationHref(item.slug)}
             aria-label={item.title}
             aria-current={item.slug === section.slug ? "page" : undefined}
-            className={`relative isolate inline-flex min-h-11 items-center gap-2 overflow-hidden rounded-lg px-3 text-meta transition-colors ${item.slug === section.slug ? "bg-inset font-medium text-foreground" : "text-foreground-2 hover:bg-inset hover:text-foreground"}`}
+            className={`relative isolate inline-flex min-h-11 items-center gap-2 overflow-hidden rounded-lg px-3 text-meta transition-colors ${item.slug === section.slug ? "bg-inset font-medium text-foreground shadow-well" : "text-foreground-2 hover:bg-inset hover:text-foreground"}`}
           >
             <LinkPending />
             <span aria-hidden className="tabular-nums text-muted-foreground">
@@ -90,51 +74,81 @@ export default async function PresentationPage({
           </Link>
         ))}
       </nav>
-      <PresentationBody content={markdownSection(narrative, section.title)} />
-      <footer className="mt-9 border-t pt-5">
-        <nav
-          aria-label="Report sequence"
-          className="flex flex-wrap items-center justify-between gap-4"
-        >
-          {previous ? (
-            <Link
-              prefetch={false}
-              href={presentationHref(previous.slug)}
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-ui text-foreground-2 hover:bg-inset"
-            >
-              <ArrowLeft aria-hidden className="size-4" />
-              {previous.title}
-            </Link>
-          ) : (
-            <span className="text-meta text-muted-foreground">
-              Requirements → Implementation → Decisions → Evidence
-            </span>
-          )}
-          {next ? (
-            <Link
-              prefetch={false}
-              href={presentationHref(next.slug)}
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
-            >
-              {next.title}
-              <ArrowRight aria-hidden className="size-4" />
-            </Link>
-          ) : (
-            <Link
-              prefetch={false}
-              href="/dashboard"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
-            >
-              Review the working product
-              <ArrowRight aria-hidden className="size-4" />
-            </Link>
-          )}
-        </nav>
-        <p className="mt-5 text-meta text-muted-foreground">
-          Independent assessment concept · Canonical report:
-          docs/PRESENTATION.md · Evidence is labeled by source and environment.
-        </p>
-      </footer>
+      <ReportSheet>
+        <header className="border-b pb-7 md:pb-9">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-meta text-muted-foreground">
+            <p className="font-medium tracking-wide">
+              SALARY DESK / ENGINEERING ASSESSMENT
+            </p>
+            <p className="tabular-nums">
+              SECTION {String(index + 1).padStart(2, "0")} /{" "}
+              {String(PRESENTATION_SECTIONS.length).padStart(2, "0")}
+            </p>
+          </div>
+          <p className="mt-5 text-meta text-muted-foreground">
+            Incubyte · Software Craftsperson / TypeScript II
+          </p>
+          <h1 className="mt-3 text-title-lg font-medium tracking-tight">
+            {section.title}
+          </h1>
+          <p className="mt-4 max-w-[80ch] text-body leading-relaxed text-foreground-2">
+            {section.summary}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-meta text-muted-foreground">
+            <span>Organization: Fictional ACME</span>
+            <span>Data: Synthetic</span>
+            <span>Status: Local review · Unpublished revision</span>
+          </div>
+        </header>
+        <PresentationBody content={markdownSection(narrative, section.title)} />
+        <footer className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-meta text-muted-foreground">
+          <p>
+            Independent assessment concept · Canonical report:
+            docs/PRESENTATION.md
+          </p>
+          <p className="tabular-nums">
+            Section {index + 1} of {PRESENTATION_SECTIONS.length}
+          </p>
+        </footer>
+      </ReportSheet>
+      <nav
+        aria-label="Report sequence"
+        className="mx-auto mt-6 flex w-full max-w-[1280px] flex-wrap items-center justify-between gap-4"
+      >
+        {previous ? (
+          <Link
+            prefetch={false}
+            href={presentationHref(previous.slug)}
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-ui text-foreground-2 hover:bg-inset"
+          >
+            <ArrowLeft aria-hidden className="size-4" />
+            {previous.title}
+          </Link>
+        ) : (
+          <span className="text-meta text-muted-foreground">
+            Requirements → Implementation → Decisions → Evidence
+          </span>
+        )}
+        {next ? (
+          <Link
+            prefetch={false}
+            href={presentationHref(next.slug)}
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
+          >
+            {next.title}
+            <ArrowRight aria-hidden className="size-4" />
+          </Link>
+        ) : (
+          <Link
+            prefetch={false}
+            href="/dashboard"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
+          >
+            Review the working product
+            <ArrowRight aria-hidden className="size-4" />
+          </Link>
+        )}
+      </nav>
     </article>
   );
 }
