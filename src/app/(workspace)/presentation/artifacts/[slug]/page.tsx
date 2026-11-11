@@ -13,7 +13,7 @@ export default async function ArtifactPage({
   const artifact = ARTIFACTS[key],
     content = await readArtifact(key);
   return (
-    <article className="mx-auto w-full max-w-[1100px] min-w-0 pb-10">
+    <article className="w-full min-w-0 pb-10">
       <Link
         className="text-meta underline underline-offset-4"
         href="/presentation/quality"

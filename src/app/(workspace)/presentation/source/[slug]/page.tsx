@@ -12,7 +12,7 @@ export default async function SourcePage({
   const source = SOURCES[key],
     content = await readSource(key);
   return (
-    <article className="mx-auto w-full max-w-[1200px] min-w-0">
+    <article className="w-full min-w-0">
       <Link
         className="text-meta underline underline-offset-4"
         href="/presentation/architecture"

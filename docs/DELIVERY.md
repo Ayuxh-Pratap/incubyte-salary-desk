@@ -82,6 +82,8 @@ Windows recording: authenticate first; press Win + Shift + R, select the browser
 
 ## Final focused local review
 
-`FINAL_PASS.md` records the final chart/control fixes, current measurements, protected Presentation and remaining release gates. Start the evaluator review at `/presentation`; its five sections link to the working Workspace and allowlisted source/evidence. The canonical narrative is `PRESENTATION.md`. Exact current check counts/source are in `review/final-pass/verification.json`. Old CI/test totals above are historical baseline evidence.
+`FINAL_PASS.md` records the final chart/control fixes, current measurements, protected Presentation and remaining release gates. Start the evaluator review at `/presentation`; its five case-study chapters link to the working Workspace and allowlisted source/evidence. The canonical narrative is `PRESENTATION.md`. Exact current check counts/source are in `review/final-pass/verification.json`. Old CI/test totals above are historical baseline evidence.
 
 Current release remains **pending candidate review and authorized publication/deployment**. No production update occurred during this pass. The candidate-narrated video and share link remain **pending**; the silent reference does not complete them. After release, follow the recording steps above and demonstrate the same coherent HR story. Candidate review should include the Presentation's salary-update diagram and source viewer so the explanation connects to actual implementation.
+
+The Presentation is now one continuous full-width case study with chapter anchors and connected SVG explanations. The existing `/presentation/product`, `/presentation/architecture`, `/presentation/decisions` and `/presentation/quality` entry paths remain redirects to their corresponding chapter anchors; private source/artifact readers retain their exact routes. Current case-study images are in `docs/review/case-study`; the prior final-pass image set remains historical.

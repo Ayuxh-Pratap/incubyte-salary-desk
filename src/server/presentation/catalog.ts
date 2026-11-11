@@ -103,7 +103,7 @@ export const SOURCES = {
   salary: {
     file: "src/server/employees/salary-repository.ts",
     title: "Version-checked persistence",
-    focus: "compareAndSwap:",
+    focus: ".where(and(",
   },
   chart: {
     file: "src/components/dashboard-plot.tsx",

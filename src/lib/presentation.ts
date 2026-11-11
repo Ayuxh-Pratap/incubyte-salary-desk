@@ -41,3 +41,7 @@ export function markdownSection(markdown: string, title: string) {
     end = normalized.indexOf("\n## ", body);
   return normalized.slice(body, end < 0 ? undefined : end).trim();
 }
+
+export function presentationAnchor(slug: string) {
+  return slug || "context";
+}

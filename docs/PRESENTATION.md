@@ -1,43 +1,38 @@
-# Salary Desk engineering presentation
+# Salary Desk engineering case study
 
-A curated reader for the assessment, backed by the working code and selected canonical records. This document is the narrative source rendered inside the evaluator-protected application. It is not evidence of employer approval or a human-only development process.
+Canonical narrative for the evaluator-protected case study. Product facts come from the requirements and implementation; measurements remain attached to their recorded source and environment. The presentation is AI-assisted work, not a claim of employer approval or human-only authorship.
 
 ## Start here
 
-### A clear view of current pay
+### Help HR answer a question and make a safe correction
 
-ACME's HR Manager manages 10,000 employees across countries. Spreadsheets make it difficult to find the right person, make a careful salary correction, and compare a clearly defined population without mixing units or currencies.
+ACME's HR Manager has 10,000 employees across countries and needs to answer three ordinary questions: who is this person, what are they paid, and how does their pay compare with a clearly defined group?
 
-Salary Desk makes those three tasks explicit. It is an independent assessment concept using entirely synthetic data. The candidate approved the working definitions; external clarification remains pending.
+A spreadsheet can hold those values, but the work becomes fragile when names repeat, units are implicit, totals mix currencies, or two people edit the same salary. Salary Desk makes the population and units visible, and makes a correction an explicit, checked action.
 
-### Review it in five minutes
+### Follow one HR question through the product
 
-1. Open [Dashboard](/dashboard?currency=USD). Separate global headcount from annual base pay in the selected currency; inspect the distribution and its exact bands.
-2. Visit [India employees paid in USD](/employees?country=IN&currency=USD). Search or page through bounded results, open a person, and inspect the change preview. Saving uses a version check; failed saves preserve the draft.
-3. Inspect [USD analysis by department](/overview?currency=USD&groupBy=department). Its statistics cover every matching employee, not the visible directory page. Explain a median and follow the matching population.
-4. Continue to [Architecture and flows](/presentation/architecture), then [Quality and evidence](/presentation/quality). Trace one rule and inspect the verification's source and environment.
+Start with [Dashboard in USD](/dashboard?currency=USD). Global headcount spans every currency; salary figures do not. Open [India employees paid in USD](/employees?country=IN&currency=USD), inspect an employee, and review a proposed change before saving. Finish in [USD analysis by department](/overview?currency=USD&groupBy=department), where every figure covers the matching population across all pages.
 
-### Know which version you are reviewing
-
-The public repository and deployed application contain the published baseline. This local review adds the refined workspace, protected browser cache, charts and this Presentation. Review changes remain unpublished until the candidate authorizes the release.
-
-The final narrated candidate video is still pending. A demo script and silent baseline clip do not satisfy that deliverable. This presentation does not submit the assessment.
+The case study below follows the same progression: define the job, draw the boundaries, trace a save, then inspect what was actually verified. Source excerpts and selected artifacts are available when a reviewer wants to go deeper.
 
 ## Product and scope
 
-### One user, three connected tasks
+### Three surfaces, one connected workflow
 
-The HR Manager needs to find people, correct current pay safely, and answer descriptive compensation questions for a trustworthy population. The product connects those tasks instead of filling a generic dashboard with unrelated metrics.
+**Dashboard orients.** Headcount by country and department, plus a selected-currency salary distribution, answer where the population is and which view to open next.
 
-The Dashboard orients and directs. Employees is the operational directory/editor. Salary Overview is the detailed, filtered analysis workspace. Four financial cards show total, median, minimum and maximum; headcount remains in the population line.
+**Employees supports the correction.** Search, filters, stable sorting and bounded pages lead to a person's current compensation. The editor shows an exact change preview, preserves a failed draft and asks the user to review a newer version after a conflict.
 
-### Working definitions, not employer confirmation
+**Salary Overview explains the population.** Total, median, minimum and maximum use the entire filtered group. Headcount stays in the population line. “Explain a number” names the definition, units and matching employees instead of leaving an unexplained dashboard value.
 
-Current annual base salary is explicit in the data and UI. Bonuses, equity, benefits, deductions and payroll are excluded. Salary values are positive; missing values never become zero. Countries and pay currencies are independent. Totals and comparisons use one currency; no FX conversion is assumed.
+### Define comparable pay before calculating it
 
-There is no employee creation/deletion, salary history, future-effective scheduling, import pipeline or product chatbot. These require additional business rules and would delay a complete assessment. The two focused enhancements are explaining a number and previewing a salary change.
+The candidate-approved working definition is **current annual base salary**, stored with explicit currency and period. Countries and pay currencies are independent. Bonuses, equity, benefits, deductions, tax and payroll are excluded. Values are positive; missing values do not become zero.
 
-The one-page requirements below were committed before application implementation. They remain the compact scope authority; extended reasoning belongs in the engineering notes.
+One currency is required for monetary analysis. No exchange rate or normalization policy was supplied, so there is no FX conversion or combined global salary total. Descriptive differences do not establish fairness or explain why pay differs.
+
+These are working product decisions pending external clarification, not definitions approved by Incubyte. Creation/deletion, history, future-effective changes, imports and bulk edits were deliberately left out to complete a defensible core within the assessment window.
 
 ```document
 requirements
@@ -45,19 +40,21 @@ requirements
 
 ## Architecture and flows
 
-### A modular monolith with visible boundaries
+### One application, with responsibilities you can point to
 
-Next.js serves the UI and thin authenticated HTTP routes. Pure TypeScript rules do the monetary work. Drizzle queries and a small persistence adapter connect to PostgreSQL. A separate backend or cache service was not justified.
+Next.js owns the browser UI and authenticated request boundary. Pure TypeScript handles monetary and salary-update rules. Drizzle query modules and a small persistence adapter own PostgreSQL access. A second backend service, public salary cache or product LLM was not justified by this scope.
+
+The diagram separates deployment boundaries from code responsibilities. A read can go directly from validated filters to a query; an edit also passes through the exact-money use case. Both reach the same persistent relational store.
 
 ```diagram
 architecture
 ```
 
-Source map: the request boundary is `src/server/http.ts`; domain rules are in `src/domain`; SQL is in `src/server/employees`, `analysis` and `dashboard`. [Read the architecture notes](/presentation/artifacts/engineering).
+### The relationships are part of correctness
 
-### Relational constraints protect the persisted state
+An employee references four lookup tables: country, pay currency, department and role. Currency precision determines which decimal inputs are valid. The employee row retains exact minor units, the annual period, a version and server-owned update metadata.
 
-Employees reference country, currency, department and role. The environment marker belongs to deployment protection, not an employee relationship. Positive bounded minor units, annual period, unique employee number and version constraints are enforced in PostgreSQL.
+The independent environment marker is an operational guard, not another employee relationship. PostgreSQL constraints protect the stored values even if a caller gets past a UI check.
 
 ```diagram
 model
@@ -67,17 +64,21 @@ model
 schema
 ```
 
-### Read, filter and page without a browser-side copy
+### Twenty-five rows returned; the whole population counted
 
-The server validates URL filters and allowlists sorting, adds a stable id tie-breaker, then applies `LIMIT/OFFSET`. Normal pages combine a window count with the bounded rows in one statement; an offset past the end has a deliberate clamped-page fallback. List and analysis share the same predicate. An aggregate over 10,000 records can be appropriate; sending those records to the browser is a different concern.
+The list query applies a shared, parameterized predicate, allowlisted sort and id tie-breaker before database pagination. A normal page combines its count and bounded rows in one statement. A requested page past the end has a deliberate count-and-clamp fallback.
+
+Analysis uses the same population predicate. Its aggregate may read thousands of matching rows in PostgreSQL; it does not send those employee records to the browser or calculate statistics from the visible page. The measured default response contained 25 employees, about 6.7 KB of decoded JSON.
 
 ```source
 queries
 ```
 
-### Follow a salary change
+### A save has more than one honest outcome
 
-The server parses decimal input directly into exact minor units. Currency and annual period remain immutable in this workflow. A conditional update checks the version: one concurrent writer succeeds; a stale writer receives a conflict rather than silently overwriting newer pay.
+HR submits a decimal proposal with the version originally read. Access, origin and schema checks run on the server. The domain validates amount and units, then the repository performs a conditional update.
+
+An invalid proposal returns a field error. A stale version returns a conflict. Only a confirmed update shows success and invalidates affected views. A failed or uncertain save keeps the draft; another writer's newer salary is never silently overwritten.
 
 ```diagram
 salary
@@ -87,83 +88,89 @@ salary
 salary
 ```
 
-### Exact money is independent of the chart API
+### Exact amounts never take a floating-point detour
 
-Minor-unit amounts stay `BIGINT`/`BigInt` and cross JSON as strings. SQL totals use exact numeric arithmetic. The median retains its one- or two-value denominator, including half a minor unit for even populations. Display rounding is deliberate. Only bounded employee counts become chart numbers; salary boundaries remain exact strings in tooltips and tables.
+The parser turns the decimal string directly into minor-unit `BigInt`. USD has two decimal places, JPY zero and KWD three. The database stores `BIGINT`; JSON carries amount strings. Totals use SQL numeric arithmetic.
+
+An even-sized median keeps the sum of its two middle values and denominator two. That can preserve half a minor unit; display rounding happens deliberately at the boundary. Charts consume bounded employee counts, while their salary boundaries and labels remain exact strings.
 
 ```source
 money
 ```
 
-### A short-lived browser snapshot, not a public salary cache
+### Fast returns need a freshness policy
 
-The authenticated workspace owns a bounded memory cache. Exact URL keys include the relevant population and view state under a session scope. Fresh returns reuse their view. Visible expired views revalidate; hidden tabs wait until visible/focused. Saves invalidate salary-bearing results and notify other tabs; sign-out and 401 responses clear protected memory.
+Each evaluator browser scope owns a bounded, 24-entry memory cache. The full URL identifies filters, sort, page, page size, currency and grouping. Fresh returns reuse the snapshot; visible expired views revalidate quietly. Hidden tabs wait until visible or focused. In-flight requests deduplicate and generations prevent an older result from winning.
+
+Successful salary saves retain confirmed detail and invalidate list, analysis and Dashboard snapshots, including other tabs in the same scope. Sign-out or a 401 clears protected memory. API authentication and private/no-store responses remain authoritative; there is no publicly shared salary cache.
 
 ```diagram
 cache
 ```
 
-[Inspect the cache](/presentation/source/cache) and [freshness hook](/presentation/source/freshness). Monetary and session protections remain server responsibilities even when the browser reuses a snapshot.
+[Inspect the cache](/presentation/source/cache) and [freshness hook](/presentation/source/freshness). Directory/analysis/Dashboard fresh lifetime is 30 seconds, detail 15 seconds and lookups five minutes. Stale retention is bounded rather than indefinite.
 
 ## Decisions and AI collaboration
 
-### Scope decisions kept the product coherent
+### The constraints explain the stack
 
-The candidate approved current annual base salary, single-currency comparisons, current-value edits and a protected synthetic evaluator experience. Employer clarification was requested separately; no unanswered definition is presented as confirmed by Incubyte.
+The short assessment window and TypeScript role favored a modular monolith: Next.js, PostgreSQL, Drizzle and Zod, with Vitest and Playwright for different failure modes. Hosted development avoids a Docker prerequisite. Separate purpose-marked development, test, preview and demonstration databases keep verification from becoming a demo reset.
 
-TypeScript/Next.js/PostgreSQL/Drizzle/Zod and a modular monolith fit the role and the short delivery window. Hosted development avoids a local Docker prerequisite. Separate purpose-marked test/demo/preview databases reduce the risk of testing against the demonstration.
+The candidate chose the product boundaries. AI helped interpret the brief, propose and implement code, write tests, adapt the UI and build measurement tools. The accepted work was checked against code and runtime evidence; this is not presented as human-only authorship or a flawless first attempt.
 
-### Revisions followed observed failures
+### What broke changed the implementation
 
-- **Exact money:** the recorded missing-module failures preceded the initial rules. Tests then protected currency precision, parsing, bounds, medians and rounding. Later real PostgreSQL fixtures checked aggregate overflow and concurrency.
-- **Async drafts:** a delayed response originally reset newer unapplied text. The recorded first-failing browser case led to submission-snapshot handling and, later, immediate same-route URL updates.
-- **UI reuse:** early palette interpretation drifted from the actual foundation. The candidate then locked Job Desk's runtime system. A standalone 216-value manifest checks the retained foundation without loading the private sibling application.
-- **Read performance:** measurements found repeated lookup reads and WAN round trips, not a 10,000-record browser response. Query consolidation and a bounded session cache followed those observations. No speculative index or service was added.
-- **Chart replay:** the final production probe distinguished HTTP revalidation from canvas recreation. New array/callback identities and a broad root-style observer caused repeated destroy/new cycles. Persistent instances and in-place updates correct the lifecycle while preserving freshness.
+**A newer draft was being reset by an older response.** A first-failing browser case led to submission-snapshot handling and immediate same-route URL changes. Unaccepted edits no longer issue requests or disappear when an accepted request finishes.
+
+**The UI interpretation drifted from its source foundation.** The candidate locked Job Desk's actual design system. A standalone 216-value manifest now checks the retained tokens and mappings without a runtime dependency on the private sibling application.
+
+**Charts looked as if the data kept recalculating.** Production instrumentation separated HTTP refresh from Chart.js instance creation. New arrays/callbacks and a broad root-style observer repeatedly destroyed and rebuilt charts. Persistent instances, current callback refs and in-place data/theme updates removed replay while keeping legitimate freshness.
+
+```source
+chart
+```
+
+### A real sequence, not a reconstructed story
+
+The milestones below come from actual commits. Published milestones link to the public baseline; local review commits are explicitly unpublished. The AI record identifies the test-first cycles that were actually observed, along with corrections to database harnesses, serializers, overflow, theme timing and measurement readiness.
+
+Where a decision's timing was not recorded, its current rationale is not relabeled as historical evidence. The case study is another AI-assisted presentation revision, not an additional product capability.
 
 ```diagram
 timeline
 ```
 
-### AI helped implement; review established what could be accepted
-
-AI assisted with interpretation, implementation, test proposals, UI adaptation and measurement tooling. The record includes accepted choices, corrections and failed checks. The candidate supplied the product decisions and must be able to explain and defend the result. This is not presented as human-only authorship or a flawless first attempt.
-
-Concrete corrections include the initially miswired test-database harness, a narrowed-list serializer still expecting detail fields, overflow from an absolute screen-reader label, and canvas colors read before the applied theme. A script was also corrected when it measured before route readiness; discarded samples were not retained as valid results.
-
-The timeline above is drawn from real commits. Recorded test-first cycles are identified in the AI record; no test-first claim is made for every presentation wrapper. Where a decision's timing was not recorded, its present rationale is not rewritten as historical evidence.
-
-[Open the actual AI record](/presentation/artifacts/ai-record). [Inspect the chart lifecycle](/presentation/source/chart).
+[Read the actual AI collaboration record](/presentation/artifacts/ai-record).
 
 ## Quality and evidence
 
-### Read evidence by version, environment and behavior
+### Measure the waiting, then change the cause
 
-The current local record below is generated from completed checks, not copied from a previous pass. Earlier reports remain explicitly historical. Hosted CI and deployed persistence evidence describe the published baseline until this review is released.
+The hypothesis was that every page downloaded 10,000 employees. The production traces did not support it: measured responses held 25 rows. Normal list reads used one query plus the environment-purpose check; fresh cached returns used neither HTTP nor SQL.
+
+The remaining uncached wait was mostly round trips and connection setup. A direct pooled read including WAN took roughly 296–307 ms, while the measured list query executed in PostgreSQL in 4.334 ms. Removing correctness checks or replacing a full-population statistic with a page calculation would make the result worse.
+
+```evidence
+performance
+```
+
+These are three samples per journey on a localhost production build, with an India client and isolated Neon US East test database. First-process behavior is separate from warm behavior; Neon cold state was not controlled. Warm initial Dashboard was slower after the final focused pass. No blanket percentage improvement, percentile ranking or SLA is claimed.
+
+### Verification is useful when it names the failure
+
+Unit tests protect precision, bounds, median/rounding rules, filters, update outcomes and cache behavior. PostgreSQL tests exercise exact aggregates, constraints, stable pages, seed preservation and a simultaneous-write race. Browser tests cover a live HR save plus controlled delays, failure, conflict, history, access and responsive interaction.
+
+The baseline record below identifies the functional source it verifies. Case-study-specific verification is recorded separately in its revision field; earlier measurements do not silently become verification of a new layout.
 
 ```evidence
 current
 ```
 
-### Tests protect plausible failures
+### Be clear about what remains
 
-Fast deterministic unit cases cover precision, invalid input, maximum amounts, median/rounding rules, shared filters, update behavior and cache scope/deduplication/invalidation. PostgreSQL integration cases cover exact aggregates, stable pages, count/analysis intersections, constraints, seed preservation and a real simultaneous-write race. Browser cases distinguish live persistence from controlled latency/failure fixtures.
+The public repository, deployed application and hosted baseline CI exist. This review remains local until release is authorized. The final candidate-narrated video and shareable link are still pending; a silent reference recording and a script do not complete that deliverable. The agent does not email or submit the assessment.
 
-The final focused cases check stable chart instances for unchanged data, legitimate data/theme updates, hidden-tab freshness, currency alignment, Presentation access and salary-free Presentation navigation. Real idle observation complements accelerated-clock tests. Reduced motion is respected rather than used to hide replay.
-
-### Performance has an environment, not a percentile slogan
-
-The employee payload is bounded by page size. Full-population analysis stays in PostgreSQL. Reported query execution excludes WAN; browser journeys include route/data/rendering work. Samples identify first-process versus warm behavior and local versus deployed conditions. Small samples do not establish an SLA or a “top 1%” ranking.
-
-The initial chart/custom-control bundle has a real cost. Presentation is server-rendered and does not initialize those charts or fetch salary data. The existing shared shell still needs client JavaScript for navigation, theme and access controls. The product has no LLM feature or LLM call site; external-request observations are recorded rather than assumed.
-
-### Reproducibility and release gates
-
-A lockfile and supported runtime, environment example without values, migrations, explicit deterministic seed/reset commands and isolated verification make the setup inspectable. Seeding is never a request/build side effect. No migration or reset is needed for this UI/Presentation pass.
-
-The published repository/application and historical CI are linked below; local review publication and hosted review CI remain gates. The final narrated video and candidate-sent submission remain pending. No assessment email or submission is performed by the agent.
-
-Physical-device and non-Chromium checks, complete assistive-technology/forced-colors/zoom review, and production cold-start/load/recovery remain limited or unverified. Working business definitions still await external clarification.
+Physical devices, non-Chromium browsers, full assistive-technology/forced-colors/zoom review, production load and controlled cold starts remain limited or unverified. External business clarification is also pending. The following selected records make those limits inspectable without exposing credentials, private correspondence or operational logs.
 
 ```artifacts
 index

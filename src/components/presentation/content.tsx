@@ -1,6 +1,7 @@
 import "server-only";
 import Link from "next/link";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { Diagram } from "./diagram";
+import { EvidenceSummary, PerformanceEvidence } from "./evidence";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
@@ -34,17 +35,17 @@ const components: Components = {
     </h3>
   ),
   p: ({ children }) => (
-    <p className="my-3 max-w-[78ch] text-ui leading-relaxed text-foreground-2">
+    <p className="my-3 max-w-[80ch] text-ui leading-relaxed text-foreground-2">
       {children}
     </p>
   ),
   ul: ({ children }) => (
-    <ul className="my-3 max-w-[78ch] list-disc space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
+    <ul className="my-3 max-w-[80ch] list-disc space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-3 max-w-[78ch] list-decimal space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
+    <ol className="my-3 max-w-[80ch] list-decimal space-y-3 pl-5 text-ui leading-relaxed text-foreground-2">
       {children}
     </ol>
   ),
@@ -112,100 +113,81 @@ export function MarkdownBody({ content }: { content: string }) {
     </Markdown>
   );
 }
-export function Diagram({ id }: { id: keyof typeof diagrams }) {
-  const diagram = diagrams[id];
-  return (
-    <figure
-      className="my-6 rounded-xl bg-card p-4 md:p-5"
-      aria-label={diagram.title}
-    >
-      <figcaption className="mb-4">
-        <p className="text-ui font-medium">{diagram.title}</p>
-        <p className="mt-1 max-w-[85ch] text-meta leading-relaxed text-muted-foreground">
-          {diagram.description}
-        </p>
-      </figcaption>
-      <ol
-        className={
-          diagram.kind === "flow"
-            ? `grid gap-5 sm:grid-cols-2 ${diagram.nodes.length === 4 ? "xl:grid-cols-4" : "xl:grid-cols-5"}`
-            : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
-        }
-      >
-        {diagram.nodes.map((node, index) => (
-          <li
-            key={node.title}
-            className="relative min-w-0 rounded-lg bg-inset p-4"
-          >
-            <span className="mb-2 block text-meta tabular-nums text-muted-foreground">
-              {diagram.kind === "model"
-                ? "Entity"
-                : diagram.kind === "timeline"
-                  ? "Milestone"
-                  : "Step"}{" "}
-              {index + 1}
-            </span>
-            <p className="text-ui font-medium">{node.title}</p>
-            <p className="mt-2 text-meta leading-relaxed text-foreground-2">
-              {node.body}
-            </p>
-            {diagram.kind === "flow" && index < diagram.nodes.length - 1 && (
-              <>
-                <ArrowRight
-                  aria-hidden
-                  className="absolute top-1/2 -right-5 hidden size-5 text-muted-foreground xl:block"
-                />
-                <ArrowDown
-                  aria-hidden
-                  className="absolute -bottom-5 left-1/2 size-5 text-muted-foreground sm:hidden"
-                />
-              </>
-            )}
-            {"commit" in node && (
-              <p className="mt-3 text-meta">
-                {"published" in node && node.published ? (
-                  <a
-                    className="underline underline-offset-4"
-                    href={`${REPOSITORY}/commit/${node.commit}`}
-                  >
-                    {node.commit}
-                  </a>
-                ) : (
-                  <span>
-                    <code>{node.commit}</code> · local review
-                  </span>
-                )}
-              </p>
-            )}
-          </li>
-        ))}
-      </ol>
-    </figure>
-  );
-}
+const sourceNotes: Record<keyof typeof SOURCES, string[]> = {
+  money: [
+    "Parse the decimal string directly into BigInt. No floating-point intermediate can change the amount.",
+    "Currency precision determines the scale. Excess decimals, zero and values above MAX_MINOR are rejected.",
+    "JSON transports minor units as strings; rounding belongs at the display boundary.",
+  ],
+  queries: [
+    "The database applies the shared population predicate before sorting and paging.",
+    "LIMIT bounds returned rows. The full matching count belongs to the same normal-page statement.",
+    "A stable id tie-breaker prevents tied names or salaries from moving unpredictably between pages.",
+  ],
+  salary: [
+    "The WHERE clause checks both employee id and the version HR originally read.",
+    "One successful write advances the version and writes server-owned update metadata.",
+    "No returned row triggers conflict handling; the UI keeps the proposed amount for review.",
+  ],
+  schema: [
+    "The positive, bounded amount and annual-period rules exist in PostgreSQL as well as server validation.",
+    "Foreign keys retain explicit country, currency, department and role.",
+    "Unknown salary is not silently coerced to zero.",
+  ],
+  chart: [
+    "The instance lifetime follows the canvas and chart kind, not freshly allocated callback identities.",
+    "Changed series update in place; unchanged revalidation does not restart the entrance animation.",
+    "Theme updates recolor the same instance.",
+  ],
+  cache: [
+    "Concurrent reads for one key share a pending request.",
+    "Freshness is bounded; exact URL and session scope identify the cached population.",
+    "Successful edits invalidate salary-bearing views rather than leaving previously visited analysis stale.",
+  ],
+  freshness: [
+    "Only visible views start expiry reads. A hidden tab resumes with a deduplicated freshness check.",
+    "A fresh focus event does not force another request.",
+    "Ordinary responses notify their query subscribers; explicit refresh remains available.",
+  ],
+};
 export async function SourceExcerpt({ id }: { id: keyof typeof SOURCES }) {
   const source = SOURCES[id],
     sample = excerpt(await readSource(id), source.focus);
   return (
-    <figure className="my-5 min-w-0 rounded-xl bg-card p-4">
-      <figcaption className="flex flex-wrap items-center justify-between gap-2 text-meta">
-        <span>{source.title}</span>
+    <figure className="my-8 min-w-0 overflow-hidden rounded-xl bg-card shadow-panel">
+      <figcaption className="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4 text-meta md:px-7">
+        <span className="font-medium">{source.title}</span>
         <Link
+          prefetch={false}
           className="underline underline-offset-4"
           href={`/presentation/source/${id}#L${sample.start}`}
         >
           Inspect actual file · line {sample.start}
         </Link>
       </figcaption>
-      <pre
-        tabIndex={0}
-        className="mt-3 overflow-x-auto rounded-lg bg-inset p-4 text-meta leading-relaxed"
-      >
-        <code>{sample.text}</code>
-      </pre>
-      <p className="mt-2 break-all text-meta text-muted-foreground">
-        {source.file} · generated from this build’s source
-      </p>
+      <div className="grid min-w-0 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <div className="min-w-0 p-4 md:p-6">
+          <pre
+            tabIndex={0}
+            className="overflow-x-auto rounded-lg bg-inset p-4 font-mono text-meta leading-relaxed"
+          >
+            <code>{sample.text}</code>
+          </pre>
+          <p className="mt-3 break-all text-meta text-muted-foreground">
+            {source.file} · actual source from this build
+          </p>
+        </div>
+        <ol className="space-y-5 p-5 text-ui leading-relaxed text-foreground-2 md:p-7 lg:border-l">
+          {sourceNotes[id].map((note, index) => (
+            <li key={note} className="flex gap-3">
+              <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-inset text-meta tabular-nums text-foreground">
+                {index + 1}
+              </span>
+              <span>{note}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </figure>
   );
 }
@@ -244,7 +226,7 @@ export function ArtifactIndex() {
     </div>
   );
 }
-export async function PresentationBody({ content }: { content: string }) {
+async function ContentBlocks({ content }: { content: string }) {
   const parts = content.split(
     /```(diagram|source|document|evidence|artifacts)\s*\n([^`]+)```/g,
   );
@@ -271,17 +253,50 @@ export async function PresentationBody({ content }: { content: string }) {
       );
     else if (type === "evidence")
       blocks.push(
-        <pre
-          key={i}
-          tabIndex={0}
-          aria-label="Current verification record"
-          className="my-5 overflow-x-auto rounded-xl bg-card p-4 text-meta leading-relaxed"
-        >
-          {await readArtifact("current-verification")}
-        </pre>,
+        id === "performance" ? (
+          <PerformanceEvidence key={i} />
+        ) : (
+          <EvidenceSummary key={i} />
+        ),
       );
-    else if (type === "artifacts") blocks.push(<ArtifactIndex key={i} />);
+    else if (type === "artifacts")
+      blocks.push(
+        <details key={i} className="my-8 rounded-xl bg-card p-5 shadow-panel">
+          <summary className="cursor-pointer text-ui font-medium">
+            Browse the selected source and evidence
+          </summary>
+          <ArtifactIndex />
+        </details>,
+      );
     else throw new Error(`Unknown presentation block: ${type}/${id}`);
+  }
+  return <>{blocks}</>;
+}
+
+export async function PresentationBody({ content }: { content: string }) {
+  const parts = content.replace(/\r\n/g, "\n").split(/^### (.+)\n/gm),
+    blocks = [];
+  if (parts[0].trim())
+    blocks.push(<ContentBlocks key="intro" content={parts[0]} />);
+  for (let i = 1; i < parts.length; i += 2) {
+    const heading = parts[i],
+      body = parts[i + 1] ?? "",
+      at = body.search(/```(?:diagram|source|document|evidence|artifacts)/),
+      intro = at < 0 ? body : body.slice(0, at),
+      rest = at < 0 ? "" : body.slice(at);
+    blocks.push(
+      <section key={heading} className="my-10 md:my-14">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-12">
+          <h3 className="max-w-[27ch] text-heading font-medium leading-snug tracking-tight md:text-title">
+            {heading}
+          </h3>
+          <div className="min-w-0 [&_p:first-child]:mt-0">
+            <MarkdownBody content={intro} />
+          </div>
+        </div>
+        {rest && <ContentBlocks content={rest} />}
+      </section>,
+    );
   }
   return <>{blocks}</>;
 }

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import {
   PRESENTATION_SECTIONS,
-  presentationHref,
+  presentationAnchor,
 } from "../../src/lib/presentation";
 async function signIn(page: import("@playwright/test").Page) {
   const origin = String(test.info().project.use.baseURL);
@@ -37,16 +37,20 @@ test("Presentation navigation renders canonical content and diagrams without sal
   });
   await page.goto("/presentation");
   for (const item of PRESENTATION_SECTIONS) {
-    if (item.slug)
-      await page
-        .getByRole("navigation", { name: "Presentation sections" })
-        .getByRole("link", { name: item.title, exact: true })
-        .click();
+    await page
+      .getByRole("navigation", { name: "Presentation sections" })
+      .getByRole("link", { name: item.title, exact: false })
+      .click();
+    await expect(page).toHaveURL(
+      new RegExp("/presentation#" + presentationAnchor(item.slug) + "$"),
+    );
     await expect(
-      page.getByRole("heading", { name: item.title, exact: true }),
+      page.locator("#" + presentationAnchor(item.slug)),
     ).toBeVisible();
-    await expect(page).toHaveURL(new RegExp(presentationHref(item.slug) + "$"));
   }
+  await page
+    .getByText("Inspect the exact verification record", { exact: true })
+    .click();
   await expect(page.getByLabel("Current verification record")).toBeVisible();
   expect(reads).toEqual([]);
   await expect(page.locator("canvas")).toHaveCount(0);
@@ -118,6 +122,8 @@ test("reviewed artifact and source links resolve inside the protected applicatio
 }) => {
   await signIn(page);
   await page.goto("/presentation/quality");
+  await expect(page).toHaveURL(/\/presentation#quality$/);
+  await expect(page.locator("#quality")).toBeVisible();
   const links = await page
     .locator('main a[href^="/presentation/artifacts/"]')
     .evaluateAll((items) => [
@@ -148,10 +154,32 @@ test("reviewed artifact and source links resolve inside the protected applicatio
   }
 });
 
-test('case study uses the full content width and explains connected success/conflict flows',async({page})=>{
- await signIn(page);await page.setViewportSize({width:1920,height:1080});await page.goto('/presentation');
- await expect(page.getByRole('heading',{name:'Salary Desk',exact:true})).toBeVisible();
- const article=page.locator('article[data-case-study]');await expect(article).toBeVisible();
- const sizes=await article.evaluate(el=>({width:el.getBoundingClientRect().width,parent:el.parentElement!.getBoundingClientRect().width,padding:parseFloat(getComputedStyle(el.parentElement!).paddingLeft)+parseFloat(getComputedStyle(el.parentElement!).paddingRight)}));expect(Math.abs(sizes.width-(sizes.parent-sizes.padding))).toBeLessThan(2);
- const salary=page.getByRole('figure',{name:'Salary-update sequence',exact:true});await expect(salary.getByRole('img')).toBeVisible();await expect(salary).toContainText('409 conflict');await expect(salary).toContainText('200 confirmed');
+test("case study uses the full content width and explains connected success/conflict flows", async ({
+  page,
+}) => {
+  await signIn(page);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("/presentation");
+  await expect(
+    page.getByRole("heading", { name: "Salary Desk", exact: true }),
+  ).toBeVisible();
+  const article = page.locator("article[data-case-study]");
+  await expect(article).toBeVisible();
+  const sizes = await article.evaluate((el) => ({
+    width: el.getBoundingClientRect().width,
+    parent: el.parentElement!.getBoundingClientRect().width,
+    padding:
+      parseFloat(getComputedStyle(el.parentElement!).paddingLeft) +
+      parseFloat(getComputedStyle(el.parentElement!).paddingRight),
+  }));
+  expect(Math.abs(sizes.width - (sizes.parent - sizes.padding))).toBeLessThan(
+    2,
+  );
+  const salary = page.getByRole("figure", {
+    name: "Salary-update sequence",
+    exact: true,
+  });
+  await expect(salary.getByRole("img")).toBeVisible();
+  await expect(salary).toContainText("409 conflict");
+  await expect(salary).toContainText("200 confirmed");
 });

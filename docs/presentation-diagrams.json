@@ -3,103 +3,544 @@
     "title": "System architecture",
     "description": "An authenticated browser uses one Next.js application. Pure rules and SQL adapters keep money and persistence separate.",
     "kind": "flow",
-    "nodes": [
-      {
-        "title": "HR browser",
-        "body": "Workspace UI; only bounded pages and aggregate series"
-      },
-      {
-        "title": "Next.js boundary",
-        "body": "Evaluator session, origin checks, Zod validation"
-      },
-      {
-        "title": "Domain + query modules",
-        "body": "Exact money/use case; parameterized Drizzle reads and versioned writes"
-      },
-      {
-        "title": "PostgreSQL",
-        "body": "Persistent relational data, constraints and purpose marker"
-      }
-    ]
+    "graph": {
+      "width": 1280,
+      "height": 510,
+      "boundaries": [
+        {
+          "x": 20,
+          "y": 45,
+          "w": 260,
+          "h": 410,
+          "label": "Browser"
+        },
+        {
+          "x": 320,
+          "y": 45,
+          "w": 650,
+          "h": 410,
+          "label": "One Next.js application · Vercel"
+        },
+        {
+          "x": 1010,
+          "y": 45,
+          "w": 250,
+          "h": 410,
+          "label": "Persistent storage · Neon"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "browser",
+          "x": 45,
+          "y": 200,
+          "w": 210,
+          "h": 100,
+          "title": "HR workspace",
+          "lines": ["URL filters + drafts", "bounded JSON only"],
+          "shape": "input"
+        },
+        {
+          "id": "http",
+          "x": 350,
+          "y": 200,
+          "w": 230,
+          "h": 100,
+          "title": "Request boundary",
+          "lines": ["evaluator + origin", "Zod validation"],
+          "shape": "process"
+        },
+        {
+          "id": "domain",
+          "x": 650,
+          "y": 90,
+          "w": 280,
+          "h": 110,
+          "title": "Pure TypeScript rules",
+          "lines": ["BigInt minor units", "salary update use case"],
+          "shape": "process"
+        },
+        {
+          "id": "queries",
+          "x": 650,
+          "y": 315,
+          "w": 280,
+          "h": 110,
+          "title": "Drizzle / repository",
+          "lines": ["shared predicates + LIMIT", "version-checked writes"],
+          "shape": "process"
+        },
+        {
+          "id": "db",
+          "x": 1030,
+          "y": 305,
+          "w": 210,
+          "h": 120,
+          "title": "PostgreSQL",
+          "lines": ["constraints + data", "purpose marker"],
+          "shape": "store"
+        }
+      ],
+      "edges": [
+        {
+          "from": "browser",
+          "to": "http",
+          "label": "request",
+          "path": "M255 250 H350",
+          "x": 302,
+          "y": 237
+        },
+        {
+          "from": "http",
+          "to": "domain",
+          "label": "validated edit",
+          "path": "M580 225 H610 V145 H650",
+          "x": 607,
+          "y": 125
+        },
+        {
+          "from": "http",
+          "to": "queries",
+          "label": "validated read",
+          "path": "M580 275 H610 V370 H650",
+          "x": 607,
+          "y": 400
+        },
+        {
+          "from": "domain",
+          "to": "queries",
+          "label": "exact values",
+          "path": "M790 200 V315",
+          "x": 840,
+          "y": 258
+        },
+        {
+          "from": "queries",
+          "to": "db",
+          "label": "SQL",
+          "path": "M930 370 H1030",
+          "x": 980,
+          "y": 356
+        }
+      ]
+    }
   },
   "model": {
     "title": "Relational model",
     "description": "Four reference tables connect to employees. The singleton environment marker independently guards which database an operation may use.",
     "kind": "model",
-    "nodes": [
-      {
-        "title": "employees",
-        "body": "id PK; employee_number UNIQUE; salary_minor BIGINT; period annual; version; updated_at/by"
-      },
-      { "title": "countries", "body": "employees.country → countries.code" },
-      {
-        "title": "currencies",
-        "body": "employees.currency → currencies.code; explicit precision 0–3"
-      },
-      {
-        "title": "departments",
-        "body": "employees.department → departments.id"
-      },
-      { "title": "roles", "body": "employees.role → roles.id" },
-      {
-        "title": "salary_desk_environment",
-        "body": "Singleton purpose; not an employee foreign key"
-      }
-    ]
+    "graph": {
+      "width": 1280,
+      "height": 620,
+      "nodes": [
+        {
+          "id": "employees",
+          "x": 480,
+          "y": 180,
+          "w": 320,
+          "h": 220,
+          "title": "employees",
+          "lines": [
+            "id PK · employee_number UNIQUE",
+            "salary_minor BIGINT · annual",
+            "country / currency FK",
+            "department / role FK",
+            "version · updated_at/by"
+          ],
+          "shape": "store"
+        },
+        {
+          "id": "countries",
+          "x": 40,
+          "y": 60,
+          "w": 260,
+          "h": 110,
+          "title": "countries",
+          "lines": ["code PK", "employment country"],
+          "shape": "process"
+        },
+        {
+          "id": "currencies",
+          "x": 40,
+          "y": 400,
+          "w": 260,
+          "h": 110,
+          "title": "currencies",
+          "lines": ["code PK · precision", "JPY 0 / USD 2 / KWD 3"],
+          "shape": "process"
+        },
+        {
+          "id": "departments",
+          "x": 980,
+          "y": 60,
+          "w": 260,
+          "h": 110,
+          "title": "departments",
+          "lines": ["id PK", "organizational group"],
+          "shape": "process"
+        },
+        {
+          "id": "roles",
+          "x": 980,
+          "y": 400,
+          "w": 260,
+          "h": 110,
+          "title": "roles",
+          "lines": ["id PK", "current role"],
+          "shape": "process"
+        },
+        {
+          "id": "environment",
+          "x": 480,
+          "y": 510,
+          "w": 320,
+          "h": 80,
+          "title": "salary_desk_environment",
+          "lines": ["separate purpose guard · no FK"],
+          "shape": "note"
+        }
+      ],
+      "edges": [
+        {
+          "from": "employees",
+          "to": "countries",
+          "label": "country → code",
+          "path": "M480 220 H390 V115 H300",
+          "x": 390,
+          "y": 165
+        },
+        {
+          "from": "employees",
+          "to": "currencies",
+          "label": "currency → code",
+          "path": "M480 360 H390 V455 H300",
+          "x": 390,
+          "y": 415
+        },
+        {
+          "from": "employees",
+          "to": "departments",
+          "label": "department → id",
+          "path": "M800 220 H890 V115 H980",
+          "x": 890,
+          "y": 165
+        },
+        {
+          "from": "employees",
+          "to": "roles",
+          "label": "role → id",
+          "path": "M800 360 H890 V455 H980",
+          "x": 890,
+          "y": 415
+        }
+      ]
+    }
   },
   "salary": {
     "title": "Salary-update sequence",
-    "description": "A confirmed save and a conflict are separate outcomes. Failed or uncertain saves preserve input; they do not show success.",
+    "description": "A salary proposal crosses access and validation checks, then a conditional write. Invalid input and a stale version preserve the draft; only a returned update produces success.",
     "kind": "flow",
-    "nodes": [
-      {
-        "title": "1 · Browser draft",
-        "body": "Amount + currency + annual period + expected version"
-      },
-      {
-        "title": "2 · API and domain",
-        "body": "Session/origin, validated JSON, exact decimal parsing"
-      },
-      {
-        "title": "3 · Conditional SQL",
-        "body": "UPDATE WHERE id AND version; increment version and server metadata"
-      },
-      {
-        "title": "4 · Outcome",
-        "body": "200: confirmed current salary · 409: review newer version · failure: keep draft"
-      },
-      {
-        "title": "5 · Refresh views",
-        "body": "Retain confirmed detail; invalidate pages, analyses and Dashboard"
-      }
-    ]
+    "graph": {
+      "width": 1280,
+      "height": 590,
+      "nodes": [
+        {
+          "id": "draft",
+          "x": 30,
+          "y": 80,
+          "w": 200,
+          "h": 90,
+          "title": "Salary proposal",
+          "lines": ["decimal proposal", "expected version"],
+          "shape": "input"
+        },
+        {
+          "id": "guard",
+          "x": 290,
+          "y": 80,
+          "w": 230,
+          "h": 90,
+          "title": "Protected API",
+          "lines": ["session · origin · schema"],
+          "shape": "process"
+        },
+        {
+          "id": "valid",
+          "x": 590,
+          "y": 60,
+          "w": 160,
+          "h": 130,
+          "title": "Valid input?",
+          "lines": ["units + amount"],
+          "shape": "decision"
+        },
+        {
+          "id": "write",
+          "x": 850,
+          "y": 80,
+          "w": 240,
+          "h": 90,
+          "title": "Conditional UPDATE",
+          "lines": ["WHERE id AND version"],
+          "shape": "process"
+        },
+        {
+          "id": "version",
+          "x": 890,
+          "y": 270,
+          "w": 160,
+          "h": 130,
+          "title": "Row returned?",
+          "lines": ["expected version"],
+          "shape": "decision"
+        },
+        {
+          "id": "confirmed",
+          "x": 520,
+          "y": 290,
+          "w": 240,
+          "h": 90,
+          "title": "200 confirmed",
+          "lines": ["new amount + version"],
+          "shape": "result"
+        },
+        {
+          "id": "conflict",
+          "x": 900,
+          "y": 470,
+          "w": 260,
+          "h": 90,
+          "title": "409 conflict",
+          "lines": ["review newer version", "keep proposal"],
+          "shape": "note"
+        },
+        {
+          "id": "invalid",
+          "x": 30,
+          "y": 290,
+          "w": 250,
+          "h": 90,
+          "title": "400 validation error",
+          "lines": ["show field error · keep draft"],
+          "shape": "note"
+        },
+        {
+          "id": "refresh",
+          "x": 520,
+          "y": 470,
+          "w": 250,
+          "h": 90,
+          "title": "Refresh affected views",
+          "lines": ["detail · list · analysis", "Dashboard + other tabs"],
+          "shape": "process"
+        }
+      ],
+      "edges": [
+        {
+          "from": "draft",
+          "to": "guard",
+          "label": "submit",
+          "path": "M230 125 H290",
+          "x": 260,
+          "y": 111
+        },
+        {
+          "from": "guard",
+          "to": "valid",
+          "label": "parse",
+          "path": "M520 125 H590",
+          "x": 555,
+          "y": 111
+        },
+        {
+          "from": "valid",
+          "to": "write",
+          "label": "yes",
+          "path": "M750 125 H850",
+          "x": 800,
+          "y": 111
+        },
+        {
+          "from": "valid",
+          "to": "invalid",
+          "label": "no",
+          "path": "M670 190 V230 H155 V290",
+          "x": 430,
+          "y": 217
+        },
+        {
+          "from": "write",
+          "to": "version",
+          "label": "atomic write",
+          "path": "M970 170 V270",
+          "x": 1040,
+          "y": 225
+        },
+        {
+          "from": "version",
+          "to": "confirmed",
+          "label": "yes",
+          "path": "M890 335 H760",
+          "x": 825,
+          "y": 321
+        },
+        {
+          "from": "version",
+          "to": "conflict",
+          "label": "no",
+          "path": "M970 400 V470",
+          "x": 1000,
+          "y": 442
+        },
+        {
+          "from": "confirmed",
+          "to": "refresh",
+          "label": "invalidate",
+          "path": "M640 380 V470",
+          "x": 703,
+          "y": 428
+        }
+      ]
+    }
   },
   "cache": {
     "title": "Read, cache and invalidation",
-    "description": "Memory reuse belongs to one authenticated browser scope. HTTP responses remain private/no-store and all fetches still require access.",
+    "description": "A real cache hit returns immediately. An expired or missing key takes an authenticated read path. Confirmed edits invalidate salary-bearing snapshots; sign-out or 401 clears protected memory entirely.",
     "kind": "flow",
-    "nodes": [
-      {
-        "title": "URL → exact query key",
-        "body": "Population, sort, page/page size, currency and access scope"
-      },
-      {
-        "title": "Fresh memory entry",
-        "body": "Return promptly; no forced skeleton or bulk page prefetch"
-      },
-      {
-        "title": "Visible stale or uncached",
-        "body": "Deduplicate request; authenticated API → purpose check → PostgreSQL"
-      },
-      {
-        "title": "Accepted response",
-        "body": "Correct key only; changed chart values update in place"
-      },
-      {
-        "title": "Edit / sign-out",
-        "body": "Edit invalidates salary keys and other tabs; sign-out/401 clears memory"
-      }
-    ]
+    "graph": {
+      "width": 1280,
+      "height": 590,
+      "nodes": [
+        {
+          "id": "key",
+          "x": 40,
+          "y": 180,
+          "w": 180,
+          "h": 80,
+          "title": "Query key",
+          "lines": ["URL + session scope"],
+          "shape": "input"
+        },
+        {
+          "id": "fresh",
+          "x": 360,
+          "y": 160,
+          "w": 160,
+          "h": 120,
+          "title": "Fresh entry?",
+          "lines": ["same query key"],
+          "shape": "decision"
+        },
+        {
+          "id": "hit",
+          "x": 640,
+          "y": 60,
+          "w": 220,
+          "h": 90,
+          "title": "Reuse snapshot",
+          "lines": ["no forced skeleton"],
+          "shape": "process"
+        },
+        {
+          "id": "fetch",
+          "x": 640,
+          "y": 300,
+          "w": 220,
+          "h": 100,
+          "title": "Deduplicated read",
+          "lines": ["session → purpose → SQL", "visible views only"],
+          "shape": "process"
+        },
+        {
+          "id": "render",
+          "x": 1000,
+          "y": 180,
+          "w": 240,
+          "h": 100,
+          "title": "Accept current result",
+          "lines": ["generation / abort guard", "update changed data"],
+          "shape": "result"
+        },
+        {
+          "id": "edit",
+          "x": 1000,
+          "y": 480,
+          "w": 240,
+          "h": 75,
+          "title": "Successful salary save",
+          "lines": ["retain confirmed detail"],
+          "shape": "process"
+        },
+        {
+          "id": "invalidate",
+          "x": 640,
+          "y": 480,
+          "w": 220,
+          "h": 75,
+          "title": "Invalidate salary keys",
+          "lines": ["broadcast to same scope"],
+          "shape": "process"
+        }
+      ],
+      "edges": [
+        {
+          "from": "key",
+          "to": "fresh",
+          "label": "read",
+          "path": "M220 220 H360",
+          "x": 290,
+          "y": 206
+        },
+        {
+          "from": "fresh",
+          "to": "hit",
+          "label": "yes",
+          "path": "M520 220 H570 V105 H640",
+          "x": 570,
+          "y": 145
+        },
+        {
+          "from": "fresh",
+          "to": "fetch",
+          "label": "no / expired",
+          "path": "M520 220 H570 V350 H640",
+          "x": 571,
+          "y": 285
+        },
+        {
+          "from": "hit",
+          "to": "render",
+          "label": "fresh view",
+          "path": "M860 105 H930 V210 H1000",
+          "x": 930,
+          "y": 143
+        },
+        {
+          "from": "fetch",
+          "to": "render",
+          "label": "latest response",
+          "path": "M860 350 H930 V250 H1000",
+          "x": 930,
+          "y": 305
+        },
+        {
+          "from": "edit",
+          "to": "invalidate",
+          "label": "after confirmation",
+          "path": "M1000 517 H860",
+          "x": 930,
+          "y": 502
+        },
+        {
+          "from": "invalidate",
+          "to": "key",
+          "label": "next read fetches again",
+          "path": "M640 517 H130 V260",
+          "x": 320,
+          "y": 503
+        }
+      ]
+    }
   },
   "timeline": {
     "title": "Recorded development progression",
