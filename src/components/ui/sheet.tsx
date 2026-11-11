@@ -26,7 +26,7 @@ export function Sheet({
       }}
     >
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-40 bg-foreground/25 backdrop-blur-xs" />
+        <Dialog.Backdrop className="fixed inset-0 z-40 bg-foreground/25 dark:bg-black/40 backdrop-blur-xs" />
         <Dialog.Popup
           data-side="right"
           className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l bg-card text-foreground shadow-xl"

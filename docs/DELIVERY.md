@@ -68,7 +68,9 @@ This is **our review rubric, not Incubyte's official score**. It evaluates demon
 
 The relevant JD signals are readable TypeScript backend ownership, meaningful tests, explicit tradeoffs and intentional AI collaboration. The implementation provides inspectable evidence for these. An assessment application is not proof of every production-scale scenario or of unrelated AI-platform experience.
 
-## Record the final demonstration (about four minutes)
+## Record the final demonstration
+
+Use the [word-for-word narration and action script](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/blob/main/docs/DEMO_SCRIPT.md) for the planned 5–6 minute take. The shorter outline below remains a quick reference.
 
 1. Start the released application for read-only orientation, and your own local development/test environment for any salary write demonstration. Follow [LOCAL_SETUP.md](LOCAL_SETUP.md); do not reset the public demo.
 2. Authenticate **before recording** so the evaluator code is not captured. Close terminals, environment files, private tabs and notifications. Use a readable browser size around 1440 by 900 and increase text if needed.

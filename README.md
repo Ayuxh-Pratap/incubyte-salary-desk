@@ -12,7 +12,7 @@ Employee salary management for an HR Manager at fictional **ACME**. Find a perso
 4. Salary Overview summarizes **every matching employee**, across all pages. Explain a number and follow its matching population.
 5. Presentation is the assessment report: scope, connected architecture/data/update/cache diagrams, actual code, decisions, AI collaboration and versioned evidence. Its appendix/source views link to canonical files on GitHub.
 
-**Video: final recording/share link pending.** Earlier silent reference footage is not represented as the final narrated demo. The brief permits any video demo; the candidate's final planned demonstration still needs recording and sharing. [Recording steps and submission checklist](docs/DELIVERY.md).
+**Video: final recording/share link pending.** Earlier silent reference footage is not represented as the final narrated demo. The brief permits any video demo; the candidate's final planned demonstration still needs recording and sharing. [Exact recording script](docs/DEMO_SCRIPT.md) · [Submission checklist](docs/DELIVERY.md).
 
 ## Documentation map
 

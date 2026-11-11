@@ -1,0 +1,40 @@
+{
+  "baselineSource": "7f484f51c1826f1c66c246d20ee89dc824577b43",
+  "change": "Shared sheet dark-only black 40% scrim; existing light treatment retained",
+  "recordedAt": "2026-11-11T19:50:19.809Z",
+  "before": {
+    "phase": "before",
+    "base": "https://incubyte-salary-desk.vercel.app",
+    "results": [
+      {
+        "mode": "dark",
+        "backdrop": "oklab(0.967428 0.000417888 -0.00125271 / 0.25)"
+      },
+      {
+        "mode": "light",
+        "backdrop": "oklab(0.216114 0.00343135 0.00508514 / 0.25)"
+      }
+    ],
+    "escapeAndFocusRestoration": true,
+    "browserErrors": []
+  },
+  "after": {
+    "phase": "after",
+    "base": "http://localhost:3000",
+    "results": [
+      {
+        "mode": "dark",
+        "backdrop": "oklab(0 0 0 / 0.4)"
+      },
+      {
+        "mode": "light",
+        "backdrop": "oklab(0.216114 0.00343135 0.00508514 / 0.25)"
+      }
+    ],
+    "escapeAndFocusRestoration": true,
+    "browserErrors": []
+  },
+  "lightUnchanged": true,
+  "noSalaryWrites": true,
+  "checks": "Lint, types, 216 design mappings, 42 unit tests, credential-free production build and 8 focused production-browser checks passed. Exact-commit full-suite results are available in hosted CI."
+}
