@@ -80,3 +80,5 @@ Exact monetary minor units and rational medians are string-serialized; no floati
 One shared evaluator identity, eight-hour encrypted cookie sessions and origin-checked writes suit this synthetic assessment. Full IAM, individual HR accounts and an audit history are deliberately excluded. Small groups are labelled; descriptive statistics establish neither pay fairness nor its causes. Salary updates are current-value corrections only.
 
 [Third-party notices](THIRD_PARTY_NOTICES.md) preserve the selectively reused UI foundation and component/font licenses. Private assessment correspondence, resume, tailoring notes, credentials, logs and browser traces are excluded from source publication.
+
+The evaluator-protected `/presentation` section explains the scope, architecture, real development decisions and selected evidence. Its source is `docs/PRESENTATION.md`; the current local review report is `docs/FINAL_PASS.md`. Historical deployed/CI evidence and current unpublished measurements are explicitly separated. The final narrated candidate video remains pending.

@@ -1,5 +1,6 @@
 import "server-only";
 import Link from "next/link";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
@@ -17,6 +18,11 @@ import {
   excerpt,
 } from "@/server/presentation/content";
 const components: Components = {
+  h1: ({ children }) => (
+    <h2 className="mt-7 mb-3 text-section font-semibold tracking-tight">
+      {children}
+    </h2>
+  ),
   h2: ({ children }) => (
     <h2 className="mt-8 text-section font-semibold tracking-tight">
       {children}
@@ -54,6 +60,16 @@ const components: Components = {
     );
     if (relative && !reviewed) return <span>{children}</span>;
     const target = relative ? "/presentation/artifacts/" + reviewed![0] : href;
+    if (target.startsWith("/") && !target.startsWith("//"))
+      return (
+        <Link
+          href={target}
+          prefetch={false}
+          className="rounded text-foreground underline decoration-border-strong underline-offset-4 hover:decoration-primary"
+        >
+          {children}
+        </Link>
+      );
     return (
       <a
         href={target}
@@ -111,13 +127,16 @@ export function Diagram({ id }: { id: keyof typeof diagrams }) {
       </figcaption>
       <ol
         className={
-          diagram.kind === "timeline"
-            ? "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
+          diagram.kind === "flow"
+            ? `grid gap-5 sm:grid-cols-2 ${diagram.nodes.length === 4 ? "xl:grid-cols-4" : "xl:grid-cols-5"}`
             : "grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
         }
       >
         {diagram.nodes.map((node, index) => (
-          <li key={node.title} className="min-w-0 rounded-lg bg-inset p-4">
+          <li
+            key={node.title}
+            className="relative min-w-0 rounded-lg bg-inset p-4"
+          >
             <span className="mb-2 block text-meta tabular-nums text-muted-foreground">
               {diagram.kind === "model"
                 ? "Entity"
@@ -130,6 +149,18 @@ export function Diagram({ id }: { id: keyof typeof diagrams }) {
             <p className="mt-2 text-meta leading-relaxed text-foreground-2">
               {node.body}
             </p>
+            {diagram.kind === "flow" && index < diagram.nodes.length - 1 && (
+              <>
+                <ArrowRight
+                  aria-hidden
+                  className="absolute top-1/2 -right-5 hidden size-5 text-muted-foreground xl:block"
+                />
+                <ArrowDown
+                  aria-hidden
+                  className="absolute -bottom-5 left-1/2 size-5 text-muted-foreground sm:hidden"
+                />
+              </>
+            )}
             {"commit" in node && (
               <p className="mt-3 text-meta">
                 {"published" in node && node.published ? (
