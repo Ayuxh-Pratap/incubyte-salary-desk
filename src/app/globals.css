@@ -1,0 +1,138 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+:root {
+  --brand-green: #014d43;
+  --brand-lime: #d3fe73;
+  --canvas: #fbfaf9;
+  --surface: #f4f4f3;
+  --paper: #ffffff;
+  --ink: #1c1917;
+  --secondary-text: #57534e;
+  --muted-text: #6b655f;
+  --dark-canvas: #111a18;
+  --dark-surface: #18231f;
+  --dark-paper: #213029;
+  --dark-text: #f4f4f5;
+  --dark-muted: #b0beb5;
+  --success-base: #06734f;
+  --warning-base: #875700;
+  --danger-base: #b91c35;
+  --dark-success: #6ee7b7;
+  --dark-warning: #fcd34d;
+  --dark-danger: #fda4af;
+  --background: var(--canvas);
+  --muted: var(--surface);
+  --card: var(--paper);
+  --foreground: var(--ink);
+  --foreground-2: var(--secondary-text);
+  --muted-foreground: var(--muted-text);
+  --primary: var(--brand-green);
+  --primary-foreground: var(--paper);
+  --ring: var(--brand-green);
+  --border: color-mix(in srgb, var(--ink) 14%, transparent);
+  --success: var(--success-base);
+  --warning: var(--warning-base);
+  --destructive: var(--danger-base);
+  --shadow-button:
+    inset 0 1px 0 color-mix(in srgb, var(--paper) 20%, transparent),
+    0 1px 2px color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.dark {
+  --background: var(--dark-canvas);
+  --muted: var(--dark-surface);
+  --card: var(--dark-paper);
+  --foreground: var(--dark-text);
+  --foreground-2: var(--dark-muted);
+  --muted-foreground: var(--dark-muted);
+  --primary: var(--brand-lime);
+  --primary-foreground: var(--brand-green);
+  --ring: var(--brand-lime);
+  --border: color-mix(in srgb, var(--dark-text) 18%, transparent);
+  --success: var(--dark-success);
+  --warning: var(--dark-warning);
+  --destructive: var(--dark-danger);
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-foreground-2: var(--foreground-2);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --text-title: 1.5rem;
+  --text-title--line-height: 1.25;
+  --text-heading: 1.125rem;
+  --text-heading--line-height: 1.4;
+  --text-ui: 0.875rem;
+  --text-ui--line-height: 1.5;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+  --shadow-button: var(--shadow-button);
+}
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    background: var(--background);
+    color: var(--foreground);
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  button,
+  a,
+  input,
+  select {
+    touch-action: manipulation;
+  }
+  button:not(:disabled),
+  a {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  input,
+  select {
+    font: inherit;
+  }
+  input::placeholder {
+    color: var(--muted-foreground);
+  }
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+  summary {
+    cursor: pointer;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
