@@ -1,0 +1,299 @@
+{
+  "source": "ebcbd912910000a5ccb3ea95668419693863fcbf",
+  "recordedAt": "2026-11-11T16:07:12.303Z",
+  "method": "Local production build; real ~72s idle observation, normal motion; native Canvas 2D context acquisition and clearRect counters (not React render counters). Controlled unrelated root CSS mutation, theme change, two real 30s TTL intervals and fresh focus/visibility events. Context reacquisition is interpreted alongside the destroy/new source path; no app telemetry injected.",
+  "controlBounds": {
+    "selector": {
+      "x": 1131.125,
+      "y": 752.828125,
+      "width": 78.78125,
+      "height": 44
+    },
+    "apply": {
+      "x": 1217.90625,
+      "y": 756.828125,
+      "width": 124.09375,
+      "height": 44
+    }
+  },
+  "externalOrigins": [],
+  "observations": [
+    {
+      "name": "initial",
+      "at": 1794413160567,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 1,
+          "clears": 16,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 1,
+          "clears": 15,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 1,
+          "clears": 15,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-root-style",
+      "at": 1794413161111,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 2,
+          "clears": 33,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 2,
+          "clears": 32,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 2,
+          "clears": 32,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        }
+      ]
+    },
+    {
+      "name": "theme-change",
+      "at": 1794413161686,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 3,
+          "clears": 49,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 3,
+          "clears": 48,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 3,
+          "clears": 48,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        }
+      ]
+    },
+    {
+      "name": "idle-first-expiry",
+      "at": 1794413196695,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 5,
+          "clears": 83,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 5,
+          "clears": 82,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 5,
+          "clears": 82,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        },
+        {
+          "at": 1794413189104,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        }
+      ]
+    },
+    {
+      "name": "idle-second-expiry",
+      "at": 1794413231710,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 7,
+          "clears": 117,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 7,
+          "clears": 115,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 7,
+          "clears": 115,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        },
+        {
+          "at": 1794413189104,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413222892,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        }
+      ]
+    },
+    {
+      "name": "fresh-focus-events",
+      "at": 1794413232222,
+      "charts": [
+        {
+          "label": "Salary histogram in USD annual base; vertical axis employee count; exact band ranges follow",
+          "connected": true,
+          "contexts": 7,
+          "clears": 117,
+          "width": 1037,
+          "height": 256
+        },
+        {
+          "label": "Headcount by country; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 7,
+          "clears": 115,
+          "width": 248,
+          "height": 256
+        },
+        {
+          "label": "Headcount by department; exact headcounts are provided in accompanying text",
+          "connected": true,
+          "contexts": 7,
+          "clears": 115,
+          "width": 488,
+          "height": 256
+        }
+      ],
+      "requests": [
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413155308,
+          "method": "GET",
+          "path": "/api/catalog"
+        },
+        {
+          "at": 1794413189104,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        },
+        {
+          "at": 1794413222892,
+          "method": "GET",
+          "path": "/api/dashboard?currency=USD"
+        }
+      ]
+    }
+  ]
+}

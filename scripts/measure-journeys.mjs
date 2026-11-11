@@ -139,7 +139,9 @@ for (let sample = 0; sample < 3; sample++) {
 }
 await browser.close();
 fs.writeFileSync(
-  `docs/review/performance-${phase}.json`,
+  process.argv[3]
+    ? `${process.argv[3]}/performance-${phase}.json`
+    : `docs/review/performance-${phase}.json`,
   JSON.stringify(
     {
       phase,

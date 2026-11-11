@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { CURRENCIES } from "@/domain/money";
 import { SelectField } from "./ui/select";
 import { Button } from "./ui/button";
@@ -12,6 +12,7 @@ export function CurrencyPicker({
   pending: boolean;
   onApply: (currency: string) => void;
 }) {
+  const id = useId();
   const [draft, setDraft] = useState<{
     source: string;
     value: string;
@@ -31,10 +32,14 @@ export function CurrencyPicker({
     onApply(value);
   }
   return (
-    <form onSubmit={submit} className="flex flex-wrap items-end gap-2">
-      <label className="space-y-1 text-meta text-foreground-2">
-        <span className="block">Pay currency</span>
+    <form
+      onSubmit={submit}
+      className="flex max-w-full min-w-0 flex-wrap items-end gap-2"
+    >
+      <div className="grid min-w-0 gap-1 text-meta text-foreground-2">
+        <label htmlFor={id}>Pay currency</label>
         <SelectField
+          id={id}
           name="currency"
           label="Dashboard pay currency"
           value={value}
@@ -46,8 +51,13 @@ export function CurrencyPicker({
             label: code,
           }))}
         />
-      </label>
-      <Button type="submit" variant="outline" aria-busy={pending}>
+      </div>
+      <Button
+        type="submit"
+        variant="outline"
+        className="max-w-full whitespace-normal"
+        aria-busy={pending}
+      >
         Apply currency
       </Button>
     </form>

@@ -82,3 +82,24 @@ it("denies cached data and new reads after session expiry, until a fresh scope i
   await cache.load("/api/employees/1", true);
   expect(calls).toBe(1);
 });
+
+it("notifies only subscribers to the changed query, while invalidation reaches affected active views", async () => {
+  const cache = new ReadCache("scope", async () => ({ value: 1 }));
+  let dashboard = 0,
+    catalog = 0;
+  const remove = cache.subscribe(
+    "/api/dashboard?currency=USD",
+    () => dashboard++,
+  );
+  cache.subscribe("/api/catalog", () => catalog++);
+  await cache.load("/api/catalog");
+  expect(catalog).toBe(2);
+  expect(dashboard).toBe(0);
+  await cache.load("/api/dashboard?currency=USD");
+  expect(dashboard).toBe(2);
+  cache.invalidateSalary();
+  expect(dashboard).toBe(3);
+  remove();
+  await cache.load("/api/dashboard?currency=USD", true);
+  expect(dashboard).toBe(3);
+});

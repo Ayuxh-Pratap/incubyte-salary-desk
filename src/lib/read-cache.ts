@@ -18,7 +18,7 @@ export class ReadCache {
     error: "Your evaluator session has expired. Sign in again.",
   };
   private entries = new Map<string, Entry>();
-  private listeners = new Set<() => void>();
+  private listeners = new Map<string, Set<() => void>>();
   constructor(
     readonly scope: string,
     private fetcher: (url: string, signal: AbortSignal) => Promise<unknown>,
@@ -58,14 +58,22 @@ export class ReadCache {
       e.state = { loading: true };
     return e.state;
   };
-  subscribe = (listener: () => void) => {
-    this.listeners.add(listener);
+  subscribe = (url: string, listener: () => void) => {
+    let listeners = this.listeners.get(url);
+    if (!listeners) {
+      listeners = new Set();
+      this.listeners.set(url, listeners);
+    }
+    listeners.add(listener);
     return () => {
-      this.listeners.delete(listener);
+      listeners.delete(listener);
+      if (!listeners.size) this.listeners.delete(url);
     };
   };
-  private notify() {
-    for (const listener of this.listeners) listener();
+  private notify(url?: string) {
+    const groups = url ? [this.listeners.get(url)] : this.listeners.values();
+    for (const listeners of groups)
+      if (listeners) for (const listener of listeners) listener();
   }
   async load(url: string, force = false) {
     if (this.denied) return;
@@ -88,13 +96,13 @@ export class ReadCache {
       loading: data === undefined,
       refreshing: data !== undefined,
     };
-    this.notify();
+    this.notify(url);
     e.pending = this.fetcher(url, controller.signal)
       .then(
         (data) => {
           if (!controller.signal.aborted && generation === e.generation) {
             e.state = { data, at: this.now(), loading: false };
-            this.notify();
+            this.notify(url);
           }
         },
         (error) => {
@@ -105,7 +113,7 @@ export class ReadCache {
               refreshing: false,
               error: error instanceof Error ? error.message : "Request failed.",
             };
-            this.notify();
+            this.notify(url);
           }
         },
       )

@@ -5,7 +5,11 @@ export function useRemote<T>(url: string) {
   const cache = useReadCache(),
     [previous, setPrevious] = useState<T | undefined>(undefined);
   const read = useCallback(() => cache.read(url), [cache, url]);
-  const state = useSyncExternalStore(cache.subscribe, read, read);
+  const subscribe = useCallback(
+    (listener: () => void) => cache.subscribe(url, listener),
+    [cache, url],
+  );
+  const state = useSyncExternalStore(subscribe, read, read);
   const data = state.data as T | undefined;
   if (data !== undefined && data !== previous) setPrevious(data);
   useEffect(() => {
@@ -18,7 +22,9 @@ export function useRemote<T>(url: string) {
     let timer: ReturnType<typeof setTimeout> | undefined;
     if (!state.error)
       timer = setTimeout(
-        () => void cache.load(url),
+        () => {
+          if (document.visibilityState === "visible") void cache.load(url);
+        },
         Math.max(100, cache.ttl(url) - (Date.now() - (state.at ?? 0)) + 10),
       );
     return () => {
