@@ -1,175 +1,415 @@
+/*
+  Runtime design tokens for Salary Desk. Faithfully vendored from Job Desk; no runtime dependency.
+
+  Relationship to DESIGN.md (project root): DESIGN.md is the documented source of the values below and is linted
+  with `npm run design:lint` (@google/design.md). The values are copied here by hand, once, in the "Palette" block;
+  `npm run design:check` (scripts/design-check.mjs) fails when a hex in DESIGN.md's front matter and the matching
+  `--desk-*` variable here disagree, so the two cannot drift silently. Nothing reads DESIGN.md at runtime.
+
+  Layers, top to bottom:
+    1. Palette         `--desk-*`   the named colours from DESIGN.md (hex, light + dark)
+    2. Semantic roles  shadcn names (`--background`, `--primary`, …) mapped onto the palette; components use only these
+    3. Tailwind theme  `@theme inline` exposes roles, type scale, radius and motion to utilities
+  Components never use a `--desk-*` colour directly and never hard-code a hex.
+*/
 @import "tailwindcss";
+
 @custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------- 1. palette (from DESIGN.md) */
 :root {
-  --brand-green: #014d43;
-  --brand-lime: #d3fe73;
-  --canvas: #f5f5f4;
-  --surface: #fafafa;
-  --paper: #ffffff;
-  --ink: #1c1d1b;
-  --secondary-text: #44483f;
-  --muted-text: #5c6058;
-  --inset-base: #f0f0ef;
-  --table-head-base: #e7e7e5;
-  --row-hover-base: #f5f5f3;
-  --row-selected-base: #e7eddf;
-  --border-base: #c5c8c2;
-  --control-border-base: #787d73;
-  --action: #27513b;
-  --dark-canvas: #101112;
-  --dark-surface: #18191b;
-  --dark-paper: #232427;
-  --dark-text: #f4f4f5;
-  --dark-secondary-text: #d4d5d9;
-  --dark-muted: #b6b7bc;
-  --dark-inset: #1d1e21;
-  --dark-table-head: #303135;
-  --dark-row-hover: #2a2b2f;
-  --dark-row-selected: #30392a;
-  --dark-border: #4c4e53;
-  --dark-control-border: #7c7e86;
-  --dark-action-text: #1c2710;
-  --success-base: #06734f;
-  --warning-base: #875700;
-  --danger-base: #b91c35;
-  --dark-success: #6ee7b7;
-  --dark-warning: #fcd34d;
-  --dark-danger: #fda4af;
-  --background: var(--canvas);
-  --muted: var(--surface);
-  --card: var(--paper);
-  --inset: var(--inset-base);
-  --table-head: var(--table-head-base);
-  --row-hover: var(--row-hover-base);
-  --row-selected: var(--row-selected-base);
-  --foreground: var(--ink);
-  --foreground-2: var(--secondary-text);
-  --muted-foreground: var(--muted-text);
-  --primary: var(--action);
-  --primary-foreground: var(--paper);
-  --primary-hover: color-mix(in srgb, var(--primary) 92%, var(--foreground));
-  --ring: var(--action);
-  --border: var(--border-base);
-  --control-border: var(--control-border-base);
-  --success: var(--success-base);
-  --warning: var(--warning-base);
-  --destructive: var(--danger-base);
-  --sh-panel: 0 1px 2px rgb(0 0 0 / 4%);
+  --desk-ink: #1c1917; /* headings, strongest text */
+  --desk-ink-2: #2a2524; /* card titles, table text */
+  --desk-body: #57534e; /* body text */
+  --desk-quiet: #79716b; /* secondary text, labels */
+  --desk-faint: #a8a29e; /* placeholders, disabled */
+  --desk-paper: #ffffff; /* cards, inputs */
+  --desk-field: #f4f4f3; /* page field behind cards */
+  --desk-canvas: #fbfaf9; /* the ground: sidebar and canvas share it; the content area sits on it */
+  --desk-fill: #f7f7f7; /* quiet fills: chips, table heads, secondary buttons */
+  --desk-line: rgb(28 25 23 / 8%); /* hairlines */
+  --desk-line-strong: rgb(28 25 23 / 14%);
+  --desk-night: #18191c; /* dark panels (also the dark-mode page) */
+  --desk-night-raised: #26272b;
+  --desk-night-line: rgb(255 255 255 / 10%);
+  --desk-night-text: #9f9fa9;
+  --desk-night-ink: #f4f4f5;
+  --desk-signal: #f15a0f; /* the one accent: primary action, active state */
+  --desk-signal-deep: #c6440a; /* accent on hover, accent text on light */
+  --desk-signal-tint: #fff1e9; /* accent wash behind "ready" items */
+  --desk-pass: #009966; /* verdict PASS, applied, ok */
+  --desk-pass-tint: #e6f7f0;
+  --desk-marginal: #f0b100; /* verdict MARGINAL, no JD, stale */
+  --desk-marginal-tint: #fff8e0;
+  --desk-fail: #ff2056; /* verdict FAIL, errors, stopped */
+  --desk-fail-tint: #ffe9ef;
+  --desk-skip: #9f9fa9; /* verdict SKIP, closed, discarded */
+  --desk-info: #1447e6; /* links to external forms, tracker references */
+}
+
+/* ---------------------------------------------------------------- 2. semantic roles (light) */
+:root {
+  --radius: 0.75rem; /* cards 12px; buttons derive md = 0.6rem */
+  --canvas: var(--desk-canvas);
+  --background: var(--desk-field);
+  --foreground: var(--desk-ink);
+  --card: var(--desk-paper);
+  --card-foreground: var(--desk-ink-2);
+  --popover: var(--desk-paper);
+  --popover-foreground: var(--desk-ink-2);
+  --primary: var(--desk-signal);
+  --primary-foreground: #ffffff;
+  --secondary: var(--desk-fill);
+  --secondary-foreground: var(--desk-ink-2);
+  --muted: var(--desk-fill);
+  --muted-foreground: var(--desk-quiet);
+  --accent: var(--desk-fill);
+  --accent-foreground: var(--desk-ink-2);
+  --destructive: var(--desk-fail);
+  --border: var(--desk-line);
+  --input: var(--desk-line-strong);
+  --ring: var(--desk-signal);
+  --chart-1: var(--desk-signal);
+  --chart-2: var(--desk-pass);
+  --chart-3: var(--desk-marginal);
+  --chart-4: var(--desk-fail);
+  --chart-5: var(--desk-skip);
+  --sidebar: var(--canvas);
+  --sidebar-foreground: var(--desk-ink-2);
+  --sidebar-primary: var(--desk-signal);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--desk-fill);
+  --sidebar-accent-foreground: var(--desk-ink-2);
+  --sidebar-border: var(--desk-line);
+  --sidebar-ring: var(--desk-signal);
+  /* status roles, used by the Verdict and Stage badges only */
+  --status-pass: var(--desk-pass);
+  --status-pass-soft: var(--desk-pass-tint);
+  --status-marginal: var(--desk-marginal);
+  --status-marginal-soft: var(--desk-marginal-tint);
+  --status-fail: var(--desk-fail);
+  --status-fail-soft: var(--desk-fail-tint);
+  --status-skip: var(--desk-skip);
+  --status-signal-soft: var(--desk-signal-tint);
+  --status-info: var(--desk-info);
+  /* text colour steps beyond shadcn's two */
+  --foreground-2: var(--desk-body);
+  --foreground-faint: var(--desk-faint);
+  --primary-hover: var(--desk-signal-deep);
+  /* elevation (DESIGN.md §Elevation): three surface steps + tactile edges. Shadows are hairline rings plus a short
+     soft blur; the inset highlight is what makes a button read as raised. Values per theme, names mapped in @theme. */
+  --sh-panel: 0 0 0 1px rgb(28 25 23 / 6%), 0 1px 2px 0 rgb(28 25 23 / 4%);
   --sh-button:
-    inset 0 1px 0 rgb(255 255 255 / 80%), 0 1px 2px rgb(0 0 0 / 7%),
-    0 0 0 1px rgb(0 0 0 / 8%);
+    inset 0 1px 0 0 rgb(255 255 255 / 80%), 0 1px 2px 0 rgb(28 25 23 / 6%),
+    0 0 0 1px rgb(28 25 23 / 10%);
   --sh-button-hover:
-    inset 0 1px 0 rgb(255 255 255 / 85%), 0 2px 4px -1px rgb(0 0 0 / 12%),
-    0 0 0 1px rgb(0 0 0 / 12%);
+    inset 0 1px 0 0 rgb(255 255 255 / 80%), 0 2px 4px -1px rgb(28 25 23 / 10%),
+    0 0 0 1px rgb(28 25 23 / 13%);
   --sh-button-pressed:
-    inset 0 1px 2px rgb(0 0 0 / 14%), 0 0 0 1px rgb(0 0 0 / 12%);
-  --sh-primary:
-    inset 0 1px 0 rgb(255 255 255 / 22%), 0 1px 2px rgb(0 0 0 / 12%);
-  --sh-primary-hover:
-    inset 0 1px 0 rgb(255 255 255 / 26%), 0 2px 4px -1px rgb(0 0 0 / 20%);
-  --sh-well: inset 0 1px 2px rgb(0 0 0 / 5%);
+    inset 0 1px 2px 0 rgb(28 25 23 / 12%), 0 0 0 1px rgb(28 25 23 / 12%);
+  --sh-button-primary:
+    inset 0 1px 0 0 rgb(255 255 255 / 24%), 0 1px 2px 0 rgb(198 68 10 / 28%),
+    0 0 0 1px rgb(198 68 10 / 70%);
+  --sh-button-primary-hover:
+    inset 0 1px 0 0 rgb(255 255 255 / 24%), 0 2px 6px -1px rgb(198 68 10 / 40%),
+    0 0 0 1px rgb(198 68 10 / 80%);
+  --sh-well:
+    inset 0 1px 2px 0 rgb(28 25 23 / 5%), inset 0 0 0 1px rgb(28 25 23 / 5%);
+  --scroll-thumb: rgb(28 25 23 / 16%);
+  --scroll-thumb-hover: rgb(28 25 23 / 28%);
+  --sh-popover:
+    0 0 0 1px rgb(28 25 23 / 8%), 0 8px 24px -8px rgb(28 25 23 / 18%),
+    0 2px 6px -2px rgb(28 25 23 / 8%);
+  --sh-sticky:
+    0 1px 0 0 rgb(28 25 23 / 8%), 0 6px 16px -10px rgb(28 25 23 / 14%);
+}
+
+/* ---------------------------------------------------------------- 2. semantic roles (dark: Bydefault's night panels) */
+.dark {
+  --canvas: #111214;
+  --background: var(--desk-night);
+  --foreground: var(--desk-night-ink);
+  --card: var(--desk-night-raised);
+  --card-foreground: var(--desk-night-ink);
+  --popover: var(--desk-night-raised);
+  --popover-foreground: var(--desk-night-ink);
+  --primary: var(--desk-signal);
+  --primary-foreground: #ffffff;
+  --secondary: #303033;
+  --secondary-foreground: var(--desk-night-ink);
+  --muted: #303033;
+  --muted-foreground: var(--desk-night-text);
+  --accent: #303033;
+  --accent-foreground: var(--desk-night-ink);
+  --destructive: var(--desk-fail);
+  --border: var(--desk-night-line);
+  --input: rgb(255 255 255 / 16%);
+  --ring: var(--desk-signal);
+  --sidebar: var(--canvas);
+  --sidebar-foreground: var(--desk-night-ink);
+  --sidebar-primary: var(--desk-signal);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #303033;
+  --sidebar-accent-foreground: var(--desk-night-ink);
+  --sidebar-border: var(--desk-night-line);
+  --sidebar-ring: var(--desk-signal);
+  --status-pass-soft: rgb(0 153 102 / 18%);
+  --status-marginal-soft: rgb(240 177 0 / 18%);
+  --status-fail-soft: rgb(255 32 86 / 18%);
+  --status-signal-soft: rgb(241 90 15 / 18%);
+  --foreground-2: #c9c9d1;
+  --foreground-faint: #6f6f78;
+  --primary-hover: #ff6a1f;
+  --sh-panel: 0 0 0 1px rgb(255 255 255 / 8%), 0 1px 2px 0 rgb(0 0 0 / 30%);
+  --sh-button:
+    inset 0 1px 0 0 rgb(255 255 255 / 8%), 0 1px 2px 0 rgb(0 0 0 / 30%),
+    0 0 0 1px rgb(0 0 0 / 10%);
+  --sh-button-hover:
+    inset 0 1px 0 0 rgb(255 255 255 / 8%), 0 2px 4px -1px rgb(0 0 0 / 40%),
+    0 0 0 1px rgb(0 0 0 / 13%);
+  --sh-button-pressed:
+    inset 0 1px 2px 0 rgb(0 0 0 / 50%), 0 0 0 1px rgb(0 0 0 / 12%);
+  --sh-button-primary:
+    inset 0 1px 0 0 rgb(255 255 255 / 20%), 0 1px 2px 0 rgb(0 0 0 / 40%),
+    0 0 0 1px rgb(241 90 15 / 60%);
+  --sh-button-primary-hover:
+    inset 0 1px 0 0 rgb(255 255 255 / 20%), 0 2px 6px -1px rgb(0 0 0 / 50%),
+    0 0 0 1px rgb(241 90 15 / 80%);
+  --sh-well:
+    inset 0 1px 2px 0 rgb(0 0 0 / 30%), inset 0 0 0 1px rgb(255 255 255 / 6%);
+  --scroll-thumb: rgb(255 255 255 / 14%);
+  --scroll-thumb-hover: rgb(255 255 255 / 26%);
+  --sh-popover:
+    0 0 0 1px rgb(255 255 255 / 10%), 0 12px 32px -8px rgb(0 0 0 / 60%),
+    0 2px 6px -2px rgb(0 0 0 / 40%);
+  --sh-sticky:
+    0 1px 0 0 rgb(255 255 255 / 8%), 0 6px 16px -10px rgb(0 0 0 / 50%);
+}
+
+/* ---------------------------------------------------------------- 3. tailwind theme */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-2: var(--foreground-2);
+  --color-foreground-faint: var(--foreground-faint);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-status-pass: var(--status-pass);
+  --color-status-pass-soft: var(--status-pass-soft);
+  --color-status-marginal: var(--status-marginal);
+  --color-status-marginal-soft: var(--status-marginal-soft);
+  --color-status-fail: var(--status-fail);
+  --color-status-fail-soft: var(--status-fail-soft);
+  --color-status-skip: var(--status-skip);
+  --color-status-signal-soft: var(--status-signal-soft);
+  --color-status-info: var(--status-info);
+
+  /* type: one family, roles in DESIGN.md §Typography; sizes are the mobile values, `md:` steps up where noted */
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --text-title: 1.5rem; /* page title mobile */
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.02em;
+  --text-title-lg: 1.875rem; /* page title desktop */
+  --text-title-lg--line-height: 1.2;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-heading: 1.125rem; /* card / section heading */
+  --text-heading--line-height: 1.33;
+  --text-heading--letter-spacing: -0.01em;
+  --text-body: 0.9375rem; /* reading text, answers */
+  --text-body--line-height: 1.6;
+  --text-ui: 0.875rem; /* rows, buttons, labels */
+  --text-ui--line-height: 1.43;
+  --text-meta: 0.75rem; /* timestamps, counts, badges */
+  --text-meta--line-height: 1.33;
+  --text-meta--letter-spacing: 0.01em;
+
+  --radius-sm: calc(var(--radius) * 0.5); /* 6px chips, kbd */
+  --radius-md: calc(var(--radius) * 0.667); /* 8px buttons, inputs */
+  --radius-lg: var(--radius); /* 12px cards */
+  --radius-xl: calc(var(--radius) * 1.333); /* 16px sheets, dialogs */
+  --radius-2xl: calc(var(--radius) * 1.667);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: 9999px; /* pills */
+
+  --shadow-panel: var(--sh-panel);
+  --shadow-button: var(--sh-button);
+  --shadow-button-hover: var(--sh-button-hover);
+  --shadow-button-pressed: var(--sh-button-pressed);
+  --shadow-button-primary: var(--sh-button-primary);
+  --shadow-button-primary-hover: var(--sh-button-primary-hover);
+  --shadow-well: var(--sh-well);
+  --shadow-popover: var(--sh-popover);
+  --shadow-raised: var(--sh-popover);
+  --shadow-sticky: var(--sh-sticky);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms;
+  --duration-base: 240ms;
+  --duration-slow: 360ms;
+
+  --spacing-touch: 2.75rem; /* 44px minimum tap target */
+  --spacing-gutter: 1rem; /* page side gutter, mobile */
+  --spacing-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground text-ui;
+    font-feature-settings: "cv11", "ss01";
+    overscroll-behavior-y: none;
+  }
+  ::selection {
+    background: var(--status-signal-soft);
+  }
+  /* Dialogs fade and settle; Animate UI's perspective flip is overridden here because the primitive has no
+     flat option. Opacity and blur still come from the primitive; the scale rides on the standalone property. */
+  [data-slot="dialog-content"] {
+    transform: none !important;
+  }
+  [data-slot="dialog-content"][data-open] {
+    animation: desk-settle var(--duration-slow) var(--ease-standard);
+  }
+  @keyframes desk-settle {
+    from {
+      scale: 0.975;
+    }
+    to {
+      scale: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lean scrollbar for panels that scroll inside the frame: a thin thumb, no track, no arrows. The standard
+   properties cover Chromium 121+, Firefox and Safari 18.2+; older WebKit falls back to the pseudo-elements. */
+@utility scroll-lean {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+  scrollbar-gutter: auto;
+  &:hover {
+    scrollbar-color: var(--scroll-thumb-hover) transparent;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+/* Bydefault's framed field: vertical hairlines at the content edges on wide screens. */
+@utility frame-lines {
+  position: relative;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+    pointer-events: none;
+  }
+  &::before {
+    left: 0;
+  }
+  &::after {
+    right: 0;
+  }
+}
+
+/* Salary-domain roles reuse the Job Desk surfaces; no branding palette overrides. */
+:root {
+  --inset: var(--muted);
+  --table-head: var(--muted);
+  --row-hover: color-mix(in srgb, var(--card), var(--foreground) 4%);
+  --row-selected: var(--status-signal-soft);
+  --control-border: var(--input);
+  --success: #006b47;
+  --warning: #7a5300;
+  --danger-text: #b3003a;
+  --action-fill: var(--desk-signal-deep);
 }
 .dark {
-  --background: var(--dark-canvas);
-  --muted: var(--dark-surface);
-  --card: var(--dark-paper);
-  --inset: var(--dark-inset);
-  --table-head: var(--dark-table-head);
-  --row-hover: var(--dark-row-hover);
-  --row-selected: var(--dark-row-selected);
-  --foreground: var(--dark-text);
-  --foreground-2: var(--dark-secondary-text);
-  --muted-foreground: var(--dark-muted);
-  --primary: var(--brand-lime);
-  --primary-foreground: var(--dark-action-text);
-  --ring: var(--brand-lime);
-  --border: var(--dark-border);
-  --control-border: var(--dark-control-border);
-  --success: var(--dark-success);
-  --warning: var(--dark-warning);
-  --destructive: var(--dark-danger);
-  --sh-panel: 0 1px 2px rgb(0 0 0 / 20%);
-  --sh-button:
-    inset 0 1px 0 rgb(255 255 255 / 9%), 0 1px 2px rgb(0 0 0 / 30%),
-    0 0 0 1px rgb(0 0 0 / 16%);
-  --sh-button-hover:
-    inset 0 1px 0 rgb(255 255 255 / 12%), 0 2px 4px -1px rgb(0 0 0 / 40%),
-    0 0 0 1px rgb(0 0 0 / 20%);
-  --sh-button-pressed:
-    inset 0 1px 2px rgb(0 0 0 / 40%), 0 0 0 1px rgb(255 255 255 / 6%);
-  --sh-primary:
-    inset 0 1px 0 rgb(255 255 255 / 22%), 0 1px 2px rgb(0 0 0 / 30%);
-  --sh-primary-hover:
-    inset 0 1px 0 rgb(255 255 255 / 30%), 0 2px 4px -1px rgb(0 0 0 / 40%);
-  --sh-well: inset 0 1px 2px rgb(0 0 0 / 25%);
+  --success: var(--status-pass);
+  --warning: var(--status-marginal);
+  --danger-text: var(--status-fail);
 }
 @theme inline {
-  --color-background: var(--background);
-  --color-muted: var(--muted);
   --color-inset: var(--inset);
   --color-table-head: var(--table-head);
   --color-row-hover: var(--row-hover);
   --color-row-selected: var(--row-selected);
   --color-control-border: var(--control-border);
-  --color-primary-hover: var(--primary-hover);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-foreground-2: var(--foreground-2);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-ring: var(--ring);
-  --color-border: var(--border);
   --color-success: var(--success);
   --color-warning: var(--warning);
-  --color-destructive: var(--destructive);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --text-title: 1.5rem;
-  --text-title--line-height: 1.25;
-  --text-title-lg: 1.875rem;
-  --text-title-lg--line-height: 1.2;
-  --text-heading: 1.125rem;
-  --text-heading--line-height: 1.4;
-  --text-ui: 0.875rem;
-  --text-ui--line-height: 1.5;
-  --text-meta: 0.75rem;
-  --text-meta--line-height: 1.5;
-  --shadow-panel: var(--sh-panel);
-  --shadow-button: var(--sh-button);
-  --shadow-button-hover: var(--sh-button-hover);
-  --shadow-button-pressed: var(--sh-button-pressed);
-  --shadow-button-primary: var(--sh-primary);
-  --shadow-button-primary-hover: var(--sh-primary-hover);
-  --shadow-well: var(--sh-well);
+  --color-danger-text: var(--danger-text);
+  --color-action-fill: var(--action-fill);
 }
 @layer base {
-  * {
-    border-color: var(--border);
-  }
-  html {
-    background: var(--background);
-    color: var(--foreground);
-    color-scheme: light;
-  }
-  html.dark {
-    color-scheme: dark;
-  }
-  body {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  button,
-  a,
-  input,
-  select {
-    touch-action: manipulation;
-  }
-  button:not(:disabled),
-  a {
-    cursor: pointer;
-  }
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 0;
@@ -177,35 +417,19 @@
   [role="dialog"]:focus-visible {
     outline-offset: -2px;
   }
-  ::selection {
-    background: var(--primary);
-    color: var(--primary-foreground);
+  svg.lucide {
+    stroke-width: 1.75;
   }
-  input,
-  select {
-    font: inherit;
+  button:not(:disabled),
+  a {
+    cursor: pointer;
   }
-  input::placeholder {
-    color: var(--muted-foreground);
+  button,
+  a,
+  input {
+    touch-action: manipulation;
   }
   table {
     font-variant-numeric: tabular-nums;
   }
-  summary {
-    cursor: pointer;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-@utility scroll-lean {
-  scrollbar-width: thin;
-  scrollbar-color: var(--control-border) transparent;
 }

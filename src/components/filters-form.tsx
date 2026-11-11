@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { applyFilterDraft, parseFilters, type Filters } from "@/domain/filters";
 import type { Catalog } from "@/domain/employee";
-import { cn } from "@/lib/utils";
+import { SelectField } from "./ui/select";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Sheet } from "./ui/sheet";
@@ -106,8 +106,6 @@ export function FiltersForm({
     onNavigate(next);
     setOpen(false);
   }
-  const selectClass =
-    "min-h-11 w-full min-w-0 rounded-lg border border-control-border bg-card px-3 text-ui text-foreground shadow-well";
   const filterFields = (prefix: string) => (
     <div className="space-y-5">
       {[
@@ -152,42 +150,47 @@ export function FiltersForm({
           <label htmlFor={prefix + name} className="block">
             {label}
           </label>
-          <select
+          <SelectField
             id={prefix + name}
             form={formId}
             name={name}
+            label={label}
             value={fields[name as keyof typeof fields]}
-            onChange={(e) => change(name, e.target.value)}
-            required={overview && name === "currency"}
+            onChange={(value) => change(name, value)}
             disabled={!catalog}
-            className={selectClass}
-          >
-            {!catalog ? (
-              <option value={fields[name as keyof typeof fields]}>
-                Loading options…
-              </option>
-            ) : (
-              <>
-                {!(overview && name === "currency") && (
-                  <option value="">All {plural}</option>
-                )}
-                {fields[name as keyof typeof fields] &&
-                  !options?.some(
-                    (o) => o.value === fields[name as keyof typeof fields],
-                  ) && (
-                    <option value={fields[name as keyof typeof fields]}>
-                      Unknown {label.toLowerCase()} (
-                      {fields[name as keyof typeof fields]})
-                    </option>
-                  )}
-                {options?.map((o) => (
-                  <option value={o.value} key={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </>
-            )}
-          </select>
+            className="w-full"
+            options={
+              !catalog
+                ? [
+                    {
+                      value: fields[name as keyof typeof fields],
+                      label: "Loading options…",
+                    },
+                  ]
+                : [
+                    ...(!(overview && name === "currency")
+                      ? [{ value: "", label: "All " + plural }]
+                      : []),
+                    ...(fields[name as keyof typeof fields] &&
+                    !options?.some(
+                      (o) => o.value === fields[name as keyof typeof fields],
+                    )
+                      ? [
+                          {
+                            value: fields[name as keyof typeof fields],
+                            label:
+                              "Unknown " +
+                              label.toLowerCase() +
+                              " (" +
+                              fields[name as keyof typeof fields] +
+                              ")",
+                          },
+                        ]
+                      : []),
+                    ...(options || []),
+                  ]
+            }
+          />
         </div>
       ))}
       <p className="text-meta leading-relaxed text-muted-foreground">
@@ -215,7 +218,7 @@ export function FiltersForm({
     >
       <aside
         aria-label="Employee filters"
-        className="scroll-lean sticky top-6 hidden max-h-[calc(100dvh-72px)] overflow-y-auto rounded-xl border bg-card p-4 shadow-panel xl:block"
+        className="scroll-lean sticky top-6 hidden max-h-[calc(100dvh-72px)] overflow-y-auto rounded-xl bg-card p-4 shadow-panel xl:block"
         tabIndex={0}
       >
         <div className="mb-5 flex items-center justify-between gap-3">
@@ -227,7 +230,7 @@ export function FiltersForm({
         {filterFields(formId + "-desktop-")}
       </aside>
       <div className="@container min-w-0">
-        <div className="mb-4 rounded-xl border bg-card p-3 shadow-panel">
+        <div className="mb-4 rounded-xl bg-card p-3 shadow-panel">
           <div className="flex flex-wrap items-center gap-2">
             <label className="relative min-w-0 flex-1">
               <span className="sr-only">Search employees</span>
@@ -282,54 +285,56 @@ export function FiltersForm({
               {overview ? (
                 <label className="flex items-center gap-2 text-meta text-foreground-2">
                   Group by
-                  <select
+                  <SelectField
                     name="groupBy"
+                    label="Group by"
                     value={fields.groupBy}
-                    onChange={(e) => change("groupBy", e.target.value)}
-                    className={cn(selectClass, "w-auto")}
-                  >
-                    <option value="department">Department</option>
-                    <option value="country">Country</option>
-                    <option value="role">Role</option>
-                  </select>
+                    onChange={(value) => change("groupBy", value)}
+                    options={[
+                      { value: "department", label: "Department" },
+                      { value: "country", label: "Country" },
+                      { value: "role", label: "Role" },
+                    ]}
+                  />
                 </label>
               ) : (
                 <>
                   <label>
                     <span className="sr-only">Sort employees</span>
-                    <select
+                    <SelectField
                       name="sort"
-                      aria-label="Sort employees"
+                      label="Sort employees"
                       value={fields.sort}
-                      onChange={(e) => change("sort", e.target.value)}
-                      className={cn(selectClass, "w-auto")}
-                    >
-                      <option value="name-asc">Name A–Z</option>
-                      <option value="name-desc">Name Z–A</option>
-                      <option value="updated-desc">Recently updated</option>
-                      <option value="salary-asc" disabled={!fields.currency}>
-                        Salary low–high
-                      </option>
-                      <option value="salary-desc" disabled={!fields.currency}>
-                        Salary high–low
-                      </option>
-                    </select>
+                      onChange={(value) => change("sort", value)}
+                      options={[
+                        { value: "name-asc", label: "Name A–Z" },
+                        { value: "name-desc", label: "Name Z–A" },
+                        { value: "updated-desc", label: "Recently updated" },
+                        {
+                          value: "salary-asc",
+                          label: "Salary low–high",
+                          disabled: !fields.currency,
+                        },
+                        {
+                          value: "salary-desc",
+                          label: "Salary high–low",
+                          disabled: !fields.currency,
+                        },
+                      ]}
+                    />
                   </label>
                   <label>
                     <span className="sr-only">Records per page</span>
-                    <select
+                    <SelectField
                       name="pageSize"
-                      aria-label="Records per page"
+                      label="Records per page"
                       value={fields.pageSize}
-                      onChange={(e) => change("pageSize", e.target.value)}
-                      className={cn(selectClass, "w-auto")}
-                    >
-                      {[25, 50, 100].map((n) => (
-                        <option key={n} value={n}>
-                          {n} per page
-                        </option>
-                      ))}
-                    </select>
+                      onChange={(value) => change("pageSize", value)}
+                      options={[25, 50, 100].map((n) => ({
+                        value: String(n),
+                        label: n + " per page",
+                      }))}
+                    />
                   </label>
                 </>
               )}

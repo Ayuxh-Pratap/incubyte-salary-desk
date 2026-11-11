@@ -1,6 +1,7 @@
 "use client";
 import { useState, type FormEvent } from "react";
 import { CURRENCIES } from "@/domain/money";
+import { SelectField } from "./ui/select";
 import { Button } from "./ui/button";
 export function CurrencyPicker({
   currency,
@@ -33,19 +34,18 @@ export function CurrencyPicker({
     <form onSubmit={submit} className="flex flex-wrap items-end gap-2">
       <label className="space-y-1 text-meta text-foreground-2">
         <span className="block">Pay currency</span>
-        <select
+        <SelectField
           name="currency"
-          aria-label="Dashboard pay currency"
+          label="Dashboard pay currency"
           value={value}
-          onChange={(e) =>
-            setDraft((previous) => ({ ...previous, value: e.target.value }))
+          onChange={(next) =>
+            setDraft((previous) => ({ ...previous, value: next }))
           }
-          className="min-h-11 rounded-lg border border-control-border bg-card px-3 text-ui shadow-well"
-        >
-          {Object.keys(CURRENCIES).map((code) => (
-            <option key={code}>{code}</option>
-          ))}
-        </select>
+          options={Object.keys(CURRENCIES).map((code) => ({
+            value: code,
+            label: code,
+          }))}
+        />
       </label>
       <Button type="submit" variant="outline" aria-busy={pending}>
         Apply currency
