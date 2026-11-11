@@ -56,3 +56,11 @@ Official https://incubyte.co/ inspected 2026-11-11. Inline public styling repeat
 ## Interview walkthroughs
 
 These are planned: follow one amount from decimal input to minor units; one list query from URL filters to SQL; one authenticated API request to its service; one edit from UI through a version check and refresh. Update with exact code paths after implementation.
+
+## Implemented verification and performance
+
+24 deterministic unit cases pass. Five PostgreSQL integration cases passed on isolated hosted PostgreSQL 17.11. Six browser checks passed against a fresh production build, including real save/reload/analysis. The SQL summary ranks the full filtered population, sums the one or two middle values as numeric text, and retains a denominator of one or two. It never uses floating-point percentile_cont.
+
+Measured 2026-11-11 on 10,000 synthetic employees, Node 24.19/Windows, client in India, Neon aws-us-east-2, TLS verified, pooled max 3, five sequential samples after ANALYZE. Median service transactions: name page 1,330.55 ms; USD salary page 1,204.66 ms; country/department page 1,202.63 ms; Unicode search 1,317.06 ms; full USD analysis 1,529.07 ms. These include WAN and transaction round trips and are not deployment latency or cold-start results. EXPLAIN execution observations: indexed currency/salary page 0.034 ms, name search 0.513 ms, overall analysis 2.086 ms. See [raw observations and plans](performance.json); run npm run perf:measure to reproduce. Five samples do not establish an SLA.
+
+Current schema indexes support name/id pagination, currency/salary/id ordering, country/department and department/role filters. Plans and data size support retaining this small set; no speculative search service or extra infrastructure.

@@ -57,7 +57,11 @@ test("evaluator access, themes and narrow-screen shell", async ({
 test("employee data endpoints reject anonymous callers", async ({
   request,
 }) => {
-  for (const url of ["/api/employees", "/api/catalog"]) {
+  for (const url of [
+    "/api/employees",
+    "/api/catalog",
+    "/api/analysis?currency=USD",
+  ]) {
     const response = await request.get(url);
     expect(response.status()).toBe(401);
     expect(await response.json()).toEqual({
@@ -76,4 +80,25 @@ test("employee detail and writes require a session", async ({ request }) => {
       })
     ).status(),
   ).toBe(401);
+});
+
+test("tampered sessions and foreign-origin authenticated writes are rejected", async ({
+  request,
+}) => {
+  const tampered = await request.get("/api/employees", {
+    headers: { Cookie: "salary-desk-session=invalid-seal" },
+  });
+  expect(tampered.status()).toBe(401);
+  const login = await request.post("/api/session", {
+    headers: { Origin: "http://localhost:3100" },
+    data: { password: process.env.EVALUATOR_PASSWORD },
+  });
+  expect(login.ok()).toBe(true);
+  const mutation = await request.patch("/api/employees/1", {
+    headers: { Origin: "https://evil.example" },
+    data: { amount: "100", currency: "USD", period: "annual", version: 1 },
+  });
+  expect(mutation.status()).toBe(403);
+  const invalidAnalysis = await request.get("/api/analysis");
+  expect(invalidAnalysis.status()).toBe(400);
 });

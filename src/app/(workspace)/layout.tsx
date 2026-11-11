@@ -7,6 +7,6 @@ export default async function Workspace({
   children: React.ReactNode;
 }) {
   const current = await session();
-  if (!current.evaluator) redirect("/login");
+  if (current.evaluator !== true) redirect("/login");
   return <Shell>{children}</Shell>;
 }

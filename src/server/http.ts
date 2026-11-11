@@ -33,7 +33,11 @@ export async function api(
     }
     const result = await work();
     return Response.json(result, {
-      headers: { "Cache-Control": "private, no-store" },
+      headers: {
+        "Cache-Control": "private, no-store",
+        "X-Salary-Desk-Environment":
+          process.env.DATABASE_PURPOSE || "unconfigured",
+      },
     });
   } catch (error) {
     if (error instanceof SalaryError)

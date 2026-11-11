@@ -16,7 +16,13 @@ export function FiltersForm({
   overview?: boolean;
 }) {
   const router = useRouter();
-  const [currency, setCurrency] = useState(filters.currency || "");
+  const [fields, setFields] = useState<Record<string, string>>({
+    country: filters.country || "",
+    department: filters.department || "",
+    role: filters.role || "",
+    currency: filters.currency || "",
+  });
+  const currency = fields.currency;
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const values = new URLSearchParams();
@@ -96,20 +102,30 @@ export function FiltersForm({
             <select
               name={name}
               onChange={(event) => {
-                if (name === "currency") setCurrency(event.target.value);
+                setFields((previous) => ({
+                  ...previous,
+                  [name]: event.target.value,
+                }));
               }}
               className={selectClass}
-              defaultValue={
-                filters[
-                  name as "country" | "department" | "role" | "currency"
-                ] || ""
-              }
+              value={fields[name]}
               required={overview && name === "currency"}
               disabled={!catalog}
             >
-              {!(overview && name === "currency") && (
+              {!catalog && (
+                <option value={fields[name]}>Loading options…</option>
+              )}
+              {catalog && !(overview && name === "currency") && (
                 <option value="">
-                  All {label.toLowerCase().replace("pay ", "")}
+                  All{" "}
+                  {
+                    {
+                      country: "countries",
+                      department: "departments",
+                      role: "roles",
+                      currency: "currencies",
+                    }[name]
+                  }
                 </option>
               )}
               {options?.map((o) => (
