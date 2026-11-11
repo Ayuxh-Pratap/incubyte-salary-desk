@@ -167,3 +167,5 @@ A cache notification regression failed before implementation; subscribers now li
 - The diagram sequence and milestone labels use actual recorded commits. Published and local-only milestones remain distinct. AI generated the wrappers and prose, then reviewed them against source, history and measurements; no blanket test-first claim is made for documentation wrappers.
 - Added tests for catalog traversal/prototype keys, missing canonical sections and drifting source excerpt anchors, plus browser coverage for evaluator protection, navigation, no salary reads, actual-source access and responsive themes.
 - Before the production pass: 39 unit cases, lint, types and the 216-value design consistency check passed. Browser/production evidence is recorded separately when completed.
+
+The first Presentation production build warned that a dynamic filesystem helper would trace the whole project. Replaced it with literal, explicitly selected file loaders; rebuilt without warnings and inspected route traces for private inputs/environment files. This was a real correction found during build review, not a pre-existing guarantee.
