@@ -1,5 +1,7 @@
 # Salary Desk visual-quality review
 
+**Historical P1 pass.** The candidate subsequently locked Job Desk’s existing palette and interaction system. Current source and evidence are in [Fidelity/performance review](FIDELITY_PERFORMANCE.md); P1 scorecards/captures below describe the previous review, not the current appearance.
+
 This is our internal review rubric, not Incubyte’s scoring system. Baseline: public commit `3c6ff79`; work stays on local `codex/visual-quality`. No main push, production deployment, public-history rewrite, email or submission is authorized in this pass.
 
 ## Baseline evidence and decisions

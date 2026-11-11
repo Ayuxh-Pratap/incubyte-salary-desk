@@ -1,0 +1,1467 @@
+{
+  "phase": "after",
+  "source": "406b4e2534448122849b54aebd5cca598cfbca08",
+  "recordedAt": "2026-11-11T14:55:35.775Z",
+  "environment": "Node 24 / Windows / Chromium / localhost production build; isolated hosted Neon US East test DB, client India; three fresh browser contexts, same process/pool; first-process request not guaranteed cold Neon",
+  "method": "click/goto to no aria-busy, all resulting response bodies read; decoded bytes, sequential journeys; probe counts include transaction control statements; SQL arguments never logged",
+  "observations": [
+    {
+      "sample": 0,
+      "name": "first-dashboard",
+      "ms": 4549,
+      "requests": [
+        {
+          "path": "/dashboard?currency=USD",
+          "type": "document",
+          "rsc": false,
+          "bytes": 31991,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1zbsn72e5c0d3.css",
+          "type": "stylesheet",
+          "rsc": false,
+          "bytes": 40033,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3y705tc4v-41-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 13402,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2rv5jvl35qh22.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 30356,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 11199,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/GeistMono_Variable.p.2vtemngyy8z-u.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 71212,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0_shif7rxv2nv.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27722,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27nrbqkhzz-mh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 16578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2c7fqfns8tiv2.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 160170,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bylbj9vf95kl.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 24944,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bvhuho7qqb1-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27797,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/Geist_Variable-s.p.43azbxi7zpibd.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 69488,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2olo2e9e-_esu.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 229288,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/38milv777xwt-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 20397,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27_07g9llbdub.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 38791,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kpjzzzgpnjh6.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 221105,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2272_ska6iagh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 205320,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 278,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 277,
+          "status": 200
+        },
+        {
+          "path": "/dashboard?_rsc=FtXVaiet2ZNNimFq",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1950,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/366uxdcx0jnzr.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 163436,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=zpkM0yuTsoi8NUCc",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2563,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=bLQk-cuNO4y9L1J7",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2nq8cv_z2k0vj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 22176,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1av0oqjuwk22e.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 26996,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/268jqhpj-1wjj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 23852,
+          "status": 200
+        },
+        {
+          "path": "/api/catalog",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1280,
+          "status": 200
+        },
+        {
+          "path": "/api/dashboard?currency=USD",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 2353,
+          "status": 200,
+          "summaryCount": 3077
+        },
+        {
+          "path": "/overview?currency=USD",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1062,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=IN",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=US",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=DE",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=GB",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=JP",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=KW",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408919099,
+          "ms": 294,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408919100,
+          "ms": 298,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408919398,
+          "ms": 297,
+          "kind": "lookup",
+          "rows": 1
+        },
+        {
+          "at": 1794408919395,
+          "ms": 319,
+          "kind": "salary-summary",
+          "rows": 35
+        }
+      ]
+    },
+    {
+      "sample": 0,
+      "name": "dashboard-employees",
+      "ms": 918,
+      "requests": [
+        {
+          "path": "/overview?sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1114,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6716,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408920183,
+          "ms": 293,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408920478,
+          "ms": 305,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 0,
+      "name": "employees-overview",
+      "ms": 914,
+      "requests": [
+        {
+          "path": "/employees?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1115,
+          "status": 200
+        },
+        {
+          "path": "/api/analysis?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1341,
+          "status": 200,
+          "summaryCount": 4154
+        },
+        {
+          "path": "/employees?department=finance&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1134,
+          "status": 200
+        },
+        {
+          "path": "/employees?department=design&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1133,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408921087,
+          "ms": 294,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408921381,
+          "ms": 302,
+          "kind": "salary-summary",
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "sample": 0,
+      "name": "return-employees",
+      "ms": 63,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 0,
+      "name": "browser-back",
+      "ms": 21,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 0,
+      "name": "browser-forward",
+      "ms": 20,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 0,
+      "name": "apply-filter",
+      "ms": 685,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6713,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408922122,
+          "ms": 293,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408922416,
+          "ms": 302,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 0,
+      "name": "next-page",
+      "ms": 842,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6759,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408922784,
+          "ms": 313,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408923097,
+          "ms": 411,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 0,
+      "name": "employee-detail",
+      "ms": 874,
+      "requests": [
+        {
+          "path": "/api/employees/5635",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 365,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408923631,
+          "ms": 388,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408924020,
+          "ms": 306,
+          "kind": "employees",
+          "rows": 1
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "first-dashboard",
+      "ms": 1159,
+      "requests": [
+        {
+          "path": "/dashboard?currency=USD",
+          "type": "document",
+          "rsc": false,
+          "bytes": 31991,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1zbsn72e5c0d3.css",
+          "type": "stylesheet",
+          "rsc": false,
+          "bytes": 40033,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3y705tc4v-41-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 13402,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2rv5jvl35qh22.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 30356,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 11199,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27nrbqkhzz-mh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 16578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0_shif7rxv2nv.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27722,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bvhuho7qqb1-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27797,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bylbj9vf95kl.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 24944,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/38milv777xwt-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 20397,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2c7fqfns8tiv2.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 160170,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27_07g9llbdub.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 38791,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/GeistMono_Variable.p.2vtemngyy8z-u.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 71212,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2olo2e9e-_esu.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 229288,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/Geist_Variable-s.p.43azbxi7zpibd.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 69488,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kpjzzzgpnjh6.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 221105,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2272_ska6iagh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 205320,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/366uxdcx0jnzr.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 163436,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 278,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 277,
+          "status": 200
+        },
+        {
+          "path": "/dashboard?_rsc=FtXVaiet2ZNNimFq",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1950,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=zpkM0yuTsoi8NUCc",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2563,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=bLQk-cuNO4y9L1J7",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2nq8cv_z2k0vj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 22176,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1av0oqjuwk22e.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 26996,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/268jqhpj-1wjj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 23852,
+          "status": 200
+        },
+        {
+          "path": "/api/catalog",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1280,
+          "status": 200
+        },
+        {
+          "path": "/api/dashboard?currency=USD",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 2353,
+          "status": 200,
+          "summaryCount": 3077
+        },
+        {
+          "path": "/overview?currency=USD",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1062,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=US",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=DE",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=IN",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=GB",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=JP",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=KW",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408924768,
+          "ms": 306,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408924768,
+          "ms": 307,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408925075,
+          "ms": 315,
+          "kind": "lookup",
+          "rows": 1
+        },
+        {
+          "at": 1794408925075,
+          "ms": 318,
+          "kind": "salary-summary",
+          "rows": 35
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "dashboard-employees",
+      "ms": 918,
+      "requests": [
+        {
+          "path": "/overview?sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1114,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6716,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408925874,
+          "ms": 297,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408926171,
+          "ms": 307,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "employees-overview",
+      "ms": 917,
+      "requests": [
+        {
+          "path": "/employees?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1115,
+          "status": 200
+        },
+        {
+          "path": "/api/analysis?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1341,
+          "status": 200,
+          "summaryCount": 4154
+        },
+        {
+          "path": "/employees?department=finance&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1134,
+          "status": 200
+        },
+        {
+          "path": "/employees?department=design&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1133,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408926759,
+          "ms": 299,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408927058,
+          "ms": 300,
+          "kind": "salary-summary",
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "return-employees",
+      "ms": 65,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 1,
+      "name": "browser-back",
+      "ms": 18,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 1,
+      "name": "browser-forward",
+      "ms": 19,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 1,
+      "name": "apply-filter",
+      "ms": 680,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6713,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408927806,
+          "ms": 294,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408928101,
+          "ms": 308,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "next-page",
+      "ms": 867,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6759,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408928483,
+          "ms": 296,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408928780,
+          "ms": 298,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 1,
+      "name": "employee-detail",
+      "ms": 857,
+      "requests": [
+        {
+          "path": "/api/employees/5635",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 365,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408929324,
+          "ms": 296,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408929621,
+          "ms": 294,
+          "kind": "employees",
+          "rows": 1
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "first-dashboard",
+      "ms": 1080,
+      "requests": [
+        {
+          "path": "/dashboard?currency=USD",
+          "type": "document",
+          "rsc": false,
+          "bytes": 31991,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1zbsn72e5c0d3.css",
+          "type": "stylesheet",
+          "rsc": false,
+          "bytes": 40033,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3y705tc4v-41-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 13402,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2rv5jvl35qh22.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 30356,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0_shif7rxv2nv.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27722,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 11199,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27nrbqkhzz-mh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 16578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bvhuho7qqb1-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 27797,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1bylbj9vf95kl.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 24944,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2c7fqfns8tiv2.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 160170,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/38milv777xwt-.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 20397,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/27_07g9llbdub.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 38791,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2olo2e9e-_esu.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 229288,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/GeistMono_Variable.p.2vtemngyy8z-u.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 71212,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/media/Geist_Variable-s.p.43azbxi7zpibd.woff2",
+          "type": "font",
+          "rsc": false,
+          "bytes": 69488,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kpjzzzgpnjh6.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 221105,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2272_ska6iagh.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 205320,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/366uxdcx0jnzr.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 163436,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 278,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=j79Vj4yH5aoiafxS",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 277,
+          "status": 200
+        },
+        {
+          "path": "/dashboard?_rsc=FtXVaiet2ZNNimFq",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1950,
+          "status": 200
+        },
+        {
+          "path": "/employees?_rsc=zpkM0yuTsoi8NUCc",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2563,
+          "status": 200
+        },
+        {
+          "path": "/overview?_rsc=bLQk-cuNO4y9L1J7",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 2578,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2nq8cv_z2k0vj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 22176,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1av0oqjuwk22e.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 26996,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/268jqhpj-1wjj.js",
+          "type": "script",
+          "rsc": false,
+          "bytes": 23852,
+          "status": 200
+        },
+        {
+          "path": "/api/catalog",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1280,
+          "status": 200
+        },
+        {
+          "path": "/api/dashboard?currency=USD",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 2353,
+          "status": 200,
+          "summaryCount": 3077
+        },
+        {
+          "path": "/overview?currency=USD",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1062,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408930367,
+          "ms": 291,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408930368,
+          "ms": 296,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408930664,
+          "ms": 296,
+          "kind": "lookup",
+          "rows": 1
+        },
+        {
+          "at": 1794408930659,
+          "ms": 317,
+          "kind": "salary-summary",
+          "rows": 35
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "dashboard-employees",
+      "ms": 918,
+      "requests": [
+        {
+          "path": "/employees?country=US",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=DE",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=GB",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=IN",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=KW",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/employees?country=JP",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1061,
+          "status": 200
+        },
+        {
+          "path": "/overview?sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1114,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6716,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408931389,
+          "ms": 291,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408931680,
+          "ms": 303,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "employees-overview",
+      "ms": 885,
+      "requests": [
+        {
+          "path": "/employees?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1115,
+          "status": 200
+        },
+        {
+          "path": "/api/analysis?currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 1341,
+          "status": 200,
+          "summaryCount": 4154
+        },
+        {
+          "path": "/employees?department=finance&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1134,
+          "status": 200
+        },
+        {
+          "path": "/employees?department=design&currency=INR&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1133,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408932283,
+          "ms": 294,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408932578,
+          "ms": 303,
+          "kind": "salary-summary",
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "return-employees",
+      "ms": 72,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 2,
+      "name": "browser-back",
+      "ms": 18,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 2,
+      "name": "browser-forward",
+      "ms": 19,
+      "requests": [],
+      "db": []
+    },
+    {
+      "sample": 2,
+      "name": "apply-filter",
+      "ms": 688,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=1&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6713,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408933303,
+          "ms": 295,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408933598,
+          "ms": 312,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "next-page",
+      "ms": 867,
+      "requests": [
+        {
+          "path": "/overview?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department&currency=INR",
+          "type": "fetch",
+          "rsc": true,
+          "bytes": 1122,
+          "status": 200
+        },
+        {
+          "path": "/api/employees?q=Aarav&sort=name-asc&page=2&pageSize=25&groupBy=department",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 6759,
+          "status": 200,
+          "rows": 25
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408933983,
+          "ms": 294,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408934278,
+          "ms": 297,
+          "kind": "count",
+          "rows": 25
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "name": "employee-detail",
+      "ms": 889,
+      "requests": [
+        {
+          "path": "/api/employees/5635",
+          "type": "fetch",
+          "rsc": false,
+          "bytes": 365,
+          "status": 200
+        }
+      ],
+      "db": [
+        {
+          "at": 1794408934841,
+          "ms": 292,
+          "kind": "environment",
+          "rows": 1
+        },
+        {
+          "at": 1794408935133,
+          "ms": 354,
+          "kind": "employees",
+          "rows": 1
+        }
+      ]
+    }
+  ]
+}

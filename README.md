@@ -4,7 +4,7 @@ A focused salary workspace for an HR Manager at fictional **ACME**: find employe
 
 **Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. [Live application](https://incubyte-salary-desk.vercel.app) · [Public repository](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [Passing hosted CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517). Enter the privately shared evaluator code; no Vercel account is required. The core product, deployed persistence and production-browser workflow are verified. The candidate’s final narrated video remains pending; see [Delivery](docs/DELIVERY.md).
 
-**Local visual-quality review:** codex/visual-quality adds the approved P1 neutral shell, responsive filter workspaces and default HR Dashboard. These changes are locally verified and intentionally unpublished; the live link/main CI above remain the published baseline. See [review, scorecards and release gates](docs/UI_REVIEW.md) and the [before/after board](docs/review/before-after.html).
+**Local fidelity/performance review:** codex/visual-quality now matches the locked Job Desk foundation, uses accessible animated dropdowns, bounded session-memory caching and Dashboard-only Chart.js series. Review changes remain unpublished; live/main CI above are the earlier baseline. See [measured causes, caching policy, screenshots and release gates](docs/FIDELITY_PERFORMANCE.md).
 
 ## Try the workflow
 
@@ -16,7 +16,7 @@ No FX, payroll, employee creation/deletion, salary history, future scheduling or
 
 ## Stack and boundaries
 
-Node 24 LTS; Next.js App Router/TypeScript; PostgreSQL 17; Drizzle; Zod; Vitest; Playwright; Tailwind; reviewed Base UI/Animate UI primitives. Modular monolith with pure money/use-case rules, server queries and access checks, thin HTTP routes and interactive React screens. [Architecture, decisions and four code walkthroughs](docs/ENGINEERING.md). [Design tokens and reuse](DESIGN.md). [Actual AI collaboration](docs/AI_COLLABORATION.md).
+Node 24 LTS; Next.js App Router/TypeScript; PostgreSQL 17; Drizzle; Zod; Vitest; Playwright; scoped Chart.js; Tailwind; reviewed Base UI/Animate UI primitives. Modular monolith with pure money/use-case rules, server queries and access checks, thin HTTP routes and interactive React screens. [Architecture, decisions and four code walkthroughs](docs/ENGINEERING.md). [Design tokens and reuse](DESIGN.md). [Actual AI collaboration](docs/AI_COLLABORATION.md).
 
 ## Local setup — hosted PostgreSQL, no Docker prerequisite
 

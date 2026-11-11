@@ -2,7 +2,7 @@
 
 Status: core implementation verified; public source and production published with candidate approval; hosted CI passed; candidate narrated video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
 
-**Current review branch:** Dashboard/P1/workspace changes are locally verified (30 unit / 9 PostgreSQL / 15 production-browser; 30 theme/viewport captures) and intentionally not published/deployed. [UI review](UI_REVIEW.md) holds both scorecards, evidence and release gates. The published handoff below still describes main’s baseline.
+**Current review branch:** the locked Job Desk foundation, protected read cache, consolidated queries and scoped Chart.js Dashboard are locally verified (35 unit / 12 PostgreSQL / 21 production-browser checks). Final viewport/measurement evidence is in [fidelity/performance review](FIDELITY_PERFORMANCE.md); earlier [UI review](UI_REVIEW.md) is historical. This version is intentionally unpublished/undeployed. Published handoff below describes main’s baseline.
 
 ## Completion checklist
 

@@ -25,7 +25,7 @@ flowchart LR
  Domain --> Adapter[Versioned salary repository]
  Adapter --> DB[(PostgreSQL on Neon)]
  Queries --> DB
- API --> Dashboard[Dashboard grouped headcounts + reused analysis]
+ API --> Dashboard[Dashboard bounded headcounts + financial aggregates + histogram]
  Dashboard --> DB
  Seed[Explicit synthetic seed command] --> DB
 ```
@@ -42,7 +42,7 @@ SQL totals use numeric arithmetic and text serialization. Median ranks the entir
 
 ## Lists, populations and safe writes
 
-One employeeWhere predicate applies literal wildcard escaping and parameterized country/department/role/currency filters to lists, counts and analysis. Sorting is allowlisted with an id tie-breaker; salary sorting requires a currency. Pages are 25/50/100 records. Count/list and overall/group analysis run in repeatable-read, read-only transactions so one response describes a consistent population. Drill-down retains the same filters. Unknown or unavailable lookup labels retain active codes rather than claiming All.
+One employeeWhere predicate applies literal wildcard escaping and parameterized country/department/role/currency filters to lists, counts and analysis. Sorting is allowlisted with an id tie-breaker; salary sorting requires a currency. Pages are 25/50/100 records. Normal count/list and full analysis branches share single-statement snapshots; out-of-range pagination has a deliberate count/clamped-page fallback. Drill-down retains the same filters. Unknown or unavailable lookup labels retain active codes rather than claiming All.
 
 Salary edits validate immutable currency/period and parse the amount on the server. UPDATE checks both id and expected version, increments the version and writes server metadata atomically. No returned row means conflict. The UI retains the proposal after validation, network or persistence failure; conflict review rebases it explicitly against the latest snapshot. Success is shown only after a confirmed response. A network failure after commit is treated as uncertain and resolved by rereading/version checks.
 
@@ -68,7 +68,7 @@ Vercel Hobby, Node 24 and region iad1; Neon aws-us-east-2. Runtime uses pooled n
 
 No job domain, personal data, integrations, Blob sync, PWA/service worker, all-record client index, dev instrumentation or Git history was copied. Applicable notices are retained. Sheet review caught generic-dialog motion and missing close-event cancellation; both were corrected and browser tested.
 
-Official incubyte.co styling inspected 2026-11-11 repeatedly used green #014d43 and lime #d3fe73. These are observed website accents, not a published brand standard. ACME is fictional and the footer identifies an independent assessment concept; no official Incubyte product/logo claim. DESIGN.md documents runtime CSS; it does not generate it.
+The locked visual source is now Job Desk DESIGN.md plus its actual runtime implementation. docs/design-foundation.json vendors 216 palette/semantic/type/radius/elevation/motion values with the inspected source commit. No lime/green brand overrides remain. Source documentation/runtime discrepancies and accessibility adaptations are explicit in DESIGN.md. No sibling folder dependency or private Job Desk domain data was introduced.
 
 ## Evidence and practical performance
 
@@ -78,13 +78,31 @@ Measured 2026-11-11: 10,000 employees; Node 24.19/Windows; client in India; Neon
 
 Indexes cover name/id, currency/salary/id, country/department and department/role. Retain this small set based on the measured workload; no external search service, replicas or speculative infrastructure.
 
-## Visual-quality review read model and UI state
+## Protected read flow and bounded session caching
 
-The local review branch adds GET /api/dashboard behind the same session/API boundary. One GROUPING SETS query returns country/department/currency headcounts; headcount is the country partition sum, never the sum of all dimensions. salaryAnalysis supplies single-currency financial metrics/department medians in the same repeatable-read snapshot. No schema change, extra service or browser-side employee index. Two tiny chart helpers keep median comparisons exact and convert only bounded dimensionless percentages to Number.
+Every data API still authenticates and returns private, no-store. The server layout verifies the session before mounting RemoteProvider. A new random scope is stored in the encrypted session at login; the provider owns its own memory map. React cache memoizes session reads during a render/request where applicable, without a cross-request protected data cache. No public CDN/full-route salary cache or shared ORM result cache is enabled.
 
-Draft controls apply together. A React navigation transition covers the server-route phase; the URL+revision-keyed abortable fetch covers the data phase. Accepted submission snapshots protect newer typing from an older route completion. Previous data is used only for structural pagination metadata and unfiltered Dashboard headcounts, never old filtered rows or salary metrics under new labels. Matching skeletons retain semantic headers/tracks and concise busy announcements. Positioned table scroll wrappers contain their absolute screen-reader labels; no negative-margin workaround.
+| Read                                  | Fresh TTL  | Policy                                                                                                |
+| ------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- |
+| Directory page / analysis / Dashboard | 30 seconds | Canonical URL including all filters, sort, page, page size, grouping and currency, under access scope |
+| Employee detail                       | 15 seconds | Employee id under the same scope                                                                      |
+| Lookup catalog                        | 5 minutes  | Small ordered lookup arrays, same authenticated scope                                                 |
 
-Full local review checks: 30 unit, nine PG and 15 production-browser cases, plus 30 viewport/theme captures. Current source/main deployment separation, before/after scorecards, screenshots and remaining gaps are documented in [UI review](UI_REVIEW.md). Published main/production remain the earlier baseline until release approval.
+In-flight reads deduplicate. Capacity is 24 insertion-ordered query keys, not every possible employee page. Fresh returns render immediately; stale same-key values may remain visible during revalidation for at most 120 additional seconds. Beyond that they are discarded. Active views revalidate at expiry and on window focus/visibility. Errors expose Retry; explicit refresh forces a read and shows pending feedback while retaining same-key values. No data is stored in localStorage/sessionStorage/IndexedDB. A failed validation response never populates the cache.
+
+Successful salary saves atomically retain the confirmed detail and invalidate every other salary-bearing result, including pages, analyses and Dashboard. The current list refreshes, a revisited analysis reads again, and scoped BroadcastChannel events invalidate other tabs. Events include document identity to prevent self-delivery. Sign-out clears/denies memory and notifies other tabs; 401 responses fail closed and erase cached data. A new login gets a fresh scope. This remains a short browser snapshot: external editors can be seen at revalidation, and an ambiguous network failure is handled through reread/version conflict rules.
+
+Within a workspace route, installed Next.js history integration updates useSearchParams immediately for filters/pagination/currency, eliminating the RSC-then-JSON waterfall. Different route navigation retains authenticated server layout checks and bounded prefetch of the three workspace destinations. LinkPending acknowledges clicks independently of data completion. Draft controls apply together; exact-key loading skeletons never show rows under another population's labels. Abort/generation guards prevent invalidated or obsolete responses from winning. Router Back/Forward restores the URL and reuses a matching fresh entry.
+
+## Query and Dashboard decisions
+
+Normal employee pages use COUNT OVER with stable allowlisted order and LIMIT/OFFSET, selecting only visible directory fields. Full detail/update metadata is fetched for the editor. Normal directory, analysis and Dashboard requests each make one environment-marker check plus one read statement. Lookup catalog now uses a single small ordered JSON aggregate statement rather than four pooled queries. The original measured fan-out caused late lookup responses on first arrival. No N+1 or 10000-record browser materialization was found. The narrow fallback for an offset past the population can use an additional count/read; tests preserve clamping and empty results.
+
+Analysis reuses the same employee predicate and exact summary SQL for the overall and grouped populations in one UNION statement. Dashboard combines headcount partitions, those financial summaries, and a bounded histogram in one statement snapshot. Histogram bins cover observed min..max in exact integer minor units with at most eight inclusive, disjoint ranges; tied/small ranges use fewer bins; empty currencies return no bins. PostgreSQL NUMERIC avoids BIGINT overflow in calculations. No schema/index change was justified by the measured 10000-row workload.
+
+Only counts become JavaScript chart numbers. Salary boundaries remain exact strings in labels/tooltips/tables. Chart.js 4.6.1 is dynamically imported solely by the Dashboard, registering bar/doughnut controllers, elements, category/linear scales and tooltips. Country doughnut answers composition; horizontal department bars compare headcount with readable labels; the annual-base histogram answers distribution for one selected currency. Global charts explicitly cover all currencies; money never crosses currencies. The country legend sits beside its doughnut and supplies keyboard-accessible population links; screen-reader headcount text accompanies the department chart, with equivalent keyboard filtering in Employees. The histogram retains its exact-band table. Country/department/currency drill-downs accompany the canvas. No historical trends or fairness conclusions are invented.
+
+Current measurement evidence, reproduction commands and limitations are in [fidelity/performance review](FIDELITY_PERFORMANCE.md). Prior P1 review is historical and superseded visually. Published main/production remain the earlier baseline until release approval.
 
 ## Four interview walkthroughs
 
@@ -96,3 +114,7 @@ Full local review checks: 30 unit, nine PG and 15 production-browser cases, plus
 The defensible tradeoff is a small complete current-salary tool with exact arithmetic and transparent populations. History, FX and full IAM require additional business decisions and are deliberately excluded.
 
 Sources: [Incubyte website](https://incubyte.co/), [Neon plans](https://neon.com/docs/introduction/plans), [Vercel Hobby](https://vercel.com/docs/plans/hobby), [Vercel Node runtime](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions). Provider/account observations were checked during setup; current account is Free/Hobby.
+
+## Final compact composition
+
+The two headcount cards share a 256px plot area and stretch equally in the desktop grid. Country legend/count links sit to the right of the doughnut; the former disclosure footers are removed. Theme segments use compact 28px controls within a 32px well; the remaining controls preserve their existing targets. Directory table headers have square inner edges beneath the result header. Salary Overview shows four financial cards: total, median, minimum and maximum. Population count remains visible above them and in the grouped analysis; no aggregate rule or API field was removed.

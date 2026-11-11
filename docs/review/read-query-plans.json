@@ -1,0 +1,405 @@
+{
+  "source": "406b4e2534448122849b54aebd5cca598cfbca08",
+  "recordedAt": "2026-11-11T14:55:55.745Z",
+  "environment": "Windows Node 24, India client, isolated Neon US East test database, 10000 synthetic employees; pooled max one",
+  "connectionMs": 3126.67,
+  "method": "One new-pool connection sample (not guaranteed Neon cold), five sequential direct read samples incl WAN, then one EXPLAIN ANALYZE per scenario; environment guard verified once outside each scenario; no index/schema/data changes",
+  "observations": [
+    {
+      "scenario": "employee_page",
+      "statementsPerRead": 1,
+      "samplesIncludingWanMs": [
+        316.69,
+        318.47,
+        307.86,
+        312.91,
+        309.3
+      ],
+      "planningMs": 0.334,
+      "executionMs": 4.296,
+      "nodes": [
+        {
+          "node": "Limit",
+          "rows": 25,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 50,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Hash Join",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Hash Join",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Hash Join",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Hash",
+          "rows": 6,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 6,
+          "loops": 1
+        },
+        {
+          "node": "Hash",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Hash",
+          "rows": 14,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 14,
+          "loops": 1
+        }
+      ]
+    },
+    {
+      "scenario": "full_analysis",
+      "statementsPerRead": 1,
+      "samplesIncludingWanMs": [
+        311.42,
+        309.94,
+        307.2,
+        311.85,
+        311.15
+      ],
+      "planningMs": 0.214,
+      "executionMs": 6.936,
+      "nodes": [
+        {
+          "node": "Append",
+          "rows": 8,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Index Only Scan",
+          "index": "employee_currency_salary_id_idx",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 3077,
+          "loops": 1
+        }
+      ]
+    },
+    {
+      "scenario": "dashboard_series",
+      "statementsPerRead": 1,
+      "samplesIncludingWanMs": [
+        333.16,
+        327.95,
+        325.02,
+        325.28,
+        327.02
+      ],
+      "planningMs": 0.414,
+      "executionMs": 30.873,
+      "nodes": [
+        {
+          "node": "Append",
+          "rows": 35,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 19,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 19,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 10000,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Index Only Scan",
+          "index": "employee_currency_salary_id_idx",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "WindowAgg",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Subquery Scan",
+          "rows": 8,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 8,
+          "loops": 1
+        },
+        {
+          "node": "Nested Loop",
+          "rows": 3077,
+          "loops": 1
+        },
+        {
+          "node": "Nested Loop",
+          "rows": 8,
+          "loops": 1
+        },
+        {
+          "node": "Result",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Limit",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Index Only Scan",
+          "index": "employee_currency_salary_id_idx",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Limit",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Index Only Scan",
+          "index": "employee_currency_salary_id_idx",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Function Scan",
+          "rows": 8,
+          "loops": 1
+        },
+        {
+          "node": "Materialize",
+          "rows": 3077,
+          "loops": 8
+        },
+        {
+          "node": "Index Only Scan",
+          "index": "employee_currency_salary_id_idx",
+          "rows": 3077,
+          "loops": 1
+        }
+      ]
+    },
+    {
+      "scenario": "lookup_catalog",
+      "statementsPerRead": 1,
+      "samplesIncludingWanMs": [
+        304.19,
+        303.6,
+        302.71,
+        302.8,
+        308.34
+      ],
+      "planningMs": 0.095,
+      "executionMs": 0.152,
+      "nodes": [
+        {
+          "node": "Result",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 6,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 6,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 7,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Sort",
+          "rows": 14,
+          "loops": 1
+        },
+        {
+          "node": "Seq Scan",
+          "rows": 14,
+          "loops": 1
+        },
+        {
+          "node": "Aggregate",
+          "rows": 1,
+          "loops": 1
+        },
+        {
+          "node": "Index Scan",
+          "index": "currencies_pkey",
+          "rows": 6,
+          "loops": 1
+        }
+      ]
+    }
+  ]
+}

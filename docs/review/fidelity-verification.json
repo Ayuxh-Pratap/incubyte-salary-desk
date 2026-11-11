@@ -1,0 +1,610 @@
+{
+  "source": "406b4e2534448122849b54aebd5cca598cfbca08",
+  "recordedAt": "2026-11-11T14:59:18.912Z",
+  "branch": "codex/visual-quality",
+  "productionChanged": false,
+  "checks": {
+    "unit": 35,
+    "postgres": 12,
+    "productionBrowser": 21,
+    "optInVisualCases": 30,
+    "lint": "passed",
+    "types": "passed",
+    "build": "passed without runtime secrets",
+    "designValues": 216,
+    "contrastPairs": 16,
+    "pageErrors": []
+  },
+  "method": {
+    "samplesPerJourney": 3,
+    "journeysPerPhase": 9,
+    "querySamples": 5,
+    "postEditSamples": 1
+  },
+  "navigation": [
+    {
+      "journey": "first-dashboard",
+      "before": {
+        "min": 2512,
+        "median": 2517,
+        "max": 6126
+      },
+      "after": {
+        "min": 1080,
+        "median": 1159,
+        "max": 4549
+      },
+      "beforeApi": [1, 2, 2],
+      "afterApi": [2, 2, 2]
+    },
+    {
+      "journey": "dashboard-employees",
+      "before": {
+        "min": 1987,
+        "median": 2434,
+        "max": 2440
+      },
+      "after": {
+        "min": 918,
+        "median": 918,
+        "max": 918
+      },
+      "beforeApi": [2, 2, 2],
+      "afterApi": [1, 1, 1]
+    },
+    {
+      "journey": "employees-overview",
+      "before": {
+        "min": 1909,
+        "median": 1911,
+        "max": 1942
+      },
+      "after": {
+        "min": 885,
+        "median": 914,
+        "max": 917
+      },
+      "beforeApi": [2, 2, 2],
+      "afterApi": [1, 1, 1]
+    },
+    {
+      "journey": "return-employees",
+      "before": {
+        "min": 1886,
+        "median": 1889,
+        "max": 1900
+      },
+      "after": {
+        "min": 63,
+        "median": 65,
+        "max": 72
+      },
+      "beforeApi": [2, 2, 2],
+      "afterApi": [0, 0, 0]
+    },
+    {
+      "journey": "browser-back",
+      "before": {
+        "min": 1870,
+        "median": 1872,
+        "max": 2375
+      },
+      "after": {
+        "min": 18,
+        "median": 18,
+        "max": 21
+      },
+      "beforeApi": [2, 2, 2],
+      "afterApi": [0, 0, 0]
+    },
+    {
+      "journey": "browser-forward",
+      "before": {
+        "min": 1868,
+        "median": 1881,
+        "max": 2386
+      },
+      "after": {
+        "min": 19,
+        "median": 19,
+        "max": 20
+      },
+      "beforeApi": [2, 2, 2],
+      "afterApi": [0, 0, 0]
+    },
+    {
+      "journey": "apply-filter",
+      "before": {
+        "min": 1884,
+        "median": 1942,
+        "max": 2384
+      },
+      "after": {
+        "min": 680,
+        "median": 685,
+        "max": 688
+      },
+      "beforeApi": [1, 1, 1],
+      "afterApi": [1, 1, 1]
+    },
+    {
+      "journey": "next-page",
+      "before": {
+        "min": 1860,
+        "median": 1878,
+        "max": 1880
+      },
+      "after": {
+        "min": 842,
+        "median": 867,
+        "max": 867
+      },
+      "beforeApi": [1, 1, 1],
+      "afterApi": [1, 1, 1]
+    },
+    {
+      "journey": "employee-detail",
+      "before": {
+        "min": 869,
+        "median": 871,
+        "max": 874
+      },
+      "after": {
+        "min": 857,
+        "median": 874,
+        "max": 889
+      },
+      "beforeApi": [1, 1, 1],
+      "afterApi": [1, 1, 1]
+    }
+  ],
+  "employeePayload": {
+    "before": {
+      "bytes": {
+        "min": 8963,
+        "median": 8966,
+        "max": 9009
+      },
+      "maxRows": 25
+    },
+    "after": {
+      "bytes": {
+        "min": 6713,
+        "median": 6716,
+        "max": 6759
+      },
+      "maxRows": 25
+    }
+  },
+  "initialNonApiDecodedBytes": {
+    "before": [1024208, 1024208, 1024208],
+    "after": [1491327, 1491327, 1484961]
+  },
+  "viewports": [
+    {
+      "route": "dashboard",
+      "theme": "light",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-dashboard-light-320.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "dark",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-dashboard-dark-320.png"
+    },
+    {
+      "route": "employees",
+      "theme": "light",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-employees-light-320.png"
+    },
+    {
+      "route": "employees",
+      "theme": "dark",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-employees-dark-320.png"
+    },
+    {
+      "route": "overview",
+      "theme": "light",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-overview-light-320.png"
+    },
+    {
+      "route": "overview",
+      "theme": "dark",
+      "width": 320,
+      "height": 740,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 320,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-overview-dark-320.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-dashboard-light-390.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-dashboard-dark-390.png"
+    },
+    {
+      "route": "employees",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-employees-light-390.png"
+    },
+    {
+      "route": "employees",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-employees-dark-390.png"
+    },
+    {
+      "route": "overview",
+      "theme": "light",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-overview-light-390.png"
+    },
+    {
+      "route": "overview",
+      "theme": "dark",
+      "width": 390,
+      "height": 844,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 390,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-overview-dark-390.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-dashboard-light-768.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-dashboard-dark-768.png"
+    },
+    {
+      "route": "employees",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-employees-light-768.png"
+    },
+    {
+      "route": "employees",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-employees-dark-768.png"
+    },
+    {
+      "route": "overview",
+      "theme": "light",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#f4f4f3",
+      "file": "after-overview-light-768.png"
+    },
+    {
+      "route": "overview",
+      "theme": "dark",
+      "width": 768,
+      "height": 1024,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 768,
+      "mainLeft": 0,
+      "canvas": "#18191c",
+      "file": "after-overview-dark-768.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "light",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-dashboard-light-1366.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "dark",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-dashboard-dark-1366.png"
+    },
+    {
+      "route": "employees",
+      "theme": "light",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-employees-light-1366.png"
+    },
+    {
+      "route": "employees",
+      "theme": "dark",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-employees-dark-1366.png"
+    },
+    {
+      "route": "overview",
+      "theme": "light",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-overview-light-1366.png"
+    },
+    {
+      "route": "overview",
+      "theme": "dark",
+      "width": 1366,
+      "height": 900,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1366,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-overview-dark-1366.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "light",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-dashboard-light-1920.png"
+    },
+    {
+      "route": "dashboard",
+      "theme": "dark",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-dashboard-dark-1920.png"
+    },
+    {
+      "route": "employees",
+      "theme": "light",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-employees-light-1920.png"
+    },
+    {
+      "route": "employees",
+      "theme": "dark",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-employees-dark-1920.png"
+    },
+    {
+      "route": "overview",
+      "theme": "light",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#f4f4f3",
+      "file": "after-overview-light-1920.png"
+    },
+    {
+      "route": "overview",
+      "theme": "dark",
+      "width": 1920,
+      "height": 1080,
+      "bodyOverflow": false,
+      "mainOverflow": false,
+      "headerOverflow": false,
+      "mainRight": 1920,
+      "mainLeft": 240,
+      "canvas": "#18191c",
+      "file": "after-overview-dark-1920.png"
+    }
+  ],
+  "queryPlans": [
+    {
+      "scenario": "employee_page",
+      "executionMs": 4.296,
+      "statements": 1
+    },
+    {
+      "scenario": "full_analysis",
+      "executionMs": 6.936,
+      "statements": 1
+    },
+    {
+      "scenario": "dashboard_series",
+      "executionMs": 30.873,
+      "statements": 1
+    },
+    {
+      "scenario": "lookup_catalog",
+      "executionMs": 0.152,
+      "statements": 1
+    }
+  ],
+  "connectionMs": 3126.67,
+  "postEdit": {
+    "saveMs": 1401,
+    "analysisMs": 912,
+    "updatedValueObserved": true
+  },
+  "limitations": [
+    "Local production-build measurements over India-to-US hosted DB, not live deployment latency or SLA",
+    "Fresh process/browser and warmed samples; true Neon autosuspend cold start not established",
+    "RSC/background-prefetch accounting can straddle journey windows; recorded payloads are decoded response bytes, not compressed wire transfer",
+    "Chart/selector functionality checked in Chromium; physical devices, Firefox/Safari and full screen-reader/forced-colors/zoom review remain unverified",
+    "Final candidate narrated demonstration and release of this review branch remain pending"
+  ]
+}

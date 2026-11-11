@@ -25,6 +25,23 @@ const light = Object.assign({}, ...roots),
       props(m[1]),
     ),
   );
+const documented = fs.readFileSync("DESIGN.md", "utf8");
+for (const value of [
+  "#fbfaf9",
+  "#111214",
+  "#f4f4f3",
+  "#18191c",
+  "#ffffff",
+  "#26272b",
+  "#f7f7f7",
+  "#303033",
+  "#f15a0f",
+  "#c6440a",
+])
+  assert(
+    documented.includes(value),
+    "Core documented palette differs: " + value,
+  );
 let matched = 0;
 for (const [section, actual] of [
   ["light", light],
