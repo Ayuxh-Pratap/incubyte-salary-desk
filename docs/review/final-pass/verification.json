@@ -95,5 +95,13 @@
     "checks": "6 existing report browser checks passed; lint, types, design checks and production build passed",
     "visualEvidence": "docs/review/report-text-layout/verification.json",
     "scope": "Headings/prose and code/explanations stack vertically; full-width diagrams and separate pages retained"
+  },
+  "paperReportRevision": {
+    "source": "655ca89",
+    "status": "Verified locally; unpublished",
+    "checks": "6 existing report browser checks; lint, types, 216-value design check and production build passed",
+    "responsive": "8 production light/dark × 390/768/1366/1920 combinations; no document overflow or report salary reads/chart initialization",
+    "evidence": "docs/review/paper-report/visual-verification.json",
+    "scope": "Shared on-screen document sheet, document margins, running headers/footers and established reading typography; no product logic or deployment changes"
   }
 }

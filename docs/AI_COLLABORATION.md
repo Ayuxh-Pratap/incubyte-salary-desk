@@ -215,3 +215,5 @@ The stacked-text revision `ede8ac6` passed six existing production report browse
 ## Paper-like report presentation
 
 The candidate asked for the report to look like text on paper. Added a shared document sheet using existing semantic surfaces, a fine edge and restrained shadow; moved navigation/actions outside the sheet; added running assessment/section headers and footers; used document margins and the existing 15px reading / 18px heading roles. Appendix/source readers share the surface. No typing effect, new palette, PDF feature, data read or business behavior was introduced. The document is intentionally bounded on wide screens while figures use its available width.
+
+Paper-report source `655ca89` passed six existing production report browser checks, lint, types, design consistency and credential-free build. Inspected light/dark production captures at phone/tablet/laptop/wide desktop; eight combinations remained overflow-free and made no salary reads or chart initialization. The new images are separate in `docs/review/paper-report`. Published history and production remain unchanged.
