@@ -1,6 +1,6 @@
 # Delivery, verification and demo
 
-Status: core implementation verified; review deployment verified; public publication and candidate video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
+Status: core implementation verified; public source and production published with candidate approval; hosted CI passed; candidate narrated video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
 
 ## Completion checklist
 
@@ -17,10 +17,18 @@ Status: core implementation verified; review deployment verified; public publica
 - [x] Final hardening browser rerun: six checks passed against a fresh production build.
 - [x] Deployed authentication, bounded browsing, edit/reload, analysis and redeployment persistence; synthetic amounts restored.
 - [x] Working protected review preview; Neon claimed into a verified Free account.
-- [ ] Public-repository review/push and first GitHub-hosted CI execution.
+- [x] Candidate-approved public repository and production publication; first hosted CI passed.
 - [ ] Candidate's final narrated video and user-sent submission.
 
-Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. Source publication and production promotion remain candidate-reviewed steps. No paid upgrade.
+Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. The candidate explicitly approved public source and production publication. No paid upgrade.
+
+## Published handoff
+
+- Application: https://incubyte-salary-desk.vercel.app (application evaluator code required; no Vercel account).
+- Repository: https://github.com/Ayuxh-Pratap/incubyte-salary-desk (public, main branch, genuine incremental commits).
+- Hosted verification: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770.
+- Owner access: the production evaluator code is in ignored .env.production.local under EVALUATOR_PASSWORD. Share only that code privately with the evaluator; never share database/session credentials or publish the environment file. Production and preview codes are distinct.
+- Video: the silent reference exists; the candidate’s final narration and shareable recording link remain pending.
 
 ## Requirement to evidence
 
@@ -40,7 +48,7 @@ Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.ve
 | Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks         |
 | Deployed persistence / final video         | deployment-checks.json verifies reload/redeploy; silent reference recorded; candidate narration pending |
 
-Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; hosted GitHub execution is pending publication, while the equivalent local commands have been exercised.
+Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; [Hosted GitHub CI passed](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770), including all 27 unit, eight PostgreSQL and six production-browser checks.
 
 ## Remaining limitations and decisions
 
@@ -63,6 +71,6 @@ Unit cases run without DB/network. Hosted integration cases use only a purpose-m
 
 Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A completed silent reference walkthrough is at artifacts/salary-desk-silent-walkthrough.webm. It is labelled AI-recorded reference footage and remains separate from the candidate’s narrated handoff.
 
-After final review: publish the reviewed source and production URL; verify deployed UI/API access and edit persistence across redeploy; run hosted CI; record the actual video. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
+Source and production publication are complete, with hosted CI passing. Complete the candidate-narrated video and replay it before submission. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
 
 Windows recording: authenticate first; press Win + Shift + R, select the browser area, choose Start and enable microphone narration if offered. Follow the four-minute story, stop and replay the saved MP4. If your recorder lacks microphone input, use a recorder with screen-plus-microphone support. See [Microsoft’s recording instructions](https://support.microsoft.com/en-us/windows/apps/use-snipping-tool-to-capture-screenshots).

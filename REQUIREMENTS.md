@@ -34,4 +34,4 @@ No employee creation/deletion, compensation history, scheduled pay, imports, bul
 
 ## Delivery
 
-Git repository with genuine incremental commits, requirements, setup/architecture/tradeoff and AI evidence; persistent deployed application and an actual video demo. Publication and submission remain candidate-reviewed steps. Clarification may revise business definitions; deployment access remains to be configured.
+Git repository with genuine incremental commits, requirements, setup/architecture/tradeoff and AI evidence; persistent deployed application and an actual video demo. Source and production publication were subsequently candidate-approved and completed; evaluator access is configured. The candidate’s narrated video and submission remain pending. Clarification may revise business definitions.

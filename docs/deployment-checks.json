@@ -216,5 +216,107 @@
         "elapsedMs": 278
       }
     ]
+  },
+  "production": {
+    "recordedAt": "2026-11-11T09:29:45.431Z",
+    "url": "https://incubyte-salary-desk.vercel.app",
+    "sourceCommit": "10a4d0a",
+    "checks": {
+      "noVercelAccountRequired": true,
+      "anonymousDataRejected": true,
+      "protectedUiRedirectsToLogin": true,
+      "secureSessionCookie": true,
+      "databasePurpose": "demo",
+      "population": 10000,
+      "pageSize": 25,
+      "invalidSalaryRejected": true,
+      "staleVersionRejected": true,
+      "persistedAfterReload": true,
+      "analysisReflectsPersistentEdit": true,
+      "browserLoginVerified": true,
+      "mobile320DarkNoOverflow": true
+    },
+    "requestObservations": [
+      {
+        "path": "/api/health",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 705
+      },
+      {
+        "path": "/api/employees",
+        "method": "GET",
+        "status": 401,
+        "elapsedMs": 574
+      },
+      {
+        "path": "/employees",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 526
+      },
+      {
+        "path": "/api/session",
+        "method": "POST",
+        "status": 200,
+        "elapsedMs": 389
+      },
+      {
+        "path": "/api/employees?pageSize=25",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 509
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 421
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 400,
+        "elapsedMs": 292
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 200,
+        "elapsedMs": 615
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 409,
+        "elapsedMs": 305
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 309
+      },
+      {
+        "path": "/api/analysis?currency=KWD&q=ACME-10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 403
+      }
+    ]
+  },
+  "publication": {
+    "approvedBy": "candidate",
+    "repositoryUrl": "https://github.com/Ayuxh-Pratap/incubyte-salary-desk",
+    "visibility": "public",
+    "defaultBranch": "main",
+    "ci": {
+      "url": "https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770",
+      "sourceCommit": "10a4d0a",
+      "conclusion": "success",
+      "unitCases": 27,
+      "postgresCases": 8,
+      "browserCases": 6
+    }
   }
 }
