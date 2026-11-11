@@ -303,7 +303,18 @@
         "status": 200,
         "elapsedMs": 403
       }
-    ]
+    ],
+    "redeployment": {
+      "recordedAt": "2026-11-11T09:32:00.421Z",
+      "deploymentUrl": "https://incubyte-salary-desk-74fdbdn3k-ayuxh-prataps-projects.vercel.app",
+      "productionUrl": "https://incubyte-salary-desk.vercel.app",
+      "sourceCommit": "5ba7488",
+      "persistedAcrossRedeployment": true,
+      "analysisReflectsPersistentEdit": true,
+      "originalSyntheticAmountRestored": true,
+      "population": 10000,
+      "sessionRemainedValid": true
+    }
   },
   "publication": {
     "approvedBy": "candidate",

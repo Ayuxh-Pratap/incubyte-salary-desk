@@ -18,6 +18,7 @@ Status: core implementation verified; public source and production published wit
 - [x] Deployed authentication, bounded browsing, edit/reload, analysis and redeployment persistence; synthetic amounts restored.
 - [x] Working protected review preview; Neon claimed into a verified Free account.
 - [x] Candidate-approved public repository and production publication; first hosted CI passed.
+- [x] Public production login/API checks, 320px dark UI and edit persistence across a fresh production redeployment; original salary restored.
 - [ ] Candidate's final narrated video and user-sent submission.
 
 Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. The candidate explicitly approved public source and production publication. No paid upgrade.
@@ -27,7 +28,7 @@ Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.ve
 - Application: https://incubyte-salary-desk.vercel.app (application evaluator code required; no Vercel account).
 - Repository: https://github.com/Ayuxh-Pratap/incubyte-salary-desk (public, main branch, genuine incremental commits).
 - Hosted verification: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770.
-- Owner access: the production evaluator code is in ignored .env.production.local under EVALUATOR_PASSWORD. Share only that code privately with the evaluator; never share database/session credentials or publish the environment file. Production and preview codes are distinct.
+- Owner access: ignored .vercel/evaluator-access.md contains only the production application code and login instructions. The underlying value is EVALUATOR_PASSWORD in ignored .env.production.local. Share only the application code privately; never share database/session credentials or publish either private file. Production and preview codes are distinct.
 - Video: the silent reference exists; the candidate’s final narration and shareable recording link remain pending.
 
 ## Requirement to evidence
