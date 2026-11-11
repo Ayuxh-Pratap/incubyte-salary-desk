@@ -31,7 +31,7 @@ export function ThemeToggle({
     <LayoutGroup id={groupId}>
       <div
         role="group"
-        className="inline-flex rounded-lg bg-inset p-0.5 shadow-well"
+        className="inline-flex gap-0.5 rounded-md bg-inset p-0.5 shadow-well"
         aria-label="Color theme"
       >
         {(
@@ -48,7 +48,7 @@ export function ThemeToggle({
             aria-label={value + " theme"}
             aria-pressed={mounted && theme === value}
             onClick={() => setTheme(value)}
-            className="relative isolate rounded-md aria-pressed:text-foreground"
+            className="relative isolate size-7 min-h-7 rounded-[5px] p-0 aria-pressed:text-foreground [&_svg]:size-3.5"
           >
             {mounted && theme === value && (
               <motion.span

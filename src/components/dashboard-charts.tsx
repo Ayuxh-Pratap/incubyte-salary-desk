@@ -164,7 +164,7 @@ function Plot({
   return (
     <div className="relative h-64 min-w-0">
       <canvas ref={ref} role="img" aria-label={label}>
-        The equivalent values and actions are available in the data table below.
+        Exact values are provided in the accompanying text.
       </canvas>
     </div>
   );
@@ -201,7 +201,7 @@ export function PopulationCharts({
       ].map(({ title, groups, name, filter, type }) => (
         <section
           key={filter}
-          className="min-h-[480px] min-w-0 rounded-xl bg-card p-5 shadow-panel"
+          className="min-w-0 rounded-xl bg-card p-5 shadow-panel"
           aria-label={title}
         >
           <h2 className="text-heading font-medium">{title}</h2>
@@ -209,93 +209,77 @@ export function PopulationCharts({
             All {population.headcount.toLocaleString("en-US")} employees · Every
             pay currency
           </p>
-          <Plot
-            type={type}
-            horizontal={type === "bar"}
-            labels={groups.map((g) => name(g.key))}
-            values={groups.map((g) => g.count)}
-            label={title + "; equivalent data and drill-downs follow"}
-            tooltip={(i) =>
-              groups[i].count.toLocaleString("en-US") +
-              " employees · " +
-              ((groups[i].count / population.headcount) * 100).toFixed(1) +
-              "% of organization"
+          <div
+            className={
+              type === "doughnut"
+                ? "grid grid-cols-[minmax(0,1fr)_minmax(122px,0.9fr)] items-center gap-4"
+                : "min-w-0"
             }
-            onPick={(i) =>
-              router.push(
-                "/employees?" +
-                  filter +
-                  "=" +
-                  encodeURIComponent(groups[i].key),
-              )
-            }
-          />
-          {type === "doughnut" && (
-            <ul
-              aria-label="Country legend"
-              className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-meta text-foreground-2"
-            >
-              {groups.map((g, i) => (
-                <li key={g.key} className="flex min-w-0 items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="size-2 shrink-0 rounded-full"
-                    style={{
-                      backgroundColor:
-                        "var(" + seriesTokens[i % seriesTokens.length] + ")",
-                    }}
-                  />
-                  <span className="truncate">{name(g.key)}</span>
-                  <span className="ml-auto tabular-nums">
-                    {g.count.toLocaleString("en-US")}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <details className="mt-4 border-t pt-3">
-            <summary className="min-h-11 cursor-pointer py-3 text-ui font-medium">
-              View data and matching employees
-            </summary>
-            <table className="w-full text-ui">
-              <caption className="sr-only">
-                {title}; current population, all currencies
-              </caption>
-              <thead>
-                <tr className="text-left text-meta text-foreground-2">
-                  <th scope="col" className="py-2">
-                    {filter === "country" ? "Country" : "Department"}
-                  </th>
-                  <th scope="col" className="text-right">
-                    Employees
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {groups.map((g) => (
-                  <tr key={g.key} className="border-t">
-                    <th scope="row" className="text-left font-normal">
-                      <Link
-                        className="flex min-h-11 items-center underline-offset-4 hover:underline"
-                        aria-label={"Explore " + filter + " " + name(g.key)}
-                        href={
-                          "/employees?" +
-                          filter +
-                          "=" +
-                          encodeURIComponent(g.key)
-                        }
-                      >
-                        {name(g.key)}
-                      </Link>
-                    </th>
-                    <td className="text-right tabular-nums">
-                      {g.count.toLocaleString("en-US")}
-                    </td>
-                  </tr>
+          >
+            <Plot
+              type={type}
+              horizontal={type === "bar"}
+              labels={groups.map((g) => name(g.key))}
+              values={groups.map((g) => g.count)}
+              label={
+                title + "; exact headcounts are provided in accompanying text"
+              }
+              tooltip={(i) =>
+                groups[i].count.toLocaleString("en-US") +
+                " employees · " +
+                ((groups[i].count / population.headcount) * 100).toFixed(1) +
+                "% of organization"
+              }
+              onPick={(i) =>
+                router.push(
+                  "/employees?" +
+                    filter +
+                    "=" +
+                    encodeURIComponent(groups[i].key),
+                )
+              }
+            />
+            {type === "doughnut" ? (
+              <ul
+                aria-label="Country legend"
+                className="text-meta text-foreground-2"
+              >
+                {groups.map((g, i) => (
+                  <li key={g.key}>
+                    <Link
+                      title={name(g.key)}
+                      aria-label={"Explore country " + name(g.key)}
+                      href={"/employees?country=" + encodeURIComponent(g.key)}
+                      className="flex min-h-10 min-w-0 items-center gap-2 rounded-md px-1 transition-colors hover:bg-row-hover hover:text-foreground"
+                    >
+                      <span
+                        aria-hidden
+                        className="size-2 shrink-0 rounded-full"
+                        style={{
+                          backgroundColor:
+                            "var(" +
+                            seriesTokens[i % seriesTokens.length] +
+                            ")",
+                        }}
+                      />
+                      <span className="min-w-0">{name(g.key)}</span>
+                      <span className="ml-auto shrink-0 tabular-nums">
+                        {g.count.toLocaleString("en-US")}
+                      </span>
+                    </Link>
+                  </li>
                 ))}
-              </tbody>
-            </table>
-          </details>
+              </ul>
+            ) : (
+              <ul className="sr-only" aria-label="Department headcounts">
+                {groups.map((g) => (
+                  <li key={g.key}>
+                    {name(g.key)}: {g.count.toLocaleString("en-US")} employees
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </section>
       ))}
     </div>

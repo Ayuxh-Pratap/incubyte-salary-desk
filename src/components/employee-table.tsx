@@ -24,7 +24,7 @@ export function EmployeeTable({
   return (
     <>
       <div
-        className="relative hidden overflow-x-auto rounded-t-xl md:block"
+        className="relative hidden overflow-x-auto md:block"
         role="region"
         aria-label="Employee table, scroll horizontally if needed"
         tabIndex={0}

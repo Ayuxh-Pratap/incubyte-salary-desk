@@ -21,7 +21,7 @@ import { MetricSkeleton } from "./skeletons";
 import { Skeleton } from "./skeletons";
 const ChartLoading = () => (
   <div
-    className="mt-5 min-h-[480px] rounded-xl bg-card p-5 shadow-panel"
+    className="mt-5 min-h-[360px] rounded-xl bg-card p-5 shadow-panel"
     aria-label="Loading chart"
   >
     <Skeleton className="h-5 w-48" />

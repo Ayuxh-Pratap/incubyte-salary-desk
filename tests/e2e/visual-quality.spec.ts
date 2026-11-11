@@ -91,11 +91,66 @@ test("Dashboard is the default and separates global headcounts from single-curre
   expect(body.population).not.toHaveProperty("total");
   expect(body.compensation.currency).toBe("USD");
   await page
-    .getByText("View data and matching employees", { exact: true })
-    .first()
-    .click();
-  await page
     .getByRole("link", { name: "Explore country India", exact: true })
     .click();
   await expect(page).toHaveURL(/\/employees\?.*country=IN/);
+});
+
+test("compact chart pair, theme switch and four salary cards retain clear data hierarchy", async ({
+  page,
+}) => {
+  await signIn(page);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("/dashboard");
+  const country = page.getByRole("region", {
+      name: "Headcount by country",
+      exact: true,
+    }),
+    department = page.getByRole("region", {
+      name: "Headcount by department",
+      exact: true,
+    });
+  await expect(page.locator("canvas")).toHaveCount(3, { timeout: 20000 });
+  expect(
+    Math.abs(
+      (await country.boundingBox())!.height -
+        (await department.boundingBox())!.height,
+    ),
+  ).toBeLessThan(1);
+  await expect(
+    page.getByText("View data and matching employees", { exact: true }),
+  ).toHaveCount(0);
+  const plot = await country.locator("canvas").boundingBox(),
+    legend = await country
+      .getByRole("list", { name: "Country legend" })
+      .boundingBox();
+  expect(legend!.x).toBeGreaterThanOrEqual(plot!.x + plot!.width);
+  const toggle = await page
+    .getByRole("group", { name: "Color theme", exact: true })
+    .boundingBox();
+  expect(toggle!.height).toBeLessThanOrEqual(36);
+  await page
+    .getByRole("navigation", { name: "Main navigation", exact: true })
+    .getByRole("link", { name: "Salary overview", exact: true })
+    .click();
+  const metrics = page.getByRole("region", {
+    name: "Salary metrics",
+    exact: true,
+  });
+  await expect(metrics.getByRole("button")).toHaveCount(4, { timeout: 20000 });
+  await expect(
+    metrics.getByRole("button", { name: "Explain Employees", exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("navigation", { name: "Main navigation", exact: true })
+    .getByRole("link", { name: "Employees", exact: true })
+    .click();
+  const scroll = page.getByRole("region", {
+    name: "Employee table, scroll horizontally if needed",
+    exact: true,
+  });
+  await expect(scroll).toBeVisible();
+  expect(
+    await scroll.evaluate((el) => getComputedStyle(el).borderTopLeftRadius),
+  ).toBe("0px");
 });
