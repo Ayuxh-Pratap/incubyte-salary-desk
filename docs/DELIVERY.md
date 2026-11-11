@@ -20,7 +20,7 @@ Status: core implementation verified; review deployment verified; public publica
 - [ ] Public-repository review/push and first GitHub-hosted CI execution.
 - [ ] Candidate's final narrated video and user-sent submission.
 
-Review preview: https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. Source publication and production promotion remain candidate-reviewed steps. No paid upgrade.
+Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. Source publication and production promotion remain candidate-reviewed steps. No paid upgrade.
 
 ## Requirement to evidence
 
@@ -38,7 +38,7 @@ Review preview: https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.ve
 | 10,000-record behavior                     | Bounded page assertions; actual query plans/timings in performance.json            |
 | Reproducible delivery                      | Lockfile, env example, migration/seed/test commands and CI workflow                |
 | Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks         |
-| Deployed persistence / final video         | Pending final deployed check and candidate recording, not satisfied by a script    |
+| Deployed persistence / final video         | deployment-checks.json verifies reload/redeploy; silent reference recorded; candidate narration pending |
 
 Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; hosted GitHub execution is pending publication, while the equivalent local commands have been exercised.
 

@@ -2,7 +2,7 @@
 
 A focused salary workspace for an HR Manager at fictional **ACME**: find employees, safely correct current annual base salary, and understand a defined compensation population. This is an independent assessment concept, not an Incubyte internal system.
 
-**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. The core product, hosted database behavior, deployed persistence and production browser workflow are verified. [Protected review preview](https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.vercel.app). Public publication and the candidate’s final video are tracked in [Delivery](docs/DELIVERY.md).
+**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. The core product, hosted database behavior, deployed persistence and production browser workflow are verified. [Protected review preview](https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app). Public publication and the candidate’s final video are tracked in [Delivery](docs/DELIVERY.md).
 
 ## Try the workflow
 

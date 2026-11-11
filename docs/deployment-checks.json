@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-11-11T08:45:05.560Z",
+  "recordedAt": "2026-11-11T08:45:05.56Z",
   "environment": "preview",
   "deploymentUrl": "https://incubyte-salary-desk-dvni3cy9x-ayuxh-prataps-projects.vercel.app",
   "checks": {
@@ -124,5 +124,97 @@
     "purposeSeparatedDatabasesVerified": 4,
     "employeesPerDatabase": 10000,
     "credentialsRefreshedWithoutReseeding": true
+  },
+  "claimedProjectDeployment": {
+    "recordedAt": "2026-11-11T09:21:45.031Z",
+    "deploymentUrl": "https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.vercel.app",
+    "sourceCommit": "18dbc94",
+    "checks": {
+      "anonymousDataRejected": true,
+      "secureSessionCookie": true,
+      "population": 10000,
+      "pageSize": 25,
+      "databasePurpose": "preview",
+      "invalidSalaryRejected": true,
+      "versionConflictRejected": true,
+      "persistedAfterReload": true,
+      "analysisAvailable": true,
+      "originalSyntheticAmountRestored": true,
+      "analysisReflectsPersistentEdit": true
+    },
+    "requestObservations": [
+      {
+        "path": "/api/employees",
+        "method": "GET",
+        "status": 401,
+        "elapsedMs": 386
+      },
+      {
+        "path": "/api/session",
+        "method": "POST",
+        "status": 200,
+        "elapsedMs": 401
+      },
+      {
+        "path": "/api/employees?pageSize=25",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 1307
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 778
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 400,
+        "elapsedMs": 295
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 200,
+        "elapsedMs": 313
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 409,
+        "elapsedMs": 302
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 299
+      },
+      {
+        "path": "/api/analysis?currency=KWD&q=ACME-10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 339
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 297
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "PATCH",
+        "status": 200,
+        "elapsedMs": 317
+      },
+      {
+        "path": "/api/employees/10000",
+        "method": "GET",
+        "status": 200,
+        "elapsedMs": 278
+      }
+    ]
   }
 }
