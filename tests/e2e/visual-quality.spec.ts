@@ -1,3 +1,4 @@
+import { choose } from "./select-helper";
 import { test, expect } from "@playwright/test";
 async function signIn(page: import("@playwright/test").Page) {
   const base = String(test.info().project.use.baseURL);
@@ -72,7 +73,7 @@ test("Dashboard is the default and separates global headcounts from single-curre
   await expect(page.getByTestId("global-headcount")).toContainText("10,000", {
     timeout: 20000,
   });
-  await page.getByLabel("Dashboard pay currency").selectOption("USD");
+  await choose(page.getByLabel("Dashboard pay currency"), "USD");
   await expect(page).toHaveURL(/\/dashboard$/);
   await page
     .getByRole("button", { name: "Apply currency", exact: true })
@@ -89,6 +90,10 @@ test("Dashboard is the default and separates global headcounts from single-curre
   expect(body.population.headcount).toBe(10000);
   expect(body.population).not.toHaveProperty("total");
   expect(body.compensation.currency).toBe("USD");
+  await page
+    .getByText("View data and matching employees", { exact: true })
+    .first()
+    .click();
   await page
     .getByRole("link", { name: "Explore country India", exact: true })
     .click();

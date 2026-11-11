@@ -1,8 +1,9 @@
 "use client";
+import { useReadCache, publishCacheEvent } from "./remote-provider";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, type ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useState, useEffect, type ReactNode } from "react";
+import { motion, LayoutGroup, useReducedMotion } from "motion/react";
 import {
   Users,
   ChartNoAxesColumn,
@@ -13,6 +14,7 @@ import {
   PanelLeftOpen,
   Info,
 } from "lucide-react";
+import { LinkPending } from "./link-pending";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -21,19 +23,44 @@ const navigation = [
   { href: "/employees", label: "Employees", icon: Users },
   { href: "/overview", label: "Salary overview", icon: ChartNoAxesColumn },
 ];
-export function Shell({ children }: { children: ReactNode }) {
+export function Shell({
+  children,
+  initialCollapsed = false,
+}: {
+  children: ReactNode;
+  initialCollapsed?: boolean;
+}) {
+  const cache = useReadCache();
   const pathname = usePathname(),
     router = useRouter(),
     reduced = useReducedMotion();
-  const [collapsed, setCollapsed] = useState(false),
+  const [collapsed, setCollapsed] = useState(initialCollapsed),
     [ending, setEnding] = useState(false),
     [error, setError] = useState("");
+  useEffect(() => {
+    document.cookie =
+      "salary-desk-sidebar=" +
+      String(collapsed) +
+      "; path=/; max-age=2592000; SameSite=Strict";
+  }, [collapsed]);
+  useEffect(() => {
+    const toggle = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "b") {
+        event.preventDefault();
+        setCollapsed((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", toggle);
+    return () => window.removeEventListener("keydown", toggle);
+  }, []);
   async function endSession() {
     setEnding(true);
     setError("");
     try {
       const response = await fetch("/api/session", { method: "DELETE" });
       if (!response.ok) throw new Error();
+      cache.clear(true);
+      publishCacheEvent(cache.scope, "logout");
       router.push("/login");
       router.refresh();
     } catch {
@@ -60,10 +87,10 @@ export function Shell({ children }: { children: ReactNode }) {
       animate={{
         gridTemplateColumns: collapsed
           ? "64px minmax(0,1fr)"
-          : "224px minmax(0,1fr)",
+          : "240px minmax(0,1fr)",
       }}
       transition={{ duration: reduced ? 0 : 0.24, ease: [0.2, 0, 0, 1] }}
-      className="flex h-dvh flex-col overflow-hidden bg-background text-foreground transition-colors duration-200 lg:grid"
+      className="flex h-dvh flex-col overflow-hidden bg-canvas text-foreground transition-colors duration-200 lg:grid"
     >
       <a
         href="#main"
@@ -78,6 +105,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="flex min-h-14 items-center gap-1">
           <Link
             href="/dashboard"
+            prefetch={true}
             aria-label="Salary Desk dashboard"
             aria-hidden={collapsed || undefined}
             tabIndex={collapsed ? -1 : undefined}
@@ -87,8 +115,15 @@ export function Shell({ children }: { children: ReactNode }) {
             )}
             title="Salary Desk · Fictional ACME assessment"
           >
-            <span className="ml-2 grid size-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-              <Layers className="size-4" aria-hidden />
+            <span
+              aria-hidden
+              className="ml-2 grid size-6 shrink-0 place-items-center rounded-[6px] bg-foreground shadow-button"
+            >
+              <span className="flex w-3 flex-col gap-[2px]">
+                <span className="h-[2px] w-2 rounded-full bg-background/60" />
+                <span className="h-[2px] w-2 rounded-full bg-background/60" />
+                <span className="h-[2px] w-3 rounded-full bg-primary" />
+              </span>
             </span>
             <motion.span
               aria-hidden
@@ -97,7 +132,7 @@ export function Shell({ children }: { children: ReactNode }) {
                 width: collapsed ? 0 : "auto",
               }}
               transition={{ duration: reduced ? 0 : 0.18 }}
-              className="overflow-hidden text-ui font-semibold whitespace-nowrap"
+              className="overflow-hidden text-ui font-medium whitespace-nowrap"
             >
               Salary Desk
             </motion.span>
@@ -116,48 +151,63 @@ export function Shell({ children }: { children: ReactNode }) {
             )}
           </Button>
         </div>
-        <nav
-          aria-label="Main navigation"
-          className="mt-4 flex min-w-0 flex-col gap-1"
-        >
-          {navigation.map(({ href, label, icon: Icon }, i) => (
-            <div key={href}>
-              {i === 1 && (
-                <p
+        <LayoutGroup id="desktop-navigation">
+          <nav
+            aria-label="Main navigation"
+            className="mt-4 flex min-w-0 flex-col gap-1"
+          >
+            {navigation.map(({ href, label, icon: Icon }, i) => (
+              <div key={href}>
+                {i === 1 && (
+                  <p
+                    className={cn(
+                      "mt-5 mb-2 px-3 text-meta text-muted-foreground",
+                      collapsed && "opacity-0",
+                    )}
+                  >
+                    Workspace
+                  </p>
+                )}
+                <Link
+                  href={href}
+                  prefetch={true}
+                  aria-label={label}
+                  aria-current={pathname === href ? "page" : undefined}
+                  title={collapsed ? label : undefined}
                   className={cn(
-                    "mt-5 mb-2 px-3 text-meta text-muted-foreground",
-                    collapsed && "opacity-0",
+                    "relative isolate flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-4 text-ui font-medium text-foreground-2 transition-colors duration-fast hover:bg-inset hover:text-foreground",
+                    pathname === href && "text-foreground",
                   )}
                 >
-                  Workspace
-                </p>
-              )}
-              <Link
-                href={href}
-                aria-label={label}
-                aria-current={pathname === href ? "page" : undefined}
-                title={collapsed ? label : undefined}
-                className={cn(
-                  "flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-4 text-ui font-medium text-foreground-2 transition-colors duration-200 hover:bg-inset hover:text-foreground",
-                  pathname === href && "bg-inset text-foreground",
-                )}
-              >
-                <Icon className="size-4 shrink-0" aria-hidden />
-                <motion.span
-                  aria-hidden
-                  animate={{
-                    opacity: collapsed ? 0 : 1,
-                    width: collapsed ? 0 : "auto",
-                  }}
-                  transition={{ duration: reduced ? 0 : 0.18 }}
-                  className="overflow-hidden whitespace-nowrap"
-                >
-                  {label}
-                </motion.span>
-              </Link>
-            </div>
-          ))}
-        </nav>
+                  {pathname === href && (
+                    <motion.span
+                      layoutId="active"
+                      aria-hidden
+                      className="absolute inset-0 -z-10 rounded-lg bg-sidebar-accent"
+                      transition={{
+                        duration: reduced ? 0 : 0.24,
+                        ease: [0.2, 0, 0, 1],
+                      }}
+                    />
+                  )}
+                  <LinkPending />
+                  <Icon className="size-4 shrink-0" aria-hidden />
+                  <motion.span
+                    aria-hidden
+                    animate={{
+                      opacity: collapsed ? 0 : 1,
+                      width: collapsed ? 0 : "auto",
+                    }}
+                    transition={{ duration: reduced ? 0 : 0.18 }}
+                    className="overflow-hidden whitespace-nowrap"
+                  >
+                    {label}
+                  </motion.span>
+                </Link>
+              </div>
+            ))}
+          </nav>
+        </LayoutGroup>
         <div
           className={cn(
             "mt-auto pt-6",
@@ -207,7 +257,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className="flex items-center justify-between gap-2">
           <Link
             href="/dashboard"
-            className="inline-flex min-h-11 items-center gap-2 font-semibold"
+            className="inline-flex min-h-11 items-center gap-2 font-medium"
           >
             <Layers className="size-5 text-primary" aria-hidden />
             Salary Desk
@@ -245,7 +295,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <main
         id="main"
         tabIndex={-1}
-        className="scroll-lean flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto bg-muted transition-colors duration-200 lg:mt-3 lg:h-[calc(100dvh-12px)] lg:rounded-tl-2xl lg:border-t lg:border-l"
+        className="scroll-lean flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto bg-background transition-colors duration-200 lg:mt-3 lg:h-[calc(100dvh-12px)] lg:rounded-tl-2xl lg:border-t lg:border-l"
       >
         <div className="w-full min-w-0 flex-1 p-4 md:p-6">{children}</div>
         <footer className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t p-4 text-meta text-muted-foreground lg:hidden">

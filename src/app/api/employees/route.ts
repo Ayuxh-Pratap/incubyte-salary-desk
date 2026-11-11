@@ -17,9 +17,6 @@ export async function GET(request: Request) {
       );
     }
     const { db } = await database();
-    return db.transaction((tx) => listEmployees(tx, filters), {
-      isolationLevel: "repeatable read",
-      accessMode: "read only",
-    });
+    return listEmployees(db, filters);
   });
 }

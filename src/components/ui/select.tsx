@@ -38,6 +38,7 @@ export function SelectField({
       <Select.Trigger
         id={id}
         aria-label={label}
+        data-value={value}
         className={cn(
           "inline-flex min-h-11 min-w-0 items-center justify-between gap-3 rounded-md border border-input bg-card px-3 text-left text-ui text-card-foreground shadow-well transition-colors duration-fast disabled:opacity-50",
           className,
@@ -60,6 +61,7 @@ export function SelectField({
                 <Select.Item
                   key={o.value}
                   value={o.value}
+                  data-value={o.value}
                   disabled={o.disabled}
                   className="relative flex min-h-11 cursor-default items-center gap-2 rounded-md py-2 pr-8 pl-3 text-ui transition-colors duration-fast data-highlighted:bg-muted data-disabled:opacity-40"
                 >

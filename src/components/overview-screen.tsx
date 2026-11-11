@@ -1,4 +1,6 @@
 "use client";
+import { useSearchParams } from "next/navigation";
+import { analysisFilters } from "@/domain/analysis";
 import Link from "next/link";
 import { useState } from "react";
 import { Info, RefreshCw, ArrowRight } from "lucide-react";
@@ -13,7 +15,17 @@ import { Button } from "./ui/button";
 import { SalaryMetrics } from "./salary-metrics";
 import { AnalysisTable } from "./analysis-table";
 import { Skeleton } from "./skeletons";
-export function OverviewScreen({ filters }: { filters: Filters }) {
+export function OverviewScreen({
+  filters: initialFilters,
+}: {
+  filters: Filters;
+}) {
+  const params = useSearchParams();
+  const filters = analysisFilters({
+    ...Object.fromEntries(params),
+    currency: params.get("currency") || "INR",
+  });
+  void initialFilters;
   const query = filterQuery(filters),
     data = useRemote<Analysis>("/api/analysis?" + query),
     catalog = useRemote<Catalog>("/api/catalog");
@@ -39,7 +51,7 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
           <p className="text-meta text-muted-foreground">
             Workspace · Compensation analysis
           </p>
-          <h1 className="mt-1 text-title font-semibold tracking-tight md:text-title-lg">
+          <h1 className="mt-1 text-title font-medium tracking-tight md:text-title-lg">
             Salary overview
           </h1>
           <p className="mt-2 max-w-2xl text-foreground-2">
@@ -47,7 +59,12 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="outline" onClick={data.reload} disabled={busy}>
+          <Button
+            variant="outline"
+            aria-busy={data.refreshing}
+            onClick={data.reload}
+            disabled={busy || data.refreshing}
+          >
             <RefreshCw aria-hidden />
             Refresh
           </Button>
@@ -83,11 +100,13 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
           </p>
         )}
         <p role="status" aria-live="polite" className="sr-only">
-          {busy
-            ? "Calculating full salary population"
-            : data.error
-              ? "Salary analysis unavailable"
-              : "Salary analysis ready"}
+          {data.refreshing
+            ? "Refreshing current view"
+            : busy
+              ? "Calculating full salary population"
+              : data.error
+                ? "Salary analysis unavailable"
+                : "Salary analysis ready"}
         </p>
         <div
           aria-busy={busy}
@@ -95,11 +114,8 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
           role="region"
         >
           {data.error && !busy ? (
-            <section
-              role="alert"
-              className="min-h-80 rounded-xl border bg-card p-6"
-            >
-              <h2 className="font-semibold">
+            <section role="alert" className="min-h-80 rounded-xl bg-card p-6">
+              <h2 className="font-medium">
                 We couldn’t calculate this population
               </h2>
               <p className="mt-2 text-muted-foreground">{data.error}</p>
@@ -128,7 +144,7 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
                 onExplain={setMetric}
               />
               {!busy && data.data?.summary.count === 0 ? (
-                <section className="mt-5 min-h-80 rounded-xl border bg-card px-6 py-16 text-center">
+                <section className="mt-5 min-h-80 rounded-xl bg-card px-6 py-16 text-center">
                   <h2 className="text-heading font-medium">
                     No matching salaries
                   </h2>
@@ -140,7 +156,7 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
               ) : (
                 <section
                   aria-label="Grouped salary analysis"
-                  className="mt-5 rounded-xl border bg-card shadow-panel"
+                  className="mt-5 rounded-xl bg-card shadow-panel"
                 >
                   <header className="border-b p-4">
                     <h2 className="text-heading font-medium">

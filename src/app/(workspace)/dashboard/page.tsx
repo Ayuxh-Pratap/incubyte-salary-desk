@@ -14,7 +14,7 @@ export default async function Dashboard({
   } catch {
     return (
       <section role="alert">
-        <h1 className="text-title font-semibold">
+        <h1 className="text-title font-medium">
           Choose a valid pay currency
         </h1>
         <Link

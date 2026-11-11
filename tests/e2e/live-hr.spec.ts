@@ -29,7 +29,8 @@ test("live HR workflow persists a salary and uses it in filtered analysis", asyn
     await page
       .getByRole("button", { name: "View " + original.name, exact: true })
       .click();
-    await expect(page.getByLabel("Pay currency")).toHaveValue(
+    await expect(page.getByLabel("Pay currency")).toHaveAttribute(
+      "data-value",
       original.currency,
     );
     const input = page.getByLabel(

@@ -32,14 +32,14 @@ export function SalaryMetrics({
             key={key}
             type="button"
             onClick={() => onExplain(key)}
-            className="min-h-36 min-w-0 rounded-xl border bg-card p-4 text-left shadow-panel transition-colors hover:bg-row-hover"
+            className="min-h-36 min-w-0 rounded-xl bg-card p-4 text-left shadow-panel transition-colors hover:bg-row-hover"
             aria-label={"Explain " + METRICS[key].label}
           >
             <span className="flex items-start justify-between gap-2 text-meta font-medium text-muted-foreground">
               {METRICS[key].label}
               <ArrowUpRight className="size-3.5 shrink-0" aria-hidden />
             </span>
-            <span className="mt-4 block break-words text-heading font-semibold tracking-tight tabular-nums">
+            <span className="mt-4 block break-words text-heading font-medium tracking-tight tabular-nums">
               {metricValue(key, analysis.summary, analysis.currency)}
             </span>
             <span className="mt-3 block text-meta text-muted-foreground">

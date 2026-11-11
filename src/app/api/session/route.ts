@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { session } from "@/server/auth";
 import {
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
       );
     const current = await session();
     current.evaluator = true;
+    current.cacheScope = randomUUID();
     await current.save();
     return Response.json(
       { ok: true },

@@ -13,7 +13,7 @@ export function EmployeeProfile({ employee }: { employee: Employee }) {
             .join("")}
         </span>
         <div>
-          <h3 className="text-heading font-semibold">{employee.name}</h3>
+          <h3 className="text-heading font-medium">{employee.name}</h3>
           <p className="text-meta text-muted-foreground">
             {employee.employeeNumber} · {employee.roleName}
           </p>
@@ -36,7 +36,7 @@ export function EmployeeProfile({ employee }: { employee: Employee }) {
         <p className="text-meta text-muted-foreground">
           Current annual base salary
         </p>
-        <p className="mt-1 break-words text-2xl font-semibold tabular-nums">
+        <p className="mt-1 break-words text-2xl font-medium tabular-nums">
           {formatMoney(employee.salaryMinor, employee.currency)}
         </p>
       </div>

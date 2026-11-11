@@ -1,3 +1,4 @@
+import { choose } from "./select-helper";
 import { test, expect, type Page, type Route } from "@playwright/test";
 import type { Employee } from "../../src/domain/employee";
 function gate() {
@@ -97,9 +98,9 @@ test("draft filters apply together; pending tables and pagination stay stable; h
       }),
     ).toBeVisible();
     const initial = calls.length;
-    await page.getByLabel("Country", { exact: true }).selectOption("US");
-    await page.getByLabel("Sort employees").selectOption("salary-desc");
-    await page.getByLabel("Records per page").selectOption("50");
+    await choose(page.getByLabel("Country", { exact: true }), "US");
+    await choose(page.getByLabel("Sort employees"), "salary-desc");
+    await choose(page.getByLabel("Records per page"), "50");
     await page.getByLabel("Search employees").fill("Alpha");
     await expect(
       page.getByText("Draft changes · Apply to update results"),
@@ -169,9 +170,18 @@ test("draft filters apply together; pending tables and pagination stay stable; h
     await expect(
       page.getByRole("button", { name: "View Alpha employee 1", exact: true }),
     ).toBeVisible();
-    await expect(page.getByLabel("Sort employees")).toHaveValue("salary-desc");
-    await expect(page.getByLabel("Records per page")).toHaveValue("50");
-    await expect(page.getByLabel("Country", { exact: true })).toHaveValue("US");
+    await expect(page.getByLabel("Sort employees")).toHaveAttribute(
+      "data-value",
+      "salary-desc",
+    );
+    await expect(page.getByLabel("Records per page")).toHaveAttribute(
+      "data-value",
+      "50",
+    );
+    await expect(page.getByLabel("Country", { exact: true })).toHaveAttribute(
+      "data-value",
+      "US",
+    );
     await page.goForward();
     await expect(
       page.getByRole("button", { name: "View Alpha employee 51", exact: true }),
@@ -299,8 +309,8 @@ test("compact filters preserve controls, focus is adjacent, and desktop rails re
   await trigger.click();
   const dialog = page.getByRole("dialog", { name: "Employee filters" });
   await expect(dialog).toBeVisible();
-  await dialog.getByLabel("Country", { exact: true }).selectOption("US");
-  await dialog.getByLabel("Role", { exact: true }).selectOption("engineer");
+  await choose(dialog.getByLabel("Country", { exact: true }), "US");
+  await choose(dialog.getByLabel("Role", { exact: true }), "engineer");
   await dialog
     .getByRole("button", { name: "Apply filters", exact: true })
     .click();
@@ -417,14 +427,11 @@ test("edits made while an accepted filter navigation is pending are not overwrit
   ).toBeVisible();
   const rsc = gate(),
     started = gate();
-  await page.route(/\/employees\?/, async (route) => {
-    if (
-      route.request().headers().rsc === "1" &&
-      new URL(route.request().url()).searchParams.get("q") === "First"
-    ) {
+  await page.route(/\/api\/employees\?/, async (route) => {
+    if (new URL(route.request().url()).searchParams.get("q") === "First") {
       started.release();
       await rsc.promise;
-      await route.continue();
+      await route.fallback();
     } else await route.fallback();
   });
   try {
@@ -500,7 +507,7 @@ test("analysis keeps metric/table geometry while pending and labels empty values
       page.getByRole("button", { name: "Explain Median annual base" }),
     ).toContainText("USD");
     const before = await metrics.boundingBox();
-    await page.getByLabel("Pay currency", { exact: true }).selectOption("INR");
+    await choose(page.getByLabel("Pay currency", { exact: true }), "INR");
     await page
       .getByRole("button", { name: "Apply filters", exact: true })
       .click();
@@ -568,6 +575,10 @@ test("Dashboard preserves a newer currency draft while an accepted snapshot is l
             { key: "INR", count: 9998 },
           ],
         },
+        distribution: [
+          { lower: "10000000", upper: "15000000", count: 1 },
+          { lower: "15000001", upper: "20000000", count: 1 },
+        ],
         compensation: analysisPayload(currency),
       },
     });
@@ -576,23 +587,20 @@ test("Dashboard preserves a newer currency draft while an accepted snapshot is l
   await expect(page.getByTestId("global-headcount")).toContainText("10,000");
   const held = gate(),
     started = gate();
-  await page.route(/\/dashboard\?/, async (route) => {
-    if (
-      route.request().headers().rsc === "1" &&
-      new URL(route.request().url()).searchParams.get("currency") === "USD"
-    ) {
+  await page.route(/\/api\/dashboard\?/, async (route) => {
+    if (new URL(route.request().url()).searchParams.get("currency") === "USD") {
       started.release();
       await held.promise;
-      await route.continue();
+      await route.fallback();
     } else await route.fallback();
   });
   const chart = page.getByRole("region", {
-    name: "Department median comparison",
+    name: "Annual salary distribution",
     exact: true,
   });
   const chartBefore = await chart.boundingBox();
   try {
-    await page.getByLabel("Dashboard pay currency").selectOption("USD");
+    await choose(page.getByLabel("Dashboard pay currency"), "USD");
     await page
       .getByRole("button", { name: "Apply currency", exact: true })
       .click();
@@ -601,14 +609,17 @@ test("Dashboard preserves a newer currency draft while an accepted snapshot is l
     expect(Math.abs(chartPending!.height - chartBefore!.height)).toBeLessThan(
       1,
     );
-    await page.getByLabel("Dashboard pay currency").selectOption("JPY");
+    await choose(page.getByLabel("Dashboard pay currency"), "JPY");
     await expect(page.getByTestId("global-headcount")).toContainText("10,000");
     held.release();
     await expect(page).toHaveURL(/currency=USD/);
     await expect(
       page.getByText("Median annual base · USD", { exact: true }),
     ).toBeVisible();
-    await expect(page.getByLabel("Dashboard pay currency")).toHaveValue("JPY");
+    await expect(page.getByLabel("Dashboard pay currency")).toHaveAttribute(
+      "data-value",
+      "JPY",
+    );
     await page
       .getByRole("button", { name: "Apply currency", exact: true })
       .click();

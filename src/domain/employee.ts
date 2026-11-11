@@ -21,8 +21,9 @@ export type Catalog = {
   roles: { id: string; name: string }[];
   currencies: { code: string; precision: number }[];
 };
+export type EmployeeSummary = Omit<Employee,"version"|"updatedAt"|"updatedBy">;
 export type EmployeePage = {
-  employees: Employee[];
+  employees: EmployeeSummary[];
   total: number;
   page: number;
   pageSize: number;

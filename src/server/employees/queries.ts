@@ -1,4 +1,14 @@
-import { and, or, eq, ilike, asc, desc, count, type SQL } from "drizzle-orm";
+import {
+  and,
+  or,
+  eq,
+  ilike,
+  asc,
+  desc,
+  count,
+  sql,
+  type SQL,
+} from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import * as schema from "../db/schema";
 import { employees as e, countries, departments, roles } from "../db/schema";
@@ -67,9 +77,6 @@ export async function listEmployees(
   f: Filters,
 ): Promise<EmployeePage> {
   const where = employeeWhere(f);
-  const [population] = await db.select({ total: count() }).from(e).where(where);
-  const pages = Math.max(1, Math.ceil(population.total / f.pageSize)),
-    page = Math.min(f.page, pages);
   const orders = {
     "name-asc": asc(e.name),
     "name-desc": desc(e.name),
@@ -77,15 +84,42 @@ export async function listEmployees(
     "salary-desc": desc(e.salaryMinor),
     "updated-desc": desc(e.updatedAt),
   };
-  const rows = await selection(db)
-    .where(where)
-    .orderBy(orders[f.sort], asc(e.id))
-    .limit(f.pageSize)
-    .offset((page - 1) * f.pageSize);
+  const { version, updatedAt, updatedBy, ...listFields } = fields;
+  void version;
+  void updatedAt;
+  void updatedBy;
+  const readPage = (page: number) =>
+    db
+      .select({ ...listFields, total: sql<number>`count(*) over()::integer` })
+      .from(e)
+      .innerJoin(countries, eq(e.country, countries.code))
+      .innerJoin(departments, eq(e.department, departments.id))
+      .innerJoin(roles, eq(e.role, roles.id))
+      .where(where)
+      .orderBy(orders[f.sort], asc(e.id))
+      .limit(f.pageSize)
+      .offset((page - 1) * f.pageSize);
+  let rows = await readPage(f.page),
+    total = rows[0]?.total ?? 0,
+    page = f.page;
+  // No row carries the window count when the requested offset is past the end.
+  if (!rows.length && f.page > 1) {
+    const [population] = await db
+      .select({ total: count() })
+      .from(e)
+      .where(where);
+    total = population.total;
+    page = Math.max(1, Math.ceil(total / f.pageSize));
+    if (total) rows = await readPage(page);
+  }
+  const pages = Math.max(1, Math.ceil(total / f.pageSize));
   return {
-    employees: rows.map(serialize),
-    total: population.total,
-    page,
+    employees: rows.map(({ total: _total, ...row }) => {
+      void _total;
+      return { ...row, salaryMinor: row.salaryMinor.toString() };
+    }),
+    total,
+    page: Math.min(page, pages),
     pageSize: f.pageSize,
     pages,
   };

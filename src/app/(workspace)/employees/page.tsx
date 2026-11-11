@@ -12,8 +12,8 @@ export default async function Employees({
     filters = parseFilters(params);
   } catch {
     return (
-      <section role="alert" className="rounded-xl border bg-card p-6">
-        <h1 className="text-title font-semibold">Check your filters</h1>
+      <section role="alert" className="rounded-xl bg-card p-6">
+        <h1 className="text-title font-medium">Check your filters</h1>
         <p className="mt-3 text-muted-foreground">
           Salary sorting requires a currency. Search is limited to 100
           characters and pages to 25, 50 or 100 records.

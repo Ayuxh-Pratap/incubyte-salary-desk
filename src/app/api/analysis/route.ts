@@ -17,9 +17,6 @@ export async function GET(request: Request) {
       );
     }
     const { db } = await database();
-    return db.transaction((tx) => salaryAnalysis(tx, filters), {
-      isolationLevel: "repeatable read",
-      accessMode: "read only",
-    });
+    return salaryAnalysis(db, filters);
   });
 }

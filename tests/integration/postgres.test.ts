@@ -12,6 +12,7 @@ import { salaryAnalysis } from "../../src/server/analysis/queries";
 import { salaryRepository } from "../../src/server/employees/salary-repository";
 import { saveSalary } from "../../src/domain/salary-update";
 import { isolatedTestUrl, verifyTestMarker } from "../../scripts/test-database";
+const queryLog: string[] = [];
 let pool: Pool, db: NodePgDatabase<typeof schema>;
 beforeAll(async () => {
   pool = new Pool({
@@ -20,7 +21,14 @@ beforeAll(async () => {
     application_name: "salary-desk-integration",
   });
   await verifyTestMarker(pool);
-  db = drizzle(pool, { schema });
+  db = drizzle(pool, {
+    schema,
+    logger: {
+      logQuery(query) {
+        queryLog.push(query);
+      },
+    },
+  });
   await seedDatabase(db);
 });
 afterAll(async () => {
@@ -228,17 +236,75 @@ it("allows exactly one of two simultaneous writes with the same version", async 
       );
   }
 });
-import {dashboardData} from '../../src/server/dashboard/queries';
-it('Dashboard counts the organization once and keeps compensation in one currency',async()=>{
- const records=syntheticEmployees();
- for(const currency of ['USD','JPY','KWD']){
-  const result=await dashboardData(db,currency);
-  expect(result.population.headcount).toBe(10000);
-  for(const dimension of ['countries','departments','currencies'] as const)expect(result.population[dimension].reduce((n,g)=>n+g.count,0)).toBe(10000);
-  expect(result.population.countries).toHaveLength(6);
-  expect(result.compensation.currency).toBe(currency);
-  expect(result.compensation.summary).toEqual(summarize(records.filter(e=>e.currency===currency).map(e=>e.salaryMinor.toString())));
-  expect(result.population).not.toHaveProperty('total');
- }
- await expect(dashboardData(db,'NOT-A-CURRENCY')).rejects.toThrow();
+import { dashboardData } from "../../src/server/dashboard/queries";
+it("Dashboard counts the organization once and keeps compensation in one currency", async () => {
+  const records = syntheticEmployees();
+  for (const currency of ["USD", "JPY", "KWD"]) {
+    const result = await dashboardData(db, currency);
+    expect(result.population.headcount).toBe(10000);
+    for (const dimension of ["countries", "departments", "currencies"] as const)
+      expect(
+        result.population[dimension].reduce((n, g) => n + g.count, 0),
+      ).toBe(10000);
+    expect(result.population.countries).toHaveLength(6);
+    expect(result.compensation.currency).toBe(currency);
+    expect(result.compensation.summary).toEqual(
+      summarize(
+        records
+          .filter((e) => e.currency === currency)
+          .map((e) => e.salaryMinor.toString()),
+      ),
+    );
+    expect(result.population).not.toHaveProperty("total");
+  }
+  await expect(dashboardData(db, "NOT-A-CURRENCY")).rejects.toThrow();
+});
+
+it("uses one statement per normal page, full analysis and bounded Dashboard series", async () => {
+  const f = parseFilters({ currency: "USD" });
+  let start = queryLog.length;
+  const page = await listEmployees(db, f);
+  expect(page.employees).toHaveLength(25);
+  expect(queryLog.length - start).toBe(1);
+  start = queryLog.length;
+  const analysis = await salaryAnalysis(db, f);
+  expect(queryLog.length - start).toBe(1);
+  start = queryLog.length;
+  const dashboard = await dashboardData(db, "USD");
+  expect(queryLog.length - start).toBe(1);
+  expect(dashboard.compensation.summary).toEqual(analysis.summary);
+  expect(dashboard.distribution).toHaveLength(8);
+  expect(dashboard.distribution.reduce((n, b) => n + b.count, 0)).toBe(
+    analysis.summary.count,
+  );
+  const rows = syntheticEmployees().filter((e) => e.currency === "USD");
+  for (const bucket of dashboard.distribution) {
+    const count = rows.filter(
+      (e) =>
+        e.salaryMinor >= BigInt(bucket.lower) &&
+        e.salaryMinor <= BigInt(bucket.upper),
+    ).length;
+    expect(bucket.count).toBe(count);
+  }
+});
+
+it("Dashboard histogram handles tied single-value and empty currency populations exactly", async () => {
+  await rollback(async (tx) => {
+    await tx
+      .update(schema.employees)
+      .set({ salaryMinor: 1n })
+      .where(eq(schema.employees.currency, "KWD"));
+    const tied = await dashboardData(tx, "KWD");
+    expect(tied.distribution).toEqual([
+      { lower: "1", upper: "1", count: tied.compensation.summary.count },
+    ]);
+    await tx
+      .update(schema.employees)
+      .set({ currency: "USD" })
+      .where(eq(schema.employees.currency, "KWD"));
+    const empty = await dashboardData(tx, "KWD");
+    expect(empty.distribution).toEqual([]);
+    expect(empty.compensation.summary.count).toBe(0);
+    expect(empty.compensation.summary.median).toBeNull();
+  });
 });

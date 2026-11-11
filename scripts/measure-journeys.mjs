@@ -88,6 +88,8 @@ for (let sample = 0; sample < 3; sample++) {
     await expect(page.getByTestId("global-headcount")).toContainText("10,000", {
       timeout: 30000,
     });
+    if (phase === "after")
+      await expect(page.locator("canvas")).toHaveCount(3, { timeout: 30000 });
   });
   await journey("dashboard-employees", () => nav("Employees"));
   await journey("employees-overview", () => nav("Salary overview"));
@@ -105,14 +107,21 @@ for (let sample = 0; sample < 3; sample++) {
     ).toBeVisible();
   });
   await journey("apply-filter", async () => {
+    const response = page.waitForResponse(
+      (r) =>
+        r.url().includes("/api/employees?") &&
+        new URL(r.url()).searchParams.get("q") === "Aarav",
+    );
     await page.getByLabel("Search employees", { exact: true }).fill("Aarav");
     await page
       .getByRole("button", { name: "Apply filters", exact: true })
       .click();
+    await response;
   });
-  await journey("next-page", () =>
-    page.getByRole("button", { name: "Next page", exact: true }).click(),
-  );
+  await journey("next-page", async () => {
+    await page.getByRole("button", { name: "Next page", exact: true }).click();
+    await expect(page.getByTestId("pagination")).toContainText("Page 2");
+  });
   await journey("employee-detail", async () => {
     await page
       .getByRole("button", { name: /^View / })

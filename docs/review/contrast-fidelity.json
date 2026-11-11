@@ -1,0 +1,114 @@
+[
+  {
+    "theme": "light",
+    "foreground": "foreground",
+    "background": "background",
+    "ratio": 15.89,
+    "minimum": 4.5
+  },
+  {
+    "theme": "light",
+    "foreground": "foreground-2",
+    "background": "background",
+    "ratio": 6.93,
+    "minimum": 4.5
+  },
+  {
+    "theme": "light",
+    "foreground": "card-foreground",
+    "background": "card",
+    "ratio": 15.12,
+    "minimum": 4.5
+  },
+  {
+    "theme": "light",
+    "foreground": "muted-foreground",
+    "background": "card",
+    "ratio": 4.79,
+    "minimum": 4.5
+  },
+  {
+    "theme": "light",
+    "foreground": "primary-foreground",
+    "background": "action-fill",
+    "ratio": 4.96,
+    "minimum": 4.5
+  },
+  {
+    "theme": "light",
+    "foreground": "ring",
+    "background": "background",
+    "ratio": 3.07,
+    "minimum": 3
+  },
+  {
+    "theme": "light",
+    "foreground": "ring",
+    "background": "card",
+    "ratio": 3.38,
+    "minimum": 3
+  },
+  {
+    "theme": "light",
+    "foreground": "ring",
+    "background": "muted",
+    "ratio": 3.16,
+    "minimum": 3
+  },
+  {
+    "theme": "dark",
+    "foreground": "foreground",
+    "background": "background",
+    "ratio": 15.99,
+    "minimum": 4.5
+  },
+  {
+    "theme": "dark",
+    "foreground": "foreground-2",
+    "background": "background",
+    "ratio": 10.68,
+    "minimum": 4.5
+  },
+  {
+    "theme": "dark",
+    "foreground": "card-foreground",
+    "background": "card",
+    "ratio": 13.57,
+    "minimum": 4.5
+  },
+  {
+    "theme": "dark",
+    "foreground": "muted-foreground",
+    "background": "card",
+    "ratio": 5.69,
+    "minimum": 4.5
+  },
+  {
+    "theme": "dark",
+    "foreground": "primary-foreground",
+    "background": "action-fill",
+    "ratio": 4.96,
+    "minimum": 4.5
+  },
+  {
+    "theme": "dark",
+    "foreground": "ring",
+    "background": "background",
+    "ratio": 5.2,
+    "minimum": 3
+  },
+  {
+    "theme": "dark",
+    "foreground": "ring",
+    "background": "card",
+    "ratio": 4.41,
+    "minimum": 3
+  },
+  {
+    "theme": "dark",
+    "foreground": "ring",
+    "background": "muted",
+    "ratio": 3.89,
+    "minimum": 3
+  }
+]

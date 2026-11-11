@@ -38,7 +38,7 @@ export function MetricExplanation({
           <p className="text-heading font-medium">What this number means</p>
           <p className="mt-3 text-foreground-2">{METRICS[metric].definition}</p>
           <div className="mt-5 rounded-xl border bg-muted p-4">
-            <p className="font-semibold tabular-nums">
+            <p className="font-medium tabular-nums">
               {analysis.summary.count.toLocaleString("en-US")} matching
               employees
             </p>

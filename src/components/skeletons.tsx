@@ -57,7 +57,7 @@ export function EmployeeCardsSkeleton({ rows = 5 }: { rows?: number }) {
 export function MetricSkeleton({ className }: { className?: string }) {
   return (
     <div
-      className={cn("min-h-36 rounded-xl border bg-card p-4", className)}
+      className={cn("min-h-36 rounded-xl bg-card p-4", className)}
       aria-hidden
     >
       <Skeleton className="h-3 w-2/3" />

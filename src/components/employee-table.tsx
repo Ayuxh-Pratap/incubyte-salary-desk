@@ -1,6 +1,6 @@
 "use client";
 import { ArrowRight, ArrowDown, ArrowUp } from "lucide-react";
-import type { Employee } from "@/domain/employee";
+import type { EmployeeSummary as Employee } from "@/domain/employee";
 import type { Filters } from "@/domain/filters";
 import { formatMoney } from "@/domain/money";
 import { Button } from "./ui/button";

@@ -9,3 +9,5 @@ Incubyte website colors are presentation references only. No employer logo or pr
 Actual retained license texts are in licenses/. Animate UI uses MIT + Commons Clause (not plain MIT); used here as part of an application, not redistributed as a component package. Base UI MIT, Geist SIL Open Font License, and Lucide ISC notices are retained from the installed releases. Job Desk supplied the reviewed visual foundation and selected wrapper patterns by the candidate’s explicit instruction; no domain data or history was imported.
 
 The shadcn/ui MIT license is retained in licenses/shadcn.txt, retrieved from its official repository. Components here are adapted wrappers, not an unmodified copied application.
+
+Chart.js 4.6.1 is the sole chart dependency, registered narrowly in the Dashboard module. Its MIT license is retained in licenses/chartjs.txt. Job Desk's current runtime palette replaces the earlier Incubyte website accent references; no employer branding claim remains.

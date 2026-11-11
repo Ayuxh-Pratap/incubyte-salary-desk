@@ -1,4 +1,6 @@
 "use client";
+import { useSearchParams } from "next/navigation";
+import { parseFilters } from "@/domain/filters";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -9,7 +11,11 @@ import {
   RefreshCw,
 } from "lucide-react";
 import type { Filters } from "@/domain/filters";
-import type { Employee, EmployeePage, Catalog } from "@/domain/employee";
+import type {
+  EmployeeSummary as Employee,
+  EmployeePage,
+  Catalog,
+} from "@/domain/employee";
 import { filterQuery } from "@/domain/analysis";
 import { useRemote } from "./use-remote";
 import { useWorkspaceNavigation } from "./use-workspace-navigation";
@@ -19,7 +25,14 @@ import { Sheet } from "./ui/sheet";
 import { EmployeeDetail } from "./employee-detail";
 import { EmployeeTable } from "./employee-table";
 import { Skeleton } from "./skeletons";
-export function EmployeesScreen({ filters }: { filters: Filters }) {
+export function EmployeesScreen({
+  filters: initialFilters,
+}: {
+  filters: Filters;
+}) {
+  const params = useSearchParams();
+  const filters = parseFilters(Object.fromEntries(params));
+  void initialFilters;
   const query = filterQuery(filters),
     results = useRemote<EmployeePage>("/api/employees?" + query),
     catalog = useRemote<Catalog>("/api/catalog");
@@ -51,20 +64,32 @@ export function EmployeesScreen({ filters }: { filters: Filters }) {
           <p className="text-meta text-muted-foreground">
             Workspace · People & compensation
           </p>
-          <h1 className="mt-1 text-title font-semibold tracking-tight md:text-title-lg">
+          <h1 className="mt-1 text-title font-medium tracking-tight md:text-title-lg">
             Employees
           </h1>
           <p className="mt-2 max-w-2xl text-foreground-2">
             Find a person. Understand their pay. Make a careful correction.
           </p>
         </div>
-        <Link
-          href={"/overview?" + overview.toString()}
-          className="inline-flex min-h-11 items-center gap-2 rounded-lg border bg-card px-3 font-medium shadow-button hover:shadow-button-hover"
-        >
-          Salary overview
-          <ArrowRight className="size-4" aria-hidden />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Refresh employee results"
+            aria-busy={results.refreshing}
+            onClick={results.reload}
+            disabled={busy || results.refreshing}
+          >
+            <RefreshCw aria-hidden />
+          </Button>
+          <Link
+            href={"/overview?" + overview.toString()}
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg border bg-card px-3 font-medium shadow-button hover:shadow-button-hover"
+          >
+            Salary overview
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
       </header>
       <FiltersForm
         filters={filters}
@@ -85,14 +110,16 @@ export function EmployeesScreen({ filters }: { filters: Filters }) {
           </p>
         )}
         <p role="status" aria-live="polite" className="sr-only">
-          {busy
-            ? "Updating employees"
-            : results.error
-              ? "Employee directory unavailable"
-              : (results.data?.total ?? 0) + " matching employees"}
+          {results.refreshing
+            ? "Refreshing current view"
+            : busy
+              ? "Updating employees"
+              : results.error
+                ? "Employee directory unavailable"
+                : (results.data?.total ?? 0) + " matching employees"}
         </p>
         <section
-          className="rounded-xl border bg-card shadow-panel"
+          className="rounded-xl bg-card shadow-panel"
           aria-label="Employee results"
           aria-busy={busy}
         >

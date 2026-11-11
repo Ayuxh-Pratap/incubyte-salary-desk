@@ -9,6 +9,7 @@ export type Dashboard = {
     currencies: HeadcountGroup[];
   };
   compensation: Analysis;
+  distribution: {lower:string;upper:string;count:number}[];
 };
 // Only this bounded, dimensionless display ratio crosses into Number arithmetic.
 export function barPercent(value: bigint, maximum: bigint): number {

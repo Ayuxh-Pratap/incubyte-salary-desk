@@ -1,59 +1,40 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
-type Remote<T> = {
-  key?: string;
-  data?: T;
-  previous?: T;
-  error?: string;
-  loading: boolean;
-};
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useReadCache } from "./remote-provider";
 export function useRemote<T>(url: string) {
-  const [state, setState] = useState<Remote<T>>({ loading: true }),
-    [revision, setRevision] = useState(0);
-  const key = url + "#" + revision;
+  const cache = useReadCache(),
+    [previous, setPrevious] = useState<T | undefined>(undefined);
+  const read = useCallback(() => cache.read(url), [cache, url]);
+  const state = useSyncExternalStore(cache.subscribe, read, read);
+  const data = state.data as T | undefined;
+  if (data !== undefined && data !== previous) setPrevious(data);
   useEffect(() => {
-    const controller = new AbortController();
-    async function load() {
-      setState((previous) => ({
-        key,
-        loading: true,
-        previous: previous.data ?? previous.previous,
-      }));
-      try {
-        const response = await fetch(url, {
-          signal: controller.signal,
-          cache: "no-store",
-        });
-        const body = await response.json().catch(() => {
-          throw new Error(
-            "The server returned an unreadable response. Please retry.",
-          );
-        });
-        if (!response.ok)
-          throw new Error(
-            response.status === 401
-              ? "Your evaluator session has expired. Sign in again."
-              : body.error || "Request failed.",
-          );
-        if (!controller.signal.aborted)
-          setState({ key, data: body, loading: false });
-      } catch (error) {
-        if (!controller.signal.aborted)
-          setState((previous) => ({
-            key,
-            previous: previous.data ?? previous.previous,
-            error:
-              error instanceof Error ? error.message : "Connection failed.",
-            loading: false,
-          }));
-      }
-    }
-    void load();
-    return () => controller.abort();
-  }, [url, key]);
+    void cache.load(url);
+    const revalidate = () => {
+      if (document.visibilityState === "visible") void cache.load(url);
+    };
+    window.addEventListener("focus", revalidate);
+    document.addEventListener("visibilitychange", revalidate);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (!state.error)
+      timer = setTimeout(
+        () => void cache.load(url),
+        Math.max(100, cache.ttl(url) - (Date.now() - (state.at ?? 0)) + 10),
+      );
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("focus", revalidate);
+      document.removeEventListener("visibilitychange", revalidate);
+    };
+  }, [cache, url, state.at, state.error]);
   return {
-    ...(state.key === key ? state : { loading: true }),
-    previousData: state.data ?? state.previous,
-    reload: useCallback(() => setRevision((x) => x + 1), []),
+    data,
+    loading: state.loading,
+    error: state.error,
+    refreshing: state.refreshing,
+    previousData: data ?? previous,
+    reload: useCallback(() => {
+      void cache.load(url, true);
+    }, [cache, url]),
   };
 }

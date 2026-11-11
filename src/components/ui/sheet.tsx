@@ -32,7 +32,7 @@ export function Sheet({
           className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l bg-card text-foreground shadow-xl"
         >
           <header className="relative border-b p-6 pr-18">
-            <Dialog.Title className="text-heading font-semibold">
+            <Dialog.Title className="text-heading font-medium">
               {title}
             </Dialog.Title>
             <Dialog.Description className="mt-1 text-ui text-muted-foreground">

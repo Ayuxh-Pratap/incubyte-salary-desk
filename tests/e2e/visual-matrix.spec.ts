@@ -43,15 +43,10 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
           "10,000",
           { timeout: 30000 },
         );
-        await expect(
-          page.getByRole("link", {
-            name: "Explore country India",
-            exact: true,
-          }),
-        ).toBeVisible({ timeout: 30000 });
+        await expect(page.locator("canvas")).toHaveCount(3, { timeout: 30000 });
       } else {
         await expect(
-          page.locator('select[name="country"]').first(),
+          page.getByRole("combobox", { name: "Country", exact: true }).first(),
         ).toBeEnabled({ timeout: 30000 });
         if (route === "employees")
           await expect(
@@ -122,7 +117,9 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
       exact: true,
     }),
   ).toBeVisible({ timeout: 30000 });
-  await expect(page.locator('select[name="country"]').first()).toBeEnabled({
+  await expect(
+    page.getByRole("combobox", { name: "Country", exact: true }).first(),
+  ).toBeEnabled({
     timeout: 30000,
   });
   for (const theme of ["light", "dark"]) {
@@ -140,10 +137,10 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
   await page.setViewportSize({ width: 1366, height: 900 });
   await page.goto("/dashboard?currency=USD");
   const comparison = page.getByRole("region", {
-    name: "Department median comparison",
+    name: "Annual salary distribution",
     exact: true,
   });
-  await expect(comparison).toHaveAttribute("aria-busy", "false", {
+  await expect(comparison).toBeVisible({
     timeout: 30000,
   });
   await comparison.evaluate((el) => {

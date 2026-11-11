@@ -1,6 +1,7 @@
 "use client";
-import { useSyncExternalStore } from "react";
+import { useId, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { Popover } from "@base-ui/react/popover";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { Button } from "./ui/button";
@@ -12,6 +13,8 @@ export function ThemeToggle({
   compact?: boolean;
   side?: "right" | "bottom";
 }) {
+  const groupId = useId(),
+    reduced = useReducedMotion();
   const mounted = useSyncExternalStore(
     subscribe,
     () => true,
@@ -25,31 +28,44 @@ export function ThemeToggle({
         ? Sun
         : Monitor;
   const controls = (
-    <div
-      role="group"
-      className="inline-flex rounded-lg bg-inset p-0.5 shadow-well"
-      aria-label="Color theme"
-    >
-      {(
-        [
-          { value: "light", Icon: Sun },
-          { value: "dark", Icon: Moon },
-          { value: "system", Icon: Monitor },
-        ] as const
-      ).map(({ value, Icon }) => (
-        <Button
-          key={value}
-          variant="ghost"
-          size="icon"
-          aria-label={value + " theme"}
-          aria-pressed={mounted && theme === value}
-          onClick={() => setTheme(value)}
-          className="rounded-md aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:shadow-panel"
-        >
-          <Icon aria-hidden />
-        </Button>
-      ))}
-    </div>
+    <LayoutGroup id={groupId}>
+      <div
+        role="group"
+        className="inline-flex rounded-lg bg-inset p-0.5 shadow-well"
+        aria-label="Color theme"
+      >
+        {(
+          [
+            { value: "light", Icon: Sun },
+            { value: "dark", Icon: Moon },
+            { value: "system", Icon: Monitor },
+          ] as const
+        ).map(({ value, Icon }) => (
+          <Button
+            key={value}
+            variant="ghost"
+            size="icon"
+            aria-label={value + " theme"}
+            aria-pressed={mounted && theme === value}
+            onClick={() => setTheme(value)}
+            className="relative isolate rounded-md aria-pressed:text-foreground"
+          >
+            {mounted && theme === value && (
+              <motion.span
+                layoutId="selected-theme"
+                aria-hidden
+                className="absolute inset-0 -z-10 rounded-md bg-card shadow-panel"
+                transition={{
+                  duration: reduced ? 0 : 0.24,
+                  ease: [0.2, 0, 0, 1],
+                }}
+              />
+            )}
+            <Icon aria-hidden />
+          </Button>
+        ))}
+      </div>
+    </LayoutGroup>
   );
   if (!compact) return controls;
   return (
@@ -61,7 +77,7 @@ export function ThemeToggle({
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Positioner side={side} sideOffset={12} className="z-50">
-          <Popover.Popup className="rounded-xl border bg-card p-2 text-foreground shadow-panel">
+          <Popover.Popup className="rounded-xl bg-card p-2 text-foreground shadow-panel">
             <Popover.Title className="px-2 pt-1 pb-2 text-meta font-medium">
               Appearance
             </Popover.Title>

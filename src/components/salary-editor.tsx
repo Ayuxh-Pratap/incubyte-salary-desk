@@ -1,4 +1,5 @@
 "use client";
+import { useReadCache, publishCacheEvent } from "./remote-provider";
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, Check, TriangleAlert } from "lucide-react";
 import type { Employee } from "@/domain/employee";
@@ -20,6 +21,7 @@ export function SalaryEditor({
   onSaved: () => void;
   onDirtyChange: (dirty: boolean) => void;
 }) {
+  const cache = useReadCache();
   const [current, setCurrent] = useState(employee),
     [amount, setAmount] = useState(
       salaryInput(employee.salaryMinor, employee.currency),
@@ -90,6 +92,8 @@ export function SalaryEditor({
           formatMoney(updated.salaryMinor, updated.currency) +
           ".",
       );
+      cache.invalidateSalary(updated);
+      publishCacheEvent(cache.scope, "salary");
       onSaved();
     } catch {
       setError(
@@ -103,7 +107,7 @@ export function SalaryEditor({
     <>
       <EmployeeProfile employee={current} />
       <form onSubmit={submit} className="mt-7 border-t pt-6">
-        <h3 className="font-semibold">Update annual base salary</h3>
+        <h3 className="font-medium">Update annual base salary</h3>
         <p className="mt-1 text-meta text-muted-foreground">
           Change the current value. No payroll payment or scheduled change is
           created.
@@ -158,7 +162,7 @@ export function SalaryEditor({
             <p className="mt-3 flex flex-wrap items-center gap-2 tabular-nums">
               <span>{formatMoney(current.salaryMinor, current.currency)}</span>
               <ArrowRight className="size-4" />
-              <span className="font-semibold">
+              <span className="font-medium">
                 {formatMoney(minor!.toString(), current.currency)}
               </span>
             </p>

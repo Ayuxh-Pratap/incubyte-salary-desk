@@ -4,7 +4,7 @@ import { employeeWhere, type QueryDb } from "../employees/queries";
 import type { Filters } from "../../domain/filters";
 import type { Analysis } from "../../domain/analysis";
 import type { Summary } from "../../domain/money";
-type DbSummary = {
+export type DbSummary = {
   group_key: string;
   count: number;
   total: string;
@@ -36,7 +36,7 @@ export function summaryQuery(filters: Filters, grouped = false): SQL {
  from ranked ${grouped ? sql`group by group_key order by count desc,group_key` : sql``}
  `;
 }
-function summary(row: DbSummary): Summary {
+export function summary(row: DbSummary): Summary {
   return {
     count: row.count,
     total: row.total,
@@ -56,13 +56,16 @@ export async function salaryAnalysis(
   filters: Filters,
 ): Promise<Analysis> {
   if (!filters.currency) throw new Error("A single currency is required.");
-  const overall = await db.execute<DbSummary>(summaryQuery(filters));
-  const groups = await db.execute<DbSummary>(summaryQuery(filters, true));
+  const result = await db.execute<DbSummary & { grouped: boolean }>(
+    sql`select false as grouped, t.* from (${summaryQuery(filters)}) t union all select true as grouped,t.* from (${summaryQuery(filters, true)}) t`,
+  );
+  const overall = result.rows.find((r) => !r.grouped)!;
+  const groups = result.rows.filter((r) => r.grouped);
   return {
     currency: filters.currency,
     period: "annual",
-    summary: summary(overall.rows[0]),
-    groups: groups.rows.map((row) => ({
+    summary: summary(overall),
+    groups: groups.map((row) => ({
       key: row.group_key,
       summary: summary(row),
     })),

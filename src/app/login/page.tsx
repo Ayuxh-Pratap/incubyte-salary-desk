@@ -6,7 +6,7 @@ export default function Login() {
     <main className="grid min-h-dvh place-items-center bg-muted p-4">
       <div className="w-full max-w-md">
         <section className="rounded-2xl border bg-card p-6 shadow-sm sm:p-9">
-          <span className="mb-8 inline-flex items-center gap-2 text-ui font-semibold">
+          <span className="mb-8 inline-flex items-center gap-2 text-ui font-medium">
             <Layers className="size-5 text-primary" />
             Salary Desk{" "}
             <span className="font-normal text-muted-foreground">/ ACME</span>
@@ -14,7 +14,7 @@ export default function Login() {
           <p className="text-meta uppercase tracking-wider text-muted-foreground">
             The compensation workspace
           </p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight">
+          <h1 className="mt-3 text-3xl font-medium tracking-tight">
             A clearer view
             <br />
             of how we pay.
