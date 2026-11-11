@@ -1,0 +1,36 @@
+{
+  "source": "ede8ac6dfa5363a05746c0342197662800790609",
+  "recordedAt": "2026-11-11T17:35:56.505Z",
+  "environment": "Local production build; presentation-only inspection",
+  "records": [
+    {
+      "width": 390,
+      "theme": "light",
+      "headingAboveProse": true,
+      "sameLeftEdge": true,
+      "noDocumentOverflow": true
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "headingAboveProse": true,
+      "sameLeftEdge": true,
+      "noDocumentOverflow": true
+    },
+    {
+      "width": 1366,
+      "theme": "light",
+      "headingAboveProse": true,
+      "sameLeftEdge": true,
+      "noDocumentOverflow": true
+    },
+    {
+      "width": 1366,
+      "theme": "dark",
+      "headingAboveProse": true,
+      "sameLeftEdge": true,
+      "noDocumentOverflow": true
+    }
+  ],
+  "sourceExplanationBelowCode": true
+}

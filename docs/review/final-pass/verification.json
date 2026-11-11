@@ -88,5 +88,12 @@
     },
     "evidence": "docs/review/assessment-report/visual-verification.json",
     "publication": "Local review only; production and default branch unchanged"
+  },
+  "reportTextLayoutRevision": {
+    "source": "ede8ac6",
+    "status": "Verified locally; unpublished",
+    "checks": "6 existing report browser checks passed; lint, types, design checks and production build passed",
+    "visualEvidence": "docs/review/report-text-layout/verification.json",
+    "scope": "Headings/prose and code/explanations stack vertically; full-width diagrams and separate pages retained"
   }
 }

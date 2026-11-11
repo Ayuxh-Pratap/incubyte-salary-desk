@@ -209,3 +209,5 @@ Final report revision `f1a7dca` passed the complete production-browser suite: 31
 ## Stacked report text
 
 The candidate disliked the split heading/prose columns. Updated the shared report renderer to stack each heading, prose and supporting material in reading order, with tighter section spacing. Source explanations now follow their snippets as well. Full-width figures, separate pages, tokens, report content and business behavior are preserved. This is a reversible presentation change; no new behavior tests or product features were added.
+
+The stacked-text revision `ede8ac6` passed six existing production report browser checks plus lint, types, design consistency and build. Direct screenshot/geometry inspection confirmed headings above left-aligned prose in light/dark at 390/1366px, and source explanations below snippets. Current evidence is isolated in `docs/review/report-text-layout`; prior report screenshots remain historical. No deployment or publication occurred.
