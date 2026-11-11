@@ -1,0 +1,1422 @@
+{
+  "options": [
+    {
+      "id": "P1",
+      "name": "Graphite + Lime",
+      "recommendation": true,
+      "tradeoff": "Closest to Job Desk’s neutral depth. Retains the Incubyte-inspired lime only for intentional actions; the light primary uses restrained forest green.",
+      "light": {
+        "canvas": "#f5f5f4",
+        "surface": "#fafafa",
+        "panel": "#ffffff",
+        "inset": "#f0f0ef",
+        "header": "#e7e7e5",
+        "hover": "#f5f5f3",
+        "selected": "#e7eddf",
+        "text": "#1c1d1b",
+        "secondary": "#44483f",
+        "muted": "#5c6058",
+        "primary": "#27513b",
+        "onPrimary": "#ffffff",
+        "line": "#c5c8c2",
+        "controlLine": "#787d73",
+        "focus": "#27513b",
+        "success": "#06734f",
+        "warning": "#875700",
+        "danger": "#b91c35"
+      },
+      "dark": {
+        "canvas": "#101112",
+        "surface": "#18191b",
+        "panel": "#232427",
+        "inset": "#1d1e21",
+        "header": "#303135",
+        "hover": "#2a2b2f",
+        "selected": "#30392a",
+        "text": "#f4f4f5",
+        "secondary": "#d4d5d9",
+        "muted": "#b6b7bc",
+        "primary": "#d3fe73",
+        "onPrimary": "#1c2710",
+        "line": "#4c4e53",
+        "controlLine": "#7c7e86",
+        "focus": "#d3fe73",
+        "success": "#6ee7b7",
+        "warning": "#fcd34d",
+        "danger": "#fda4af"
+      }
+    },
+    {
+      "id": "P2",
+      "name": "Slate + Cobalt",
+      "tradeoff": "Cool, precise enterprise character. Blue has familiar action semantics but gives up the employer-inspired accent.",
+      "light": {
+        "canvas": "#f0f3f7",
+        "surface": "#f8fafc",
+        "panel": "#ffffff",
+        "inset": "#eef2f6",
+        "header": "#e3e9f1",
+        "hover": "#f1f5fa",
+        "selected": "#dfeafc",
+        "text": "#172033",
+        "secondary": "#36465d",
+        "muted": "#516075",
+        "primary": "#2459ba",
+        "onPrimary": "#ffffff",
+        "line": "#b6c1d0",
+        "controlLine": "#728298",
+        "focus": "#2459ba",
+        "success": "#06734f",
+        "warning": "#875700",
+        "danger": "#b91c35"
+      },
+      "dark": {
+        "canvas": "#0e1218",
+        "surface": "#161c25",
+        "panel": "#202936",
+        "inset": "#19212c",
+        "header": "#2b3748",
+        "hover": "#263244",
+        "selected": "#233e65",
+        "text": "#edf2fa",
+        "secondary": "#d1dded",
+        "muted": "#b0bfd2",
+        "primary": "#8db6ff",
+        "onPrimary": "#14243e",
+        "line": "#465870",
+        "controlLine": "#7e91ab",
+        "focus": "#8db6ff",
+        "success": "#6ee7b7",
+        "warning": "#fcd34d",
+        "danger": "#fda4af"
+      }
+    },
+    {
+      "id": "P3",
+      "name": "Stone + Terracotta",
+      "tradeoff": "Warm paper and charcoal surfaces feel approachable for HR. Terracotta is kept distinct from the darker red validation state.",
+      "light": {
+        "canvas": "#f3f0eb",
+        "surface": "#faf8f4",
+        "panel": "#fffefa",
+        "inset": "#f0ebe3",
+        "header": "#e7e0d6",
+        "hover": "#f6f0e8",
+        "selected": "#f3e0d1",
+        "text": "#29231e",
+        "secondary": "#4b4035",
+        "muted": "#6a5c51",
+        "primary": "#9a431d",
+        "onPrimary": "#ffffff",
+        "line": "#c8baaa",
+        "controlLine": "#877563",
+        "focus": "#9a431d",
+        "success": "#06734f",
+        "warning": "#875700",
+        "danger": "#b91c35"
+      },
+      "dark": {
+        "canvas": "#171411",
+        "surface": "#211d19",
+        "panel": "#2c2722",
+        "inset": "#241f1a",
+        "header": "#39312b",
+        "hover": "#332c25",
+        "selected": "#4c3020",
+        "text": "#faf1e7",
+        "secondary": "#e0d1c2",
+        "muted": "#c3b5a6",
+        "primary": "#ffb48c",
+        "onPrimary": "#392012",
+        "line": "#655448",
+        "controlLine": "#a18a77",
+        "focus": "#ffb48c",
+        "success": "#6ee7b7",
+        "warning": "#fcd34d",
+        "danger": "#fda4af"
+      }
+    },
+    {
+      "id": "P4",
+      "name": "Ink + Violet",
+      "tradeoff": "Distinct product identity with a quiet lavender accent. Slight violet neutrals feel less strictly utilitarian than Graphite.",
+      "light": {
+        "canvas": "#f3f2f7",
+        "surface": "#faf9fc",
+        "panel": "#ffffff",
+        "inset": "#eeecf4",
+        "header": "#e4e1ef",
+        "hover": "#f1eef7",
+        "selected": "#e9e0fa",
+        "text": "#241d33",
+        "secondary": "#493d59",
+        "muted": "#655b75",
+        "primary": "#6a3db8",
+        "onPrimary": "#ffffff",
+        "line": "#c3b9d1",
+        "controlLine": "#857394",
+        "focus": "#6a3db8",
+        "success": "#06734f",
+        "warning": "#875700",
+        "danger": "#b91c35"
+      },
+      "dark": {
+        "canvas": "#141217",
+        "surface": "#1c1921",
+        "panel": "#26222d",
+        "inset": "#201c27",
+        "header": "#332c3d",
+        "hover": "#302837",
+        "selected": "#422f59",
+        "text": "#f5f0fb",
+        "secondary": "#ded2e9",
+        "muted": "#bfb3cc",
+        "primary": "#c9a6ff",
+        "onPrimary": "#2b1943",
+        "line": "#5b4c6b",
+        "controlLine": "#9683a8",
+        "focus": "#c9a6ff",
+        "success": "#6ee7b7",
+        "warning": "#fcd34d",
+        "danger": "#fda4af"
+      }
+    },
+    {
+      "id": "P5",
+      "name": "Zinc + Teal",
+      "tradeoff": "A calm finance-oriented accent on neutral gray surfaces. More conventional than lime, with some proximity to green success semantics.",
+      "light": {
+        "canvas": "#f1f4f3",
+        "surface": "#f9fbfa",
+        "panel": "#ffffff",
+        "inset": "#edf2f0",
+        "header": "#e2e9e6",
+        "hover": "#f0f6f3",
+        "selected": "#dcefe9",
+        "text": "#192621",
+        "secondary": "#354b40",
+        "muted": "#52675c",
+        "primary": "#006b63",
+        "onPrimary": "#ffffff",
+        "line": "#b6c9bf",
+        "controlLine": "#738d80",
+        "focus": "#006b63",
+        "success": "#06734f",
+        "warning": "#875700",
+        "danger": "#b91c35"
+      },
+      "dark": {
+        "canvas": "#111415",
+        "surface": "#191d1e",
+        "panel": "#24292a",
+        "inset": "#1e2324",
+        "header": "#303738",
+        "hover": "#2b3334",
+        "selected": "#203f3d",
+        "text": "#eef6f4",
+        "secondary": "#d1e0dc",
+        "muted": "#adc2bc",
+        "primary": "#6ee0d0",
+        "onPrimary": "#123b34",
+        "line": "#485d57",
+        "controlLine": "#7a9990",
+        "focus": "#6ee0d0",
+        "success": "#6ee7b7",
+        "warning": "#fcd34d",
+        "danger": "#fda4af"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 6.15
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 6.42
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 5.63
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 5.19
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 5.88
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.38
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 15.51
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 9.36
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 9.03
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 8.65
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 9.03
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 7.92
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.22
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 3.7
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 5.88
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 6.19
+    },
+    {
+      "id": "P1",
+      "mode": "light",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 8.79
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 7.75
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 8.32
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 6.49
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 7.06
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 6.01
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 17.2
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 10.58
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 13.51
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 15.24
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 13.45
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 14.44
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 3.83
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 4.12
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 10.18
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 10.76
+    },
+    {
+      "id": "P1",
+      "mode": "dark",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 8.21
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 6.12
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 5.69
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 5.24
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 5.85
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.28
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 14.62
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 9.58
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 6.54
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 6.25
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 6.54
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 5.81
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 3.92
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 3.48
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 5.88
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 6.19
+    },
+    {
+      "id": "P2",
+      "mode": "light",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 9.15
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 7.84
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 8.67
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 6.44
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 6.92
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.76
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 16.7
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 10.67
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 7.6
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 8.37
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 7.17
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 7.93
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.56
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 5.04
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 9.62
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 10.17
+    },
+    {
+      "id": "P2",
+      "mode": "dark",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 7.76
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 6.07
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 6.38
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 5.42
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 4.91
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 5.69
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.02
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 13.65
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 9.99
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 6.57
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 6.2
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 6.51
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 5.54
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.38
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 3.72
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 5.82
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 6.13
+    },
+    {
+      "id": "P3",
+      "mode": "light",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 6.34
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 8.35
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 7.38
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 8.15
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 6.36
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 6.86
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.99
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 16.43
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 9.9
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 8.75
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 9.69
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 8.56
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 9.46
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.52
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 4.99
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 9.7
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 10.25
+    },
+    {
+      "id": "P3",
+      "mode": "dark",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 7.82
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 6.05
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 6.35
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 5.43
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 4.93
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 5.54
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 4.99
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 14.52
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 10.02
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 7.06
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 6.74
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 7.06
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 6.04
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.31
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 3.68
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 5.88
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 6.19
+    },
+    {
+      "id": "P4",
+      "mode": "light",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 8.7
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 7.81
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 8.38
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 6.72
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 7.1
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.91
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 16.6
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 10.75
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 7.85
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 8.58
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 7.7
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 8.26
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.53
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 4.86
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 10.21
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 10.8
+    },
+    {
+      "id": "P4",
+      "mode": "dark",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 8.23
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 5.85
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 6.08
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 5.37
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 4.93
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 5.55
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 5.09
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 14.15
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 9.41
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 6.15
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 6.4
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 5.65
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 3.59
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 3.17
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 5.88
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 6.19
+    },
+    {
+      "id": "P5",
+      "mode": "light",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 6.4
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/surface",
+      "minimum": 4.5,
+      "ratio": 9.08
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/panel",
+      "minimum": 4.5,
+      "ratio": 7.87
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/inset",
+      "minimum": 4.5,
+      "ratio": 8.49
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/header",
+      "minimum": 4.5,
+      "ratio": 6.49
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/hover",
+      "minimum": 4.5,
+      "ratio": 6.9
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "muted/selected",
+      "minimum": 4.5,
+      "ratio": 6.1
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "text/canvas",
+      "minimum": 4.5,
+      "ratio": 16.85
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "secondary/panel",
+      "minimum": 4.5,
+      "ratio": 10.81
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "onPrimary/primary",
+      "minimum": 4.5,
+      "ratio": 7.78
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "focus/surface",
+      "minimum": 3,
+      "ratio": 10.71
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "focus/panel",
+      "minimum": 3,
+      "ratio": 9.28
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "focus/inset",
+      "minimum": 3,
+      "ratio": 10.02
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "controlLine/panel",
+      "minimum": 3,
+      "ratio": 4.76
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "controlLine/inset",
+      "minimum": 3,
+      "ratio": 5.14
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "success/panel",
+      "minimum": 4.5,
+      "ratio": 9.66
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "warning/panel",
+      "minimum": 4.5,
+      "ratio": 10.22
+    },
+    {
+      "id": "P5",
+      "mode": "dark",
+      "pair": "danger/panel",
+      "minimum": 4.5,
+      "ratio": 7.79
+    }
+  ]
+}
