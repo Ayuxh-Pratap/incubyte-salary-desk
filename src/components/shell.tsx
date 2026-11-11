@@ -180,7 +180,10 @@ export function Shell({
                 )}
                 <Link
                   href={href}
-                  prefetch={!pathname.startsWith("/presentation")}
+                  prefetch={
+                    !pathname.startsWith("/presentation") &&
+                    !href.startsWith("/presentation")
+                  }
                   aria-label={label}
                   aria-current={
                     pathname === href ||

@@ -111,6 +111,55 @@ await p.screenshot({
   path: "docs/review/final-pass/dashboard-" + phase + "-dark.png",
   animations: "disabled",
 });
+if (phase === "after") {
+  await p.waitForTimeout(35000);
+  await observe("idle-third-expiry");
+  const beforeHidden = requests.length;
+  await p.evaluate(() =>
+    Object.defineProperty(document, "visibilityState", {
+      configurable: true,
+      get: () => "hidden",
+    }),
+  );
+  await p.waitForTimeout(35000);
+  await observe("hidden-expiry");
+  expect(requests.length).toBe(beforeHidden);
+  await p.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", {
+      configurable: true,
+      get: () => "visible",
+    });
+    document.dispatchEvent(new Event("visibilitychange"));
+    window.dispatchEvent(new Event("focus"));
+  });
+  await expect.poll(() => requests.length).toBe(beforeHidden + 1);
+  await expect(p.locator('[aria-busy="true"]')).toHaveCount(0);
+  await observe("visible-expired-resume");
+  await p
+    .getByRole("combobox", { name: "Dashboard pay currency", exact: true })
+    .click();
+  await p.getByRole("option", { name: "INR", exact: true }).click();
+  await observe("currency-draft");
+  await p.getByRole("button", { name: "Apply currency", exact: true }).click();
+  await expect(p).toHaveURL(/currency=INR/);
+  await expect(p.locator('[aria-busy="true"]')).toHaveCount(0);
+  await expect(p.locator("canvas")).toHaveCount(3);
+  await observe("accepted-currency-change");
+  await p
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Employees", exact: true })
+    .click();
+  await expect(
+    p.getByRole("heading", { name: "Employees", exact: true }),
+  ).toBeVisible();
+  await p
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Dashboard", exact: true })
+    .click();
+  await expect(p.locator("canvas")).toHaveCount(3);
+  await expect(p.locator('[aria-busy="true"]')).toHaveCount(0);
+  await observe("navigation-return-new-canvases");
+}
 fs.writeFileSync(
   "docs/review/final-pass/chart-idle-" + phase + ".json",
   JSON.stringify(
@@ -120,7 +169,7 @@ fs.writeFileSync(
       }).trim(),
       recordedAt: new Date().toISOString(),
       method:
-        "Local production build; real ~72s idle observation, normal motion; native Canvas 2D context acquisition and clearRect counters (not React render counters). Controlled unrelated root CSS mutation, theme change, two real 30s TTL intervals and fresh focus/visibility events. Context reacquisition is interpreted alongside the destroy/new source path; no app telemetry injected.",
+        "Local production build; real idle observation (~72s baseline; ~145s plus actions after), normal motion; native Canvas 2D context acquisition and clearRect counters (not React render counters). Controlled unrelated root CSS mutation, theme change, two comparable real 30s TTL intervals and fresh focus/visibility events; after-only additional third interval, hidden expiry/resume, currency draft/application and navigation return. Context reacquisition is interpreted alongside the destroy/new source path; no app telemetry injected.",
       controlBounds: { selector, apply },
       externalOrigins: [...external],
       observations,

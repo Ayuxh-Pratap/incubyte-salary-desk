@@ -26,17 +26,15 @@ page.on("request", (r) => meta.set(r, { phase, at: Date.now() }));
 page.on("response", (response) => {
   const m = meta.get(response.request());
   if (!m || !response.url().includes("/api/")) return;
-  void response
-    .body()
-    .then((buffer) =>
-      records.push({
-        ...m,
-        path: new URL(response.url()).pathname,
-        method: response.request().method(),
-        bytes: buffer.length,
-        status: response.status(),
-      }),
-    );
+  void response.body().then((buffer) =>
+    records.push({
+      ...m,
+      path: new URL(response.url()).pathname,
+      method: response.request().method(),
+      bytes: buffer.length,
+      status: response.status(),
+    }),
+  );
 });
 try {
   await page.goto(
@@ -79,7 +77,7 @@ try {
   ).toContainText(formatMoney(next, original.currency), { timeout: 20000 });
   const returnMs = Math.round(performance.now() - at);
   fs.writeFileSync(
-    "docs/review/edit-cache-measurement.json",
+    (process.argv[2] || "docs/review") + "/edit-cache-measurement.json",
     JSON.stringify(
       {
         source: execFileSync("git", ["rev-parse", "HEAD"], {

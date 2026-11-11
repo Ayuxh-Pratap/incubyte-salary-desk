@@ -83,7 +83,7 @@ try {
     );
   }
   fs.writeFileSync(
-    "docs/review/read-query-plans.json",
+    (process.argv[2] || "docs/review") + "/read-query-plans.json",
     JSON.stringify(
       {
         source: execFileSync("git", ["rev-parse", "HEAD"], {
