@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import {
   PRESENTATION_SECTIONS,
-  presentationAnchor,
+  presentationHref,
 } from "../../src/lib/presentation";
 async function signIn(page: import("@playwright/test").Page) {
   const origin = String(test.info().project.use.baseURL);
@@ -41,11 +41,9 @@ test("Presentation navigation renders canonical content and diagrams without sal
       .getByRole("navigation", { name: "Presentation sections" })
       .getByRole("link", { name: item.title, exact: false })
       .click();
-    await expect(page).toHaveURL(
-      new RegExp("/presentation#" + presentationAnchor(item.slug) + "$"),
-    );
+    await expect(page).toHaveURL(new RegExp(presentationHref(item.slug) + "$"));
     await expect(
-      page.locator("#" + presentationAnchor(item.slug)),
+      page.getByRole("heading", { level: 1, name: item.title, exact: true }),
     ).toBeVisible();
   }
   await page
@@ -122,8 +120,14 @@ test("reviewed artifact and source links resolve inside the protected applicatio
 }) => {
   await signIn(page);
   await page.goto("/presentation/quality");
-  await expect(page).toHaveURL(/\/presentation#quality$/);
-  await expect(page.locator("#quality")).toBeVisible();
+  await expect(page).toHaveURL(/\/presentation\/quality$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Verification and delivery",
+      exact: true,
+    }),
+  ).toBeVisible();
   const links = await page
     .locator('main a[href^="/presentation/artifacts/"]')
     .evaluateAll((items) => [
@@ -154,14 +158,14 @@ test("reviewed artifact and source links resolve inside the protected applicatio
   }
 });
 
-test("case study uses the full content width and explains connected success/conflict flows", async ({
+test("assessment report uses separate full-width pages with scoped content and connected flows", async ({
   page,
 }) => {
   await signIn(page);
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto("/presentation");
   await expect(
-    page.getByRole("heading", { name: "Salary Desk", exact: true }),
+    page.getByRole("heading", { name: "Assessment overview", exact: true }),
   ).toBeVisible();
   const article = page.locator("article[data-case-study]");
   await expect(article).toBeVisible();
@@ -175,6 +179,14 @@ test("case study uses the full content width and explains connected success/conf
   expect(Math.abs(sizes.width - (sizes.parent - sizes.padding))).toBeLessThan(
     2,
   );
+  await expect(
+    page.getByRole("figure", { name: "Salary-update sequence", exact: true }),
+  ).toHaveCount(0);
+  await page
+    .getByRole("navigation", { name: "Presentation sections" })
+    .getByRole("link", { name: "Architecture and implementation", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/presentation\/architecture$/);
   const salary = page.getByRole("figure", {
     name: "Salary-update sequence",
     exact: true,

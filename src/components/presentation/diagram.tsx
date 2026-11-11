@@ -103,7 +103,7 @@ export function Diagram({ id }: { id: keyof typeof diagrams }) {
         className="my-8 rounded-xl bg-card p-5 shadow-panel md:p-7"
       >
         <figcaption>
-          <h4 className="text-heading font-medium">{diagram.title}</h4>
+          <h3 className="text-heading font-medium">{diagram.title}</h3>
           <p className="mt-2 text-ui leading-relaxed text-foreground-2">
             {diagram.description}
           </p>
@@ -144,7 +144,7 @@ export function Diagram({ id }: { id: keyof typeof diagrams }) {
       className="my-8 min-w-0 rounded-xl bg-card shadow-panel"
     >
       <figcaption className="p-5 pb-0 md:px-7 md:pt-7">
-        <h4 className="text-heading font-medium">{diagram.title}</h4>
+        <h3 className="text-heading font-medium">{diagram.title}</h3>
         <p className="mt-2 max-w-[95ch] text-ui leading-relaxed text-foreground-2">
           {diagram.description}
         </p>

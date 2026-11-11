@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import {
   PRESENTATION_SECTIONS,
   presentationSection,
-  presentationAnchor,
+  presentationHref,
   markdownSection,
 } from "@/lib/presentation";
 import { readPresentation } from "@/server/presentation/content";
 import { REPOSITORY } from "@/server/presentation/catalog";
 import { PresentationBody } from "@/components/presentation/content";
-import { CURRENCIES } from "@/domain/money";
+import { LinkPending } from "@/components/link-pending";
 export default async function PresentationPage({
   params,
 }: {
@@ -20,145 +20,120 @@ export default async function PresentationPage({
   if (segments.length > 1) notFound();
   const section = presentationSection(segments[0] ?? "");
   if (!section) notFound();
-  if (section.slug)
-    redirect("/presentation#" + presentationAnchor(section.slug));
+  const index = PRESENTATION_SECTIONS.indexOf(section),
+    previous = PRESENTATION_SECTIONS[index - 1],
+    next = PRESENTATION_SECTIONS[index + 1];
   const narrative = await readPresentation();
   return (
-    <article data-case-study className="w-full min-w-0 pb-10">
-      <header className="pt-3 pb-8 md:pt-5 md:pb-10">
+    <article
+      data-case-study
+      data-assessment-report
+      className="w-full min-w-0 pb-10"
+    >
+      <header className="pt-2 pb-7 md:pb-9">
         <div className="flex flex-wrap items-center justify-between gap-3 text-meta text-muted-foreground">
-          <p>Case study · Full-stack TypeScript · AI-assisted development</p>
-          <p>Independent assessment concept · Fictional ACME</p>
+          <p>Salary Desk · Assessment report and engineering case study</p>
+          <p>
+            Section {index + 1} of {PRESENTATION_SECTIONS.length} · Local review
+          </p>
         </div>
-        <div className="mt-7 grid items-end gap-7 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,0.7fr)] xl:gap-12">
+        <div className="mt-5 flex flex-wrap items-start justify-between gap-5">
           <div>
             <h1 className="text-title-lg font-medium tracking-tight">
-              Salary Desk
+              {section.title}
             </h1>
-            <p className="mt-4 max-w-[32ch] text-3xl leading-tight font-medium tracking-tight md:text-4xl">
-              A clear view of pay.
-              <br />A careful way to change it.
-            </p>
-            <p className="mt-5 max-w-[75ch] text-ui leading-relaxed text-foreground-2">
-              From a spreadsheet brief to a working HR tool: find an employee,
-              correct current pay without losing a newer edit, and explain
-              compensation for a defined population.
+            <p className="mt-3 max-w-[85ch] text-ui leading-relaxed text-foreground-2">
+              {section.summary}
             </p>
           </div>
-          <div className="flex flex-wrap gap-3 xl:justify-end">
+          <div className="flex flex-wrap gap-3">
             <Link
               prefetch={false}
               href="/dashboard?currency=USD"
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button transition-shadow hover:shadow-button-hover"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
             >
               Open workspace
               <ArrowRight aria-hidden className="size-4" />
             </Link>
             <a
               href={REPOSITORY}
-              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-ui text-foreground-2 hover:bg-inset"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-meta text-foreground-2 hover:bg-inset"
             >
-              Published source
+              Published baseline source
               <ArrowUpRight aria-hidden className="size-4" />
             </a>
           </div>
         </div>
-        <dl className="mt-9 grid grid-cols-2 border-y md:grid-cols-4">
-          {[
-            { value: "10,000", label: "Synthetic employees" },
-            {
-              value: String(Object.keys(CURRENCIES).length),
-              label: "Explicit pay currencies",
-            },
-            { value: "25", label: "Rows per default page" },
-            { value: "Annual base", label: "Salary basis" },
-          ].map((fact) => (
-            <div
-              key={fact.label}
-              className="py-5 pr-4 md:border-r md:pl-5 md:first:pl-0 md:last:border-r-0"
-            >
-              <dt className="text-meta text-muted-foreground">{fact.label}</dt>
-              <dd className="mt-2 text-title font-medium tracking-tight tabular-nums">
-                {fact.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-        <ul
-          aria-label="Application stack"
-          className="mt-5 flex flex-wrap gap-2"
-        >
-          {[
-            "TypeScript",
-            "Next.js",
-            "PostgreSQL",
-            "Drizzle",
-            "Zod",
-            "Vitest",
-            "Playwright",
-          ].map((item) => (
-            <li
-              key={item}
-              className="rounded-full bg-inset px-3 py-1 text-meta text-foreground-2"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+        <p className="mt-4 text-meta text-muted-foreground">
+          Incubyte · Software Craftsperson / TypeScript II assessment ·
+          Fictional ACME · Synthetic data
+        </p>
       </header>
       <nav
         aria-label="Presentation sections"
-        className="sticky top-0 z-10 flex flex-wrap gap-x-5 gap-y-1 border-y bg-background/95 px-1 py-2 backdrop-blur-sm"
+        className="mb-8 flex flex-wrap gap-2 border-y py-3"
       >
         {PRESENTATION_SECTIONS.map((item, i) => (
           <Link
             key={item.slug}
             prefetch={false}
-            href={"/presentation#" + presentationAnchor(item.slug)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 text-meta text-foreground-2 hover:bg-inset hover:text-foreground"
+            href={presentationHref(item.slug)}
+            aria-label={item.title}
+            aria-current={item.slug === section.slug ? "page" : undefined}
+            className={`relative isolate inline-flex min-h-11 items-center gap-2 overflow-hidden rounded-lg px-3 text-meta transition-colors ${item.slug === section.slug ? "bg-inset font-medium text-foreground" : "text-foreground-2 hover:bg-inset hover:text-foreground"}`}
           >
-            <span className="tabular-nums text-muted-foreground">0{i + 1}</span>
-            {item.title}
+            <LinkPending />
+            <span aria-hidden className="tabular-nums text-muted-foreground">
+              0{i + 1}
+            </span>
+            {item.navLabel}
           </Link>
         ))}
       </nav>
-      {PRESENTATION_SECTIONS.map((chapter, index) => (
-        <section
-          key={chapter.slug}
-          id={presentationAnchor(chapter.slug)}
-          aria-labelledby={`chapter-${index}`}
-          className="scroll-mt-44 border-b pt-10 pb-5 xl:scroll-mt-24 md:pt-14 md:pb-8"
+      <PresentationBody content={markdownSection(narrative, section.title)} />
+      <footer className="mt-9 border-t pt-5">
+        <nav
+          aria-label="Report sequence"
+          className="flex flex-wrap items-center justify-between gap-4"
         >
-          <header className="flex flex-wrap items-baseline justify-between gap-4">
-            <h2
-              id={`chapter-${index}`}
-              className="text-title font-medium tracking-tight"
+          {previous ? (
+            <Link
+              prefetch={false}
+              href={presentationHref(previous.slug)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-ui text-foreground-2 hover:bg-inset"
             >
-              <span className="mr-3 text-meta tabular-nums text-muted-foreground">
-                0{index + 1}
-              </span>
-              {chapter.title}
-            </h2>
-            <p className="text-meta text-muted-foreground">{chapter.summary}</p>
-          </header>
-          <PresentationBody
-            content={markdownSection(narrative, chapter.title)}
-          />
-        </section>
-      ))}
-      <footer className="flex flex-wrap items-center justify-between gap-4 pt-7 text-meta text-muted-foreground">
-        <span>
-          Canonical story: docs/PRESENTATION.md · Synthetic data · Evidence is
-          versioned.
-        </span>
-        <Link
-          prefetch={false}
-          href="/dashboard"
-          className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-foreground hover:bg-inset"
-        >
-          Explore the working product
-          <ArrowRight aria-hidden className="size-4" />
-        </Link>
+              <ArrowLeft aria-hidden className="size-4" />
+              {previous.title}
+            </Link>
+          ) : (
+            <span className="text-meta text-muted-foreground">
+              Requirements → Implementation → Decisions → Evidence
+            </span>
+          )}
+          {next ? (
+            <Link
+              prefetch={false}
+              href={presentationHref(next.slug)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
+            >
+              {next.title}
+              <ArrowRight aria-hidden className="size-4" />
+            </Link>
+          ) : (
+            <Link
+              prefetch={false}
+              href="/dashboard"
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-card px-4 text-ui font-medium shadow-button hover:shadow-button-hover"
+            >
+              Review the working product
+              <ArrowRight aria-hidden className="size-4" />
+            </Link>
+          )}
+        </nav>
+        <p className="mt-5 text-meta text-muted-foreground">
+          Independent assessment concept · Canonical report:
+          docs/PRESENTATION.md · Evidence is labeled by source and environment.
+        </p>
       </footer>
     </article>
   );

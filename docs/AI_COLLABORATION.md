@@ -196,3 +196,10 @@ Final source `b3e2106` passed the complete production suite: 30 browser checks, 
 - SVG colors resolve to the existing input/border, inset, foreground and status-signal roles. No palette, global CSS, database, API, cache policy or salary behavior changed. Source excerpts, recorded performance and verification remain grounded in their actual versions.
 
 Final case-study source `39f40eb` passed six focused production browser checks after the desktop-fit adjustment, plus eight light/dark × viewport combinations with clean captures and zero salary reads/chart initialization. The preceding complete production suite passed 31 cases at `8ac9e06`; 42 unit tests, lint, types, design consistency and the credential-free production build passed on the final revision. Exact sources remain separate in the verification artifact. No source publication, production deployment, email or submission occurred.
+
+## Assessment report clarification
+
+- User correction: separate pages are welcome; the reference should remain inspiration, and Presentation must be a proper assessment report and documented case study. The earlier continuous-page interpretation was too literal.
+- Retained full-width Job Desk-derived styling, SVG decision/data/cache flows, actual source annotations and honest historical evidence. Replaced anchor redirects with dedicated overview/scope/implementation/decisions/verification routes, active navigation and a review sequence.
+- Added an explicit separation of brief versus provisional product decisions, assessor review order and requirement-to-evidence/delivery status matrix. The missing narrated video remains pending; no new employer approval or publication is implied.
+- A new route-scoping browser expectation failed on the previous continuous-page production build before implementation. Report-only visits must still issue no salary reads or initialize charts. Heading levels were adjusted for independent pages.

@@ -7,22 +7,31 @@ export async function EvidenceSummary() {
       applicationSource: string;
       status: string;
       checks: Record<string, string>;
+      caseStudyRevision?: { source: string; checks: Record<string, string> };
+      reportRevision?: { source: string; checks: Record<string, string> };
     };
+  const revision = record.reportRevision ?? record.caseStudyRevision;
+  const checks = revision?.checks ?? record.checks;
+  const label = record.reportRevision
+    ? "Assessment report revision"
+    : record.caseStudyRevision
+      ? "Case-study revision"
+      : "Functional baseline";
   return (
     <section
       aria-label="Recorded verification"
       className="my-8 rounded-xl bg-card p-5 shadow-panel md:p-7"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h4 className="text-heading font-medium">
+        <h3 className="text-heading font-medium">
           Evidence, with its version attached
-        </h4>
+        </h3>
         <span className="text-meta text-muted-foreground">
-          Functional baseline · {record.applicationSource.slice(0, 7)}
+          {label} · {(revision?.source ?? record.applicationSource).slice(0, 7)}
         </span>
       </div>
       <dl className="mt-5 grid gap-x-8 md:grid-cols-2">
-        {Object.entries(record.checks).map(([key, value]) => (
+        {Object.entries(checks).map(([key, value]) => (
           <div key={key} className="border-t py-4">
             <dt className="text-meta font-medium capitalize text-muted-foreground">
               {key.replace(/([A-Z])/g, " $1")}
@@ -73,9 +82,9 @@ export async function PerformanceEvidence() {
       className="my-8 min-w-0 overflow-hidden rounded-xl bg-card shadow-panel"
     >
       <figcaption className="px-5 py-5 md:px-7">
-        <h4 className="text-heading font-medium">
+        <h3 className="text-heading font-medium">
           Every sample, including the slower ones
-        </h4>
+        </h3>
         <p className="mt-2 text-meta text-muted-foreground">
           Historical functional comparison · {before.source.slice(0, 7)} →{" "}
           {after.source.slice(0, 7)} · 3 samples per journey · milliseconds

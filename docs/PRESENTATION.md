@@ -1,8 +1,8 @@
-# Salary Desk engineering case study
+# Salary Desk assessment report and engineering case study
 
 Canonical narrative for the evaluator-protected case study. Product facts come from the requirements and implementation; measurements remain attached to their recorded source and environment. The presentation is AI-assisted work, not a claim of employer approval or human-only authorship.
 
-## Start here
+## Assessment overview
 
 ### Help HR answer a question and make a safe correction
 
@@ -14,9 +14,28 @@ A spreadsheet can hold those values, but the work becomes fragile when names rep
 
 Start with [Dashboard in USD](/dashboard?currency=USD). Global headcount spans every currency; salary figures do not. Open [India employees paid in USD](/employees?country=IN&currency=USD), inspect an employee, and review a proposed change before saving. Finish in [USD analysis by department](/overview?currency=USD&groupBy=department), where every figure covers the matching population across all pages.
 
-The case study below follows the same progression: define the job, draw the boundaries, trace a save, then inspect what was actually verified. Source excerpts and selected artifacts are available when a reviewer wants to go deeper.
+This report separates scope, implementation, decisions and verification so an assessor can inspect each claim against its evidence. The engineering case study explains how the system reached its current design; it does not replace the assessment requirements or delivery checklist.
 
-## Product and scope
+### Report structure and review order
+
+1. [Requirements and scope](/presentation/product): the confirmed brief, candidate-approved working definitions, acceptance criteria and exclusions.
+2. [Architecture and implementation](/presentation/architecture): connected system/data/update/cache diagrams, with actual source excerpts and explanations.
+3. [Decisions and AI collaboration](/presentation/decisions): recorded alternatives, corrections, tradeoffs and real commit progression.
+4. [Verification and delivery](/presentation/quality): requirement-to-evidence mapping, tests, measured performance, limitations and submission status.
+
+The functional application, public baseline repository and baseline deployment exist. This report revision is local and unpublished. The final candidate-narrated video remains pending.
+
+### Assessment context
+
+The brief calls for a fully functional UI/backend, relational database, deterministic 10,000-employee seed, a requirements document written before implementation, meaningful fast unit tests, deployment, video and committed approach/AI evidence. Salary Desk is an independent assessment concept using fictional ACME data. Its compensation definitions are candidate-approved working decisions pending external clarification.
+
+## Requirements and scope
+
+### Separate the brief from working product decisions
+
+The assessment requires an HR salary-management tool for 10,000 employees across countries, replacing spreadsheet-based work and helping HR answer questions about pay. The one-page requirements document was committed before application implementation.
+
+Annual base salary, one-currency monetary analysis, current-value editing and no employee creation/deletion are the candidate-approved working scope. They are not described as explicit employer requirements. If clarification changes those choices, the impact map in the engineering notes identifies the affected requirements, schema, calculations, queries, tests and UI.
 
 ### Three surfaces, one connected workflow
 
@@ -38,7 +57,7 @@ These are working product decisions pending external clarification, not definiti
 requirements
 ```
 
-## Architecture and flows
+## Architecture and implementation
 
 ### One application, with responsibilities you can point to
 
@@ -142,7 +161,22 @@ timeline
 
 [Read the actual AI collaboration record](/presentation/artifacts/ai-record).
 
-## Quality and evidence
+## Verification and delivery
+
+### Requirement-to-evidence assessment
+
+| Assessment deliverable                            | Evidence / implemented behavior                                            | Status                                              |
+| ------------------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------- |
+| Requirements before implementation                | One-page REQUIREMENTS.md and initial commit                                | Complete; business definitions provisional          |
+| Working UI and backend                            | Dashboard, directory, safe salary editor and full-population analysis      | Functional baseline published; review changes local |
+| Relational storage and 10,000 synthetic employees | PostgreSQL constraints, explicit deterministic seed and count verification | Complete; isolated verification                     |
+| Fast meaningful unit tests                        | Exact-money, filtering, update and cache cases                             | Recorded checks, with source versions below         |
+| Persistence and concurrent-edit protection        | PostgreSQL/live browser evidence, version-checked update                   | Verified on recorded sources                        |
+| Genuine development and AI evidence               | Incremental commits, decision notes, AI collaboration record               | Available; no reconstructed history                 |
+| Deployed application and repository               | Published baseline and historical hosted CI                                | Review release / hosted review CI pending           |
+| Video demonstration                               | Script and silent reference recording                                      | Candidate-narrated video and share link pending     |
+
+The technical evidence is separated from submission completion. Passing local tests does not complete a missing video, publish this revision or verify its deployed behavior.
 
 ### Measure the waiting, then change the cause
 

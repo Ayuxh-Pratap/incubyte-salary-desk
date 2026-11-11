@@ -287,9 +287,9 @@ export async function PresentationBody({ content }: { content: string }) {
     blocks.push(
       <section key={heading} className="my-10 md:my-14">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-12">
-          <h3 className="max-w-[27ch] text-heading font-medium leading-snug tracking-tight md:text-title">
+          <h2 className="max-w-[27ch] text-heading font-medium leading-snug tracking-tight md:text-title">
             {heading}
-          </h3>
+          </h2>
           <div className="min-w-0 [&_p:first-child]:mt-0">
             <MarkdownBody content={intro} />
           </div>

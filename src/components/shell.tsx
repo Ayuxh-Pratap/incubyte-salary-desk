@@ -19,6 +19,7 @@ import { LinkPending } from "./link-pending";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { PRESENTATION_SECTIONS, presentationHref } from "@/lib/presentation";
 const workspace = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/employees", label: "Employees", icon: Users },
@@ -26,7 +27,11 @@ const workspace = [
 ];
 const navigation = [
   ...workspace,
-  { href: "/presentation", label: "Case study", icon: BookOpen },
+  ...PRESENTATION_SECTIONS.map((section) => ({
+    href: presentationHref(section.slug),
+    label: section.navLabel,
+    icon: BookOpen,
+  })),
 ];
 export function Shell({
   children,
@@ -181,18 +186,24 @@ export function Shell({
                   }
                   aria-label={label}
                   aria-current={
-                    pathname === href || pathname.startsWith(href + "/")
+                    pathname === href ||
+                    (href !== "/presentation" &&
+                      pathname.startsWith(href + "/"))
                       ? "page"
                       : undefined
                   }
                   title={collapsed ? label : undefined}
                   className={cn(
                     "relative isolate flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-4 text-ui font-medium text-foreground-2 transition-colors duration-fast hover:bg-inset hover:text-foreground",
-                    (pathname === href || pathname.startsWith(href + "/")) &&
+                    (pathname === href ||
+                      (href !== "/presentation" &&
+                        pathname.startsWith(href + "/"))) &&
                       "text-foreground",
                   )}
                 >
-                  {(pathname === href || pathname.startsWith(href + "/")) && (
+                  {(pathname === href ||
+                    (href !== "/presentation" &&
+                      pathname.startsWith(href + "/"))) && (
                     <motion.span
                       layoutId="active"
                       aria-hidden
@@ -301,7 +312,8 @@ export function Shell({
             <Link
               key={href}
               aria-current={
-                pathname === href || pathname.startsWith(href + "/")
+                pathname === href ||
+                (href !== "/presentation" && pathname.startsWith(href + "/"))
                   ? "page"
                   : undefined
               }
@@ -309,7 +321,9 @@ export function Shell({
               prefetch={!pathname.startsWith("/presentation")}
               className={cn(
                 "flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-lg px-1 text-meta font-medium text-foreground-2",
-                (pathname === href || pathname.startsWith(href + "/")) &&
+                (pathname === href ||
+                  (href !== "/presentation" &&
+                    pathname.startsWith(href + "/"))) &&
                   "bg-inset text-foreground",
               )}
             >
