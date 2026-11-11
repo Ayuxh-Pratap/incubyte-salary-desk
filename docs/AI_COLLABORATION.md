@@ -137,3 +137,7 @@ Caught and corrected the list serializer's assumption that detail update metadat
 ### Measurement-driven lookup follow-up
 
 The first after-run exposed a remaining first-arrival bottleneck: lookup queries competed for the three pooled connections, and their responses could straddle journey windows. Added a focused integration assertion: it failed at four statements, then passed after one small ordered JSON catalog statement. All twelve PostgreSQL tests pass, including tied/empty histogram populations. Retained explicit environment checks and the existing supported pooled connection configuration. No new index, service or schema was needed. Re-running final production/browser and measurement evidence after this correction; preliminary after numbers are superseded by the final run.
+
+### Canvas inspection correction
+
+The thirty-size sweep passed, but manual inspection showed light-theme canvas tick colors and white arc edges persisting on a dark page; imperative canvas rendering had read CSS before next-themes applied the root class. A new theme-render assertion failed first. Charts now read tokens on the next animation frame, observe root theme changes, use the actual computed Geist font stack, and disconnect/destroy cleanly. The capture waits for each canvas's applied theme, not an artificial timeout. This is a real visual lifecycle defect caught after functional tests, not a financial calculation error.

@@ -136,6 +136,24 @@ test("Dashboard renders bounded interactive charts, exact accessible bands and r
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/dashboard?currency=KWD");
   await expect(page.locator("canvas")).toHaveCount(3, { timeout: 20000 });
+  await page.getByRole("button", { name: "dark theme", exact: true }).click();
+  await expect(page.locator("canvas").nth(1)).toHaveAttribute(
+    "data-theme",
+    "dark",
+  );
+  await expect(page.locator("canvas").nth(1)).toHaveAttribute(
+    "data-axis-color",
+    "#c9c9d1",
+  );
+  await page.getByRole("button", { name: "light theme", exact: true }).click();
+  await expect(page.locator("canvas").nth(1)).toHaveAttribute(
+    "data-theme",
+    "light",
+  );
+  await expect(page.locator("canvas").nth(1)).toHaveAttribute(
+    "data-axis-color",
+    "#57534e",
+  );
   const response = await page.request.get("/api/dashboard?currency=KWD"),
     data = await response.json();
   expect(data.distribution.length).toBeLessThanOrEqual(8);

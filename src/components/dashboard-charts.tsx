@@ -58,69 +58,99 @@ function Plot({
     reduced = useReducedMotion();
   useEffect(() => {
     if (!ref.current) return;
-    const style = getComputedStyle(document.documentElement),
-      token = (name: string) => style.getPropertyValue(name).trim();
-    const colors = seriesTokens.map(token);
-    const config: ChartConfiguration<"bar" | "doughnut", number[], string> = {
-      type,
-      data: {
-        labels,
-        datasets: [
-          {
-            data: values,
-            backgroundColor: type === "doughnut" ? colors : token("--chart-1"),
-            borderWidth: type === "doughnut" ? 2 : 0,
-            borderColor: token("--card"),
-            borderRadius: type === "bar" ? 4 : 0,
-          },
-        ],
-      },
-      options: {
-        indexAxis: horizontal ? "y" : "x",
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: reduced ? false : { duration: 240 },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              title: (items) => labels[items[0]?.dataIndex ?? 0],
-              label: (item) => tooltip(item.dataIndex),
+    let chart: Chart<"bar" | "doughnut", number[], string> | undefined;
+    let frame: number;
+    const draw = () => {
+      if (!ref.current) return;
+      const style = getComputedStyle(document.documentElement),
+        token = (name: string) => style.getPropertyValue(name).trim();
+      const colors = seriesTokens.map(token);
+      const fontFamily = getComputedStyle(document.body).fontFamily;
+      Chart.defaults.font.family = fontFamily;
+      Chart.defaults.color = token("--foreground-2");
+      const config: ChartConfiguration<"bar" | "doughnut", number[], string> = {
+        type,
+        data: {
+          labels,
+          datasets: [
+            {
+              data: values,
+              backgroundColor:
+                type === "doughnut" ? colors : token("--chart-1"),
+              borderWidth: type === "doughnut" ? 2 : 0,
+              borderColor: token("--card"),
+              borderRadius: type === "bar" ? 4 : 0,
+            },
+          ],
+        },
+        options: {
+          indexAxis: horizontal ? "y" : "x",
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: reduced ? false : { duration: 240 },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: (items) => labels[items[0]?.dataIndex ?? 0],
+                label: (item) => tooltip(item.dataIndex),
+              },
             },
           },
-        },
-        onClick: (_event, elements) => {
-          if (elements[0]) onPick?.(elements[0].index);
-        },
-        ...(type === "bar"
-          ? {
-              scales: {
-                x: {
-                  beginAtZero: true,
-                  grid: { display: horizontal, color: token("--border") },
-                  ticks: {
-                    precision: 0,
-                    color: token("--foreground-2"),
-                    font: { family: "Geist", size: 11 },
-                    maxRotation: 0,
-                    autoSkip: false,
+          onClick: (_event, elements) => {
+            if (elements[0]) onPick?.(elements[0].index);
+          },
+          ...(type === "bar"
+            ? {
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                    grid: { display: horizontal, color: token("--border") },
+                    ticks: {
+                      precision: 0,
+                      color: token("--foreground-2"),
+                      font: { family: fontFamily, size: 12 },
+                      maxRotation: 0,
+                      autoSkip: false,
+                    },
+                  },
+                  y: {
+                    beginAtZero: true,
+                    grid: { display: !horizontal, color: token("--border") },
+                    ticks: {
+                      precision: 0,
+                      color: token("--foreground-2"),
+                      font: { family: fontFamily, size: 12 },
+                    },
                   },
                 },
-                y: {
-                  beginAtZero: true,
-                  grid: { display: !horizontal, color: token("--border") },
-                  ticks: {
-                    precision: 0,
-                    color: token("--foreground-2"),
-                    font: { family: "Geist", size: 11 },
-                  },
-                },
-              },
-            }
-          : { cutout: "68%" }),
-      },
+              }
+            : { cutout: "68%" }),
+        },
+      };
+      chart?.destroy();
+      chart = new Chart(ref.current, config);
+      ref.current.dataset.theme = document.documentElement.classList.contains(
+        "dark",
+      )
+        ? "dark"
+        : "light";
+      ref.current.dataset.axisColor = token("--foreground-2");
     };
-    const chart = new Chart(ref.current, config);
-    return () => chart.destroy();
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(draw);
+    };
+    const observer = new MutationObserver(schedule);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+    schedule();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      chart?.destroy();
+    };
   }, [
     type,
     labels,

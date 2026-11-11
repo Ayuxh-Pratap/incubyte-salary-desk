@@ -46,7 +46,13 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
         await expect(page.locator("canvas")).toHaveCount(3, { timeout: 30000 });
       } else {
         await expect(
-          page.getByRole("combobox", { name: "Country", exact: true }).first(),
+          page
+            .getByRole("combobox", {
+              name: "Country",
+              exact: true,
+              includeHidden: true,
+            })
+            .first(),
         ).toBeEnabled({ timeout: 30000 });
         if (route === "employees")
           await expect(
@@ -75,6 +81,9 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
             page.getByRole("group", { name: "Color theme", exact: true }),
           ).toHaveCount(0);
         }
+        if (route === "dashboard")
+          for (const canvas of await page.locator("canvas").all())
+            await expect(canvas).toHaveAttribute("data-theme", theme);
         await page.locator("main#main").evaluate((el) => {
           el.scrollTop = 0;
         });
@@ -140,7 +149,7 @@ test("capture the HR visual review matrix", async ({ page, browser }) => {
     name: "Annual salary distribution",
     exact: true,
   });
-  await expect(comparison).toBeVisible({
+  await expect(comparison).toHaveAttribute("aria-busy", "false", {
     timeout: 30000,
   });
   await comparison.evaluate((el) => {
