@@ -1,11 +1,11 @@
 # Delivery, verification and demo
 
-Status: core implementation verified; final hosting/publication/video work in progress. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
+Status: core implementation verified; review deployment verified; public publication and candidate video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
 
 ## Completion checklist
 
 - [x] Read assessment/supporting context; inspect independent Git boundary and UI reuse.
-- [x] Requirements and architecture committed before application code (fc8339e).
+- [x] Requirements and architecture committed before application code (initial documentation commit).
 - [x] Protected responsive UI, PostgreSQL migrations and deterministic synthetic seed.
 - [x] Bounded browsing, literal search, shared filters and stable sorting/pagination.
 - [x] Exact salary edits, preview, validation, retained drafts and optimistic conflicts.
@@ -15,12 +15,12 @@ Status: core implementation verified; final hosting/publication/video work in pr
 - [x] Seeded performance observations and EXPLAIN plans; fresh npm ci rehearsal.
 - [x] Separate development/test/demo/preview PostgreSQL databases, migrated and seeded explicitly.
 - [x] Final hardening browser rerun: six checks passed against a fresh production build.
-- [ ] Deployed persistence/redeployment check.
-- [ ] Working review deployment and persistent Neon ownership claim.
+- [x] Deployed authentication, bounded browsing, edit/reload, analysis and redeployment persistence; synthetic amounts restored.
+- [x] Working protected review preview; Neon claimed into a verified Free account.
 - [ ] Public-repository review/push and first GitHub-hosted CI execution.
 - [ ] Candidate's final narrated video and user-sent submission.
 
-The temporary Neon project expires **14 November 2026, 08:00 UTC** unless claimed into a free account. Do not submit an expiring database as permanent hosting. No paid upgrade is authorized. Source remains local until publication review.
+Review preview: https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.vercel.app (Vercel account access, then evaluator code). The database project is now claimed into the candidate’s verified Free account; the earlier temporary expiry no longer describes the current setup. Source publication and production promotion remain candidate-reviewed steps. No paid upgrade.
 
 ## Requirement to evidence
 
@@ -61,6 +61,8 @@ Unit cases run without DB/network. Hosted integration cases use only a purpose-m
 
 ## Recording and submission steps
 
-Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A silent automated walkthrough, if prepared, is reference footage rather than the candidate's completed narrated handoff.
+Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A completed silent reference walkthrough is at artifacts/salary-desk-silent-walkthrough.webm. It is labelled AI-recorded reference footage and remains separate from the candidate’s narrated handoff.
 
-After final review: claim persistent free database ownership; publish the reviewed source; verify deployed UI/API access and edit persistence across redeploy; run hosted CI; record the actual video. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
+After final review: publish the reviewed source and production URL; verify deployed UI/API access and edit persistence across redeploy; run hosted CI; record the actual video. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
+
+Windows recording: authenticate first; press Win + Shift + R, select the browser area, choose Start and enable microphone narration if offered. Follow the four-minute story, stop and replay the saved MP4. If your recorder lacks microphone input, use a recorder with screen-plus-microphone support. See [Microsoft’s recording instructions](https://support.microsoft.com/en-us/windows/apps/use-snipping-tool-to-capture-screenshots).

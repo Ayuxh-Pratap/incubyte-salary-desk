@@ -109,7 +109,8 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
           <>
             <div className="mt-5 flex flex-wrap items-center justify-between gap-2 text-meta text-muted-foreground">
               <span>
-                {data.data.summary.count.toLocaleString("en-US")} employees ·{" "}
+                {data.data.summary.count.toLocaleString("en-US")}{" "}
+                {data.data.summary.count === 1 ? "employee" : "employees"} ·{" "}
                 {data.data.currency} · Annual base salary
               </span>
               <span>All matching records, across every page</span>
@@ -274,7 +275,8 @@ export function OverviewScreen({ filters }: { filters: Filters }) {
                           <ArrowUpRight className="size-4 shrink-0" />
                         </div>
                         <p className="mt-1 text-meta text-muted-foreground">
-                          {group.summary.count} employees
+                          {group.summary.count}{" "}
+                          {group.summary.count === 1 ? "employee" : "employees"}
                           {group.summary.count < 5 ? " · Small sample" : ""}
                         </p>
                         <dl className="mt-3 grid grid-cols-2 gap-3">

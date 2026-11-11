@@ -19,3 +19,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Neon operator setup
+
+Preserve the existing purpose-separated database URLs and the current evaluator authentication. Neon skills are local operator tooling, excluded from publication. Neon MCP is pinned to this project with read-only schema/query/docs tools; guarded CLI scripts handle explicit writes. Use --no-env-pull when linking/checking out Neon context, or pull to a separate ignored file. Never overwrite .env.local through an automatic Neon setup or replace the working driver/auth with additional services.

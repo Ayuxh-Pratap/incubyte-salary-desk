@@ -6,6 +6,7 @@ import type { Filters } from "@/domain/filters";
 import type { Catalog } from "@/domain/employee";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 export function FiltersForm({
   filters,
   catalog,
@@ -152,12 +153,12 @@ export function FiltersForm({
             : "Choose a currency to sort by salary"}
         </p>
         {overview ? (
-          <label className="flex items-center gap-2 text-meta text-foreground-2">
+          <label className="flex items-center gap-2 text-meta whitespace-nowrap text-foreground-2">
             Group by
             <select
               name="groupBy"
               defaultValue={filters.groupBy}
-              className={selectClass + " w-auto"}
+              className={cn(selectClass, "w-auto")}
             >
               <option value="department">Department</option>
               <option value="country">Country</option>
@@ -166,13 +167,13 @@ export function FiltersForm({
           </label>
         ) : (
           <div className="flex flex-wrap gap-2">
-            <label className="flex items-center gap-2 text-meta text-foreground-2">
+            <label className="flex items-center gap-2 text-meta whitespace-nowrap text-foreground-2">
               <span className="sr-only">Sort employees</span>
               <select
                 name="sort"
                 aria-label="Sort employees"
                 defaultValue={filters.sort}
-                className={selectClass + " w-auto"}
+                className={cn(selectClass, "w-auto")}
               >
                 <option value="name-asc">Name A–Z</option>
                 <option value="name-desc">Name Z–A</option>
@@ -191,7 +192,7 @@ export function FiltersForm({
                 name="pageSize"
                 aria-label="Records per page"
                 defaultValue={filters.pageSize}
-                className={selectClass + " w-auto"}
+                className={cn(selectClass, "w-auto")}
               >
                 {[25, 50, 100].map((n) => (
                   <option key={n} value={n}>

@@ -9,3 +9,6 @@ test-results
 playwright-report
 tmp
 artifacts
+.agents
+.codex
+skills-lock.json

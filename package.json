@@ -25,7 +25,8 @@
     "test:e2e:live": "tsx scripts/run-live-e2e.ts",
     "perf:measure": "tsx scripts/measure.ts",
     "db:environment": "tsx scripts/with-environment.ts",
-    "build:verify": "node scripts/verify-build.mjs"
+    "build:verify": "node scripts/verify-build.mjs",
+    "demo:record": "tsx scripts/record-demo.ts"
   },
   "dependencies": {
     "@animate-ui/react": "2.4.3",

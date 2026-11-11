@@ -2,7 +2,7 @@
 
 A focused salary workspace for an HR Manager at fictional **ACME**: find employees, safely correct current annual base salary, and understand a defined compensation population. This is an independent assessment concept, not an Incubyte internal system.
 
-**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. The core product, hosted database behavior and production browser workflow are implemented and verified. Deployment ownership/publication and the candidate's final video are tracked in [Delivery](docs/DELIVERY.md).
+**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. The core product, hosted database behavior, deployed persistence and production browser workflow are verified. [Protected review preview](https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.vercel.app). Public publication and the candidate’s final video are tracked in [Delivery](docs/DELIVERY.md).
 
 ## Try the workflow
 
@@ -68,7 +68,7 @@ For reset, deliberately enable ALLOW_DEMO_RESET=true and pass the exact purpose 
 
 Vercel runtime needs only its environment's pooled DATABASE_URL, DATABASE_PURPOSE (demo for production, preview for previews), SESSION_SECRET and EVALUATOR_PASSWORD. Secrets stay server-side. Vercel-issued deployment origins are allowlisted from platform variables; APP_ORIGIN is required locally and for a custom canonical domain. Preview writes are rejected unless the database is marked preview. Migrate and seed explicitly before deploy; do not configure build hooks to run them. Node 24 and the iad1 function region are configured for the Neon US East project. No paid resources or upgrades.
 
-The current temporary Neon project **expires 14 November 2026 at 08:00 UTC unless claimed**. That is a development/review facility, not a permanent submission database. Claim it into a free account or transfer the synthetic setup to a persistent free project before submission. See [Delivery](docs/DELIVERY.md) for the actual deployment and publication state.
+The prepared Neon project has been claimed into the candidate’s verified Free account. All four databases and 10,000-row counts were rechecked after the claim; its rotated connection credentials were refreshed without reseeding. The protected preview passed edit/reload/redeploy checks. See [Delivery](docs/DELIVERY.md) for public production/repository and video status.
 
 ## Evidence and limitations
 

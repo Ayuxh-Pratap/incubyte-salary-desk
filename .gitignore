@@ -19,3 +19,6 @@ next-env.d.ts
 .vercel
 .env*
 artifacts/
+.agents/
+.codex/
+skills-lock.json

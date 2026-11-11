@@ -75,6 +75,7 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
           <ThemeToggle />
           <Button
+            aria-label="End evaluator session"
             variant="ghost"
             className="mt-3 w-full justify-start"
             onClick={async () => {
@@ -84,7 +85,7 @@ export function Shell({ children }: { children: ReactNode }) {
             }}
           >
             <LogOut />
-            End evaluator session
+            End session
           </Button>
           <p className="mt-4 text-meta text-muted-foreground">
             Independent assessment concept.
@@ -103,6 +104,7 @@ export function Shell({ children }: { children: ReactNode }) {
             <span>Fictional ACME · Assessment concept</span>
             <ThemeToggle />
             <Button
+              aria-label="End evaluator session"
               variant="ghost"
               onClick={async () => {
                 await fetch("/api/session", { method: "DELETE" });

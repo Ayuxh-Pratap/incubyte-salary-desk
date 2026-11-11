@@ -1,0 +1,128 @@
+{
+  "recordedAt": "2026-11-11T08:45:05.560Z",
+  "environment": "preview",
+  "deploymentUrl": "https://incubyte-salary-desk-dvni3cy9x-ayuxh-prataps-projects.vercel.app",
+  "checks": {
+    "anonymousDataRejected": true,
+    "cookieFlags": {
+      "httpOnly": true,
+      "secure": true,
+      "sameSiteStrict": true
+    },
+    "boundedDirectory": {
+      "population": 10000,
+      "returned": 25,
+      "purpose": "preview"
+    },
+    "invalidAmountRejected": true,
+    "staleVersionRejected": true,
+    "persistedAfterReload": true,
+    "persistedAcrossRedeployment": true,
+    "analysisReflectsPersistentEdit": true,
+    "originalSyntheticAmountRestored": true
+  },
+  "requestObservations": [
+    {
+      "path": "/api/employees",
+      "method": "GET",
+      "status": 401,
+      "elapsedMs": 558
+    },
+    {
+      "path": "/api/session",
+      "method": "POST",
+      "status": 200,
+      "elapsedMs": 403
+    },
+    {
+      "path": "/api/employees?pageSize=25",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 1017
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 316
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "PATCH",
+      "status": 400,
+      "elapsedMs": 283
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "PATCH",
+      "status": 200,
+      "elapsedMs": 514
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "PATCH",
+      "status": 409,
+      "elapsedMs": 272
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 288
+    },
+    {
+      "path": "/api/employees",
+      "method": "GET",
+      "status": 401,
+      "elapsedMs": 929,
+      "deployment": "redeployed"
+    },
+    {
+      "path": "/api/session",
+      "method": "POST",
+      "status": 200,
+      "elapsedMs": 625,
+      "deployment": "redeployed"
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 706,
+      "deployment": "redeployed"
+    },
+    {
+      "path": "/api/analysis?currency=KWD&q=ACME-10000",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 402,
+      "deployment": "redeployed"
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "PATCH",
+      "status": 200,
+      "elapsedMs": 315,
+      "deployment": "redeployed"
+    },
+    {
+      "path": "/api/employees/10000",
+      "method": "GET",
+      "status": 200,
+      "elapsedMs": 367,
+      "deployment": "redeployed"
+    }
+  ],
+  "redeploymentUrl": "https://incubyte-salary-desk-fqlzg9ltk-ayuxh-prataps-projects.vercel.app",
+  "redeploymentVerifiedAt": "2026-11-11T08:48:49.233Z",
+  "accessNote": "Vercel-protected review preview; platform automation cookie used. Application evaluator authorization verified independently.",
+  "originalSourceCommitBeforeEmailRedaction": "2716857fd9137ddf86ed1f26deb46976ae39b32b",
+  "emailRedactedEquivalentCommit": "e7e1c48acc8aa0ab1c2a3d781fc34e86bfa1b15a",
+  "ownershipClaim": {
+    "accountPlan": "free",
+    "projectAccessible": true,
+    "purposeSeparatedDatabasesVerified": 4,
+    "employeesPerDatabase": 10000,
+    "credentialsRefreshedWithoutReseeding": true
+  }
+}

@@ -74,7 +74,8 @@ export function EmployeesScreen({ filters }: { filters: Filters }) {
             <h2 className="font-medium">
               {results.data
                 ? results.data.total.toLocaleString("en-US") +
-                  " matching employees"
+                  " matching " +
+                  (results.data.total === 1 ? "employee" : "employees")
                 : "Employee directory"}
             </h2>
           </div>
