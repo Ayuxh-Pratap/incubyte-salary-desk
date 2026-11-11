@@ -28,3 +28,7 @@ Node.js 24 LTS is selected. Install with `npm ci`. Copy `.env.example` to ignore
 ## Scope boundary
 
 Current annual base salary, positive amounts, explicit currency and period, single-currency analysis. No FX, payroll, employee creation/deletion, salary history or future-effective changes. See the requirements for the complete agreed boundary.
+
+## Synthetic seed
+
+After configuring and migrating a dedicated database, run `npm run db:seed` explicitly. It inserts deterministic IDs with conflict-do-nothing and verifies exactly 10,000 rows; existing salary edits survive normal repeats. Reset is separate: explicitly set `ALLOW_DEMO_RESET=true` and run `npm run db:reset -- --confirm=RESET-SYNTHETIC-development` against the marked development database (substitute the exact purpose only for an intended synthetic environment). Reset discards salary edits. Never seed on build or request. Hosted execution is pending configuration.

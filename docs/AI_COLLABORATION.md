@@ -23,3 +23,9 @@ Money tests were run before the module existed and failed on its missing import;
 Compatibility: Node 24.19, Next 16.4.6, React 19.3.1, Drizzle 0.45.4/kit 0.31.11, Vitest 5.1, Playwright 1.65. ESLint 10 ran but conflicts with Next's official plugin peer ranges; reverted to compatible 9.39.5 pending upstream support. Production npm audit reports zero advisories; development-tool advisories remain under review. Packaged Geist avoids a Google Fonts download during builds.
 
 Foundation browser rerun passed: login/logout, hostile-origin rejection, light/dark theme and 320 px overflow check. Screenshots were inspected locally and remain ignored. No hosted database verification or deployment is claimed yet.
+
+## Seed and browsing slice
+
+Ran the seed test before its module existed, then implemented deterministic generation: 10,000 unique IDs and employee numbers, six currencies, a three-person leadership group, varied names, fractional precision and tied values. A new regression test failed because salary ordering accepted multiple currencies; the parser now requires a currency for monetary sorting. All 17 unit tests pass. Seed SQL preserves existing rows with conflict-do-nothing inside a transaction and verifies the final count; hosted execution remains pending Neon authentication. No database-backed behavior is claimed verified yet.
+
+Browsing verification caught two issues before commit: response state now carries its request key, including failures, to prevent stale or indefinitely loading populations; a mobile theme click was intercepted by Next’s development indicator, confirmed from the trace actionability log. Disabled that development-only indicator rather than forcing the click or inflating timeouts.

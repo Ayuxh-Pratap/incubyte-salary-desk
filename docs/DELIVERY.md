@@ -30,3 +30,5 @@ README must include install/configuration, migrations, seed, guarded reset, test
 ## Current pending items
 
 Hosted database/account configuration, external scope reply, actual deployment and video. No behavior is claimed implemented before verification. Target: strong first submission in 2-3 days, with correctness and deployment ahead of optional polish.
+
+Browsing slice: generator and protected SQL/API/UI are implemented. Unit tests (17), production build and access/browser checks (2) pass. Actual PostgreSQL migration, seed idempotence, queries and performance remain unverified until a hosted connection is available.

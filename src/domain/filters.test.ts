@@ -13,3 +13,10 @@ it("normalizes search while preserving literal wildcard characters", () => {
   ).toMatchObject({ q: "José %_", country: "IN", currency: "INR" });
   expect(() => parseFilters({ q: "a".repeat(101) })).toThrow();
 });
+
+it("requires a currency for monetary ordering", () => {
+  expect(() => parseFilters({ sort: "salary-desc" })).toThrow();
+  expect(parseFilters({ sort: "salary-desc", currency: "JPY" }).sort).toBe(
+    "salary-desc",
+  );
+});

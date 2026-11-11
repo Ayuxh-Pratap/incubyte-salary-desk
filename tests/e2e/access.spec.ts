@@ -53,3 +53,15 @@ test("evaluator access, themes and narrow-screen shell", async ({
   await page.goto("/employees");
   await expect(page).toHaveURL(/\/login$/);
 });
+
+test("employee data endpoints reject anonymous callers", async ({
+  request,
+}) => {
+  for (const url of ["/api/employees", "/api/catalog"]) {
+    const response = await request.get(url);
+    expect(response.status()).toBe(401);
+    expect(await response.json()).toEqual({
+      error: "Evaluator session required.",
+    });
+  }
+});

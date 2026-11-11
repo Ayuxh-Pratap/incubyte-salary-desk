@@ -1,27 +1,31 @@
-export default function Employees() {
-  return (
-    <>
-      <p className="text-meta font-medium uppercase tracking-wider text-muted-foreground">
-        People & compensation
-      </p>
-      <h1 className="mt-2 text-title font-semibold tracking-tight">
-        Employees
-      </h1>
-      <p className="mt-2 text-foreground-2">
-        Find a person. Understand their pay. Make a careful correction.
-      </p>
-      <section className="mt-6 rounded-xl border bg-card p-6">
-        <h2 className="text-heading font-medium">
-          Database setup is the next step
-        </h2>
-        <p className="mt-2 text-muted-foreground">
-          The foundation is running. Employee browsing will use the hosted
-          database after migration and explicit synthetic seeding.
+import Link from "next/link";
+import { parseFilters } from "@/domain/filters";
+import { EmployeesScreen } from "@/components/employees-screen";
+export default async function Employees({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  let filters;
+  try {
+    filters = parseFilters(params);
+  } catch {
+    return (
+      <section role="alert" className="rounded-xl border bg-card p-6">
+        <h1 className="text-title font-semibold">Check your filters</h1>
+        <p className="mt-3 text-muted-foreground">
+          Salary sorting requires a currency. Search is limited to 100
+          characters and pages to 25, 50 or 100 records.
         </p>
-        <p className="mt-4 text-meta text-muted-foreground">
-          No sample records are presented as connected data.
-        </p>
+        <Link
+          href="/employees"
+          className="mt-4 inline-flex min-h-11 items-center underline"
+        >
+          Clear filters
+        </Link>
       </section>
-    </>
-  );
+    );
+  }
+  return <EmployeesScreen filters={filters} />;
 }

@@ -39,11 +39,14 @@ export const filterSchema = z.object({
 });
 export type Filters = z.infer<typeof filterSchema>;
 export function parseFilters(input: Record<string, unknown>): Filters {
-  return filterSchema.parse(
+  const parsed = filterSchema.parse(
     Object.fromEntries(
       Object.entries(input).filter(
         ([, value]) => value !== "" && value !== undefined,
       ),
     ),
   );
+  if (parsed.sort.startsWith("salary-") && !parsed.currency)
+    throw new Error("Choose one currency before sorting by salary.");
+  return parsed;
 }
