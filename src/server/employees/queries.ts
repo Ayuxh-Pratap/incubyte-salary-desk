@@ -132,17 +132,10 @@ export async function getEmployee(
   return row ? serialize(row) : null;
 }
 export async function catalog(db: QueryDb): Promise<Catalog> {
-  const [countryRows, departmentRows, roleRows, currencyRows] =
-    await Promise.all([
-      db.select().from(countries).orderBy(asc(countries.name)),
-      db.select().from(departments).orderBy(asc(departments.name)),
-      db.select().from(roles).orderBy(asc(roles.name)),
-      db.select().from(schema.currencies).orderBy(asc(schema.currencies.code)),
-    ]);
-  return {
-    countries: countryRows,
-    departments: departmentRows,
-    roles: roleRows,
-    currencies: currencyRows,
-  };
+  const result = await db.execute<Catalog & Record<string, unknown>>(sql`select
+ coalesce((select jsonb_agg(to_jsonb(c) order by c.name) from countries c),'[]'::jsonb) as countries,
+ coalesce((select jsonb_agg(to_jsonb(d) order by d.name) from departments d),'[]'::jsonb) as departments,
+ coalesce((select jsonb_agg(to_jsonb(r) order by r.name) from roles r),'[]'::jsonb) as roles,
+ coalesce((select jsonb_agg(to_jsonb(c) order by c.code) from currencies c),'[]'::jsonb) as currencies`);
+  return result.rows[0];
 }

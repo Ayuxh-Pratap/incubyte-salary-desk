@@ -171,7 +171,7 @@ export function PopulationCharts({
       ].map(({ title, groups, name, filter, type }) => (
         <section
           key={filter}
-          className="min-w-0 rounded-xl bg-card p-5 shadow-panel"
+          className="min-h-[480px] min-w-0 rounded-xl bg-card p-5 shadow-panel"
           aria-label={title}
         >
           <h2 className="text-heading font-medium">{title}</h2>
@@ -181,6 +181,7 @@ export function PopulationCharts({
           </p>
           <Plot
             type={type}
+            horizontal={type === "bar"}
             labels={groups.map((g) => name(g.key))}
             values={groups.map((g) => g.count)}
             label={title + "; equivalent data and drill-downs follow"}
@@ -298,8 +299,12 @@ export function SalaryDistribution({
             Annual salary distribution
           </h3>
           <p className="mt-1 text-meta text-foreground-2">
-            {currency} · Current annual base · All{" "}
-            {count.toLocaleString("en-US")} matching employees
+            {loading
+              ? currency + " · Current annual base · Population loading"
+              : currency +
+                " · Current annual base · All " +
+                count.toLocaleString("en-US") +
+                " matching employees"}
           </p>
         </div>
         <Link

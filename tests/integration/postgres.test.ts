@@ -1,3 +1,4 @@
+import { catalog } from "../../src/server/employees/queries";
 import { beforeAll, afterAll, it, expect } from "vitest";
 import { Pool } from "pg";
 import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
@@ -307,4 +308,14 @@ it("Dashboard histogram handles tied single-value and empty currency populations
     expect(empty.compensation.summary.count).toBe(0);
     expect(empty.compensation.summary.median).toBeNull();
   });
+});
+
+it("loads the small lookup catalog in one statement instead of four competing pooled queries", async () => {
+  const start = queryLog.length;
+  const result = await catalog(db);
+  expect(queryLog.length - start).toBe(1);
+  expect(result.countries).toHaveLength(6);
+  expect(result.departments).toHaveLength(7);
+  expect(result.roles).toHaveLength(14);
+  expect(result.currencies.find((c) => c.code === "KWD")?.precision).toBe(3);
 });
