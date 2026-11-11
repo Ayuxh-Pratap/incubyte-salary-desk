@@ -205,3 +205,7 @@ Final case-study source `39f40eb` passed six focused production browser checks a
 - A new route-scoping browser expectation failed on the previous continuous-page production build before implementation. Report-only visits must still issue no salary reads or initialize charts. Heading levels were adjusted for independent pages.
 
 Final report revision `f1a7dca` passed the complete production-browser suite: 31 checks, with one optional Workspace matrix skipped. All 42 unit cases, lint, types, design consistency and credential-free build passed. Eight current production light/dark/viewport combinations verified full width, readable/keyboard-scrollable diagrams, no document overflow and zero salary reads/chart initialization. The new report captures are separate from historical case-study images. A development trial collided with another runner's shared Playwright artifact output; it was not treated as product verification, and the authoritative production run completed serially. Published history and production remain untouched.
+
+## Stacked report text
+
+The candidate disliked the split heading/prose columns. Updated the shared report renderer to stack each heading, prose and supporting material in reading order, with tighter section spacing. Source explanations now follow their snippets as well. Full-width figures, separate pages, tokens, report content and business behavior are preserved. This is a reversible presentation change; no new behavior tests or product features were added.
