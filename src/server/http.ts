@@ -1,4 +1,5 @@
 import "server-only";
+import { SalaryError } from "../domain/salary-update";
 import { ZodError } from "zod";
 import { session } from "./auth";
 import { assertOrigin } from "./security";
@@ -35,6 +36,16 @@ export async function api(
       headers: { "Cache-Control": "private, no-store" },
     });
   } catch (error) {
+    if (error instanceof SalaryError)
+      error = new HttpError(
+        error.code === "conflict"
+          ? 409
+          : error.code === "not-found"
+            ? 404
+            : 400,
+        error.message,
+        error.current ? { current: error.current } : undefined,
+      );
     const status =
       error instanceof HttpError
         ? error.status

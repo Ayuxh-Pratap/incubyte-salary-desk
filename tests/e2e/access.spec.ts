@@ -65,3 +65,15 @@ test("employee data endpoints reject anonymous callers", async ({
     });
   }
 });
+
+test("employee detail and writes require a session", async ({ request }) => {
+  expect((await request.get("/api/employees/1")).status()).toBe(401);
+  expect(
+    (
+      await request.patch("/api/employees/1", {
+        headers: { Origin: "http://localhost:3100" },
+        data: { amount: "100", currency: "INR", period: "annual", version: 1 },
+      })
+    ).status(),
+  ).toBe(401);
+});

@@ -11,16 +11,24 @@ export function Sheet({
   children,
 }: {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void | boolean;
   title: string;
   description: string;
   children: ReactNode;
 }) {
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={(next, details) => {
+        if (onOpenChange(next) === false) details.cancel();
+      }}
+    >
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-40 bg-foreground/25 backdrop-blur-xs" />
-        <Dialog.Popup className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l bg-card text-foreground shadow-xl">
+        <Dialog.Popup
+          data-side="right"
+          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l bg-card text-foreground shadow-xl"
+        >
           <header className="relative border-b p-6 pr-18">
             <Dialog.Title className="text-heading font-semibold">
               {title}

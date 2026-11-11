@@ -130,7 +130,7 @@ export function syntheticEmployees() {
         ];
     const department = i < 3 ? DEPARTMENTS[6] : DEPARTMENTS[random() % 6],
       role = department.roles[random() % department.roles.length];
-    const currency = country.currency;
+    const currency = i % 13 === 0 ? "USD" : country.currency;
     const [base, spread] = ranges[currency];
     const major =
       base +

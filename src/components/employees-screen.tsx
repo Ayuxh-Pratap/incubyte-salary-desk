@@ -16,7 +16,7 @@ import { useRemote } from "./use-remote";
 import { FiltersForm } from "./filters-form";
 import { Button } from "./ui/button";
 import { Sheet } from "./ui/sheet";
-import { EmployeeProfile } from "./employee-profile";
+import { EmployeeDetail } from "./employee-detail";
 export function EmployeesScreen({ filters }: { filters: Filters }) {
   const router = useRouter(),
     query = new URLSearchParams(
@@ -25,6 +25,7 @@ export function EmployeesScreen({ filters }: { filters: Filters }) {
   const results = useRemote<EmployeePage>("/api/employees?" + query),
     catalog = useRemote<Catalog>("/api/catalog");
   const [selected, setSelected] = useState<Employee | null>(null);
+  const [dirty, setDirty] = useState(false);
   function page(number: number) {
     const params = new URLSearchParams(query);
     params.set("page", String(number));
@@ -248,18 +249,27 @@ export function EmployeesScreen({ filters }: { filters: Filters }) {
       <Sheet
         open={!!selected}
         onOpenChange={(open) => {
-          if (!open) setSelected(null);
+          if (
+            !open &&
+            dirty &&
+            !window.confirm("Discard your unsaved salary change?")
+          )
+            return false;
+          if (!open) {
+            setSelected(null);
+            setDirty(false);
+          }
         }}
         title="Employee compensation"
         description="Current annual base salary and employee context."
       >
         {selected && (
-          <>
-            <EmployeeProfile employee={selected} />
-            <p className="mt-6 rounded-lg border bg-muted p-3 text-meta text-muted-foreground">
-              Salary editing is the next verified implementation slice.
-            </p>
-          </>
+          <EmployeeDetail
+            key={selected.id}
+            id={selected.id}
+            onSaved={results.reload}
+            onDirtyChange={setDirty}
+          />
         )}
       </Sheet>
     </>
