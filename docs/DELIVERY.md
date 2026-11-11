@@ -90,4 +90,4 @@ The relevant JD signals are readable TypeScript backend ownership, meaningful te
 
 ## Verdict
 
-The application release and its written engineering handoff can be completed independently. **The final assessment submission is not ready to send until the candidate records, reviews and shares the final video.** No further feature or redesign is required for this release. External clarification remains a documented policy limitation, not implied approval.
+The application release and written engineering handoff are published and operational; hosted checks and source-labeled read-only production evidence are recorded in release-verification.json. **The final assessment submission is not ready to send until the candidate records, reviews and shares the final video.** No further feature or redesign is required for this release. External clarification remains a documented policy limitation, not implied approval.

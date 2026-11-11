@@ -1,9 +1,9 @@
 {
   "release": true,
-  "applicationSource": "release candidate based on 2fe05d5; final commit identified by hosted CI",
+  "applicationSource": "8c45db062f8c06fcff21d812ca57f740a2bc5e55",
   "applicationFilesSha256": "e846e0cc088ad4ebdd7ea256b3df2c633b85e9f514e270a6b570cf66b626da32",
-  "recordedAt": "2026-11-11T19:01:18.151Z",
-  "status": "Fresh local release gates passed; publication and production verification follow. Final video remains pending.",
+  "recordedAt": "2026-11-11T19:13:01.228Z",
+  "status": "Approved application published and operational. This evidence-only follow-up preserves the verified application source; its own exact-commit checks are available in hosted CI. Final video remains pending.",
   "environment": "Windows, Node 24.19.0, npm 11.17.0; production-build Chromium suite against isolated hosted test PostgreSQL. Demo untouched.",
   "checks": {
     "lint": "Passed; no warnings",
@@ -15,13 +15,93 @@
     "build": "Credential-free production build passed as Playwright webServer prerequisite",
     "links": "34 local Markdown links resolved; reviewed app artifact/source GitHub links asserted",
     "productionBefore": "Public evaluator login without Vercel account; anonymous API 401; demo purpose, 10000 population, 25-row page; read-only salary/version checkpoint",
-    "hosted": "See exact-commit hosted workflow after push; not yet claimed by this record",
-    "video": "Candidate confirmed not recorded; final recording and share URL remain the submission blocker"
+    "hosted": "Passed at 8c45db0: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/43084420801 (42 unit, 12 PostgreSQL, 31 browser; one optional screenshot matrix skipped). Follow-up commits have separate runs in the same workflow.",
+    "video": "Candidate confirmed not recorded; final recording and share URL remain the submission blocker",
+    "production": "Read-only live verification passed at 8c45db0: all Workspace/report areas, protected access, exact 10000 count, bounded pages, full-population analysis, unchanged salary/version across deployment and no browser errors.",
+    "localRehearsal": "Documented Node --env-file=.env.local production start verified: development marker, authenticated 10000 count and 25-row response; no mutation",
+    "packaging": "Actual Vercel dry-run manifest verified required protected routes/documents and excluded private env/operator files/generated recordings. Unanchored artifacts ignore corrected to root /artifacts/.",
+    "documents": "All 17 reviewed artifact routes and 7 source routes resolved with canonical GitHub links; zero salary reads and zero browser errors during this report-only traversal."
   },
   "limitations": [
     "Historical performance figures are source-labeled, not rebenchmarked by these checks.",
     "One optional Workspace screenshot matrix skipped; representative report/theme/viewport checks passed.",
     "No load SLA, controlled cold-start, full assistive-technology or non-Chromium certification.",
     "No clarification reply text supplied; candidate-approved scope is not employer approval."
-  ]
+  ],
+  "localVerificationSource": "98bdcd9 release candidate, with identical application source files; packaging correction 8c45db0 then verified on actual upload/deployment",
+  "deployment": {
+    "verifiedSource": "8c45db062f8c06fcff21d812ca57f740a2bc5e55",
+    "id": "dpl_ACuKvkG4KdB63LFDcRfwaRADpXYR",
+    "url": "https://incubyte-salary-desk.vercel.app",
+    "state": "READY",
+    "runtime": "24.x",
+    "region": "iad1",
+    "note": "The evidence-only follow-up deployment has its own releaseCommit metadata; no schema change, migration, reseed, reset or demo mutation."
+  },
+  "productionVerification": {
+    "publicLoginWithoutVercelAccount": true,
+    "anonymousApi401": true,
+    "secureSession": true,
+    "databasePurpose": "demo",
+    "population": 10000,
+    "pageRows": 25,
+    "filtersAndPagination": true,
+    "analysisFullPopulation": true,
+    "protectedPresentationAndCanonicalLinks": true,
+    "salaryAndVersionUnchangedAcrossDeployment": true,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "reportWidths": [
+      390,
+      820,
+      1440
+    ],
+    "browserErrors": [],
+    "artifacts": 17,
+    "sources": 7,
+    "canonicalGitHubLinks": true,
+    "salaryReads": 0,
+    "mode": "Read-only; no production mutation, reseed or reset",
+    "recordedAt": "2026-11-11T19:10:46.602Z"
+  },
+  "employeeHttpSamples": {
+    "method": "One sequential four-read sample on hosted production from the Windows/India client after deployment; authenticated direct HTTP including WAN; not browser navigation or SQL duration. Cold state not controlled; no percentile/SLA claim.",
+    "samples": [
+      {
+        "path": "/api/employees?pageSize=25",
+        "status": 200,
+        "ms": 387,
+        "bytes": 6716
+      },
+      {
+        "path": "/api/employees?pageSize=25",
+        "status": 200,
+        "ms": 263,
+        "bytes": 6716
+      },
+      {
+        "path": "/api/employees?pageSize=25",
+        "status": 200,
+        "ms": 281,
+        "bytes": 6716
+      },
+      {
+        "path": "/api/employees?pageSize=25",
+        "status": 200,
+        "ms": 263,
+        "bytes": 6716
+      }
+    ]
+  },
+  "packaging": {
+    "files": 281,
+    "protectedArtifactRouteIncluded": true,
+    "protectedSourceRouteIncluded": true,
+    "reviewedHandoffDocsIncluded": true,
+    "privateEnvOperatorAndRecordingsExcluded": true,
+    "method": "Vercel CLI 65.14.0 deploy --dry --json; assert actual file paths",
+    "note": "Initial deployed build omitted artifacts route because unanchored artifacts ignore matched nested route. Root-anchored /artifacts/ corrects packaging."
+  }
 }
