@@ -22,3 +22,7 @@ artifacts/
 .agents/
 .codex/
 skills-lock.json
+
+# Reviewed protected route, not generated demo recordings
+!src/app/(workspace)/presentation/artifacts/
+!src/app/(workspace)/presentation/artifacts/**

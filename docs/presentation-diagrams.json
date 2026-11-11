@@ -1,0 +1,153 @@
+{
+  "architecture": {
+    "title": "System architecture",
+    "description": "An authenticated browser uses one Next.js application. Pure rules and SQL adapters keep money and persistence separate.",
+    "kind": "flow",
+    "nodes": [
+      {
+        "title": "HR browser",
+        "body": "Workspace UI; only bounded pages and aggregate series"
+      },
+      {
+        "title": "Next.js boundary",
+        "body": "Evaluator session, origin checks, Zod validation"
+      },
+      {
+        "title": "Domain + query modules",
+        "body": "Exact money/use case; parameterized Drizzle reads and versioned writes"
+      },
+      {
+        "title": "PostgreSQL",
+        "body": "Persistent relational data, constraints and purpose marker"
+      }
+    ]
+  },
+  "model": {
+    "title": "Relational model",
+    "description": "Four reference tables connect to employees. The singleton environment marker independently guards which database an operation may use.",
+    "kind": "model",
+    "nodes": [
+      {
+        "title": "employees",
+        "body": "id PK; employee_number UNIQUE; salary_minor BIGINT; period annual; version; updated_at/by"
+      },
+      { "title": "countries", "body": "employees.country → countries.code" },
+      {
+        "title": "currencies",
+        "body": "employees.currency → currencies.code; explicit precision 0–3"
+      },
+      {
+        "title": "departments",
+        "body": "employees.department → departments.id"
+      },
+      { "title": "roles", "body": "employees.role → roles.id" },
+      {
+        "title": "salary_desk_environment",
+        "body": "Singleton purpose; not an employee foreign key"
+      }
+    ]
+  },
+  "salary": {
+    "title": "Salary-update sequence",
+    "description": "A confirmed save and a conflict are separate outcomes. Failed or uncertain saves preserve input; they do not show success.",
+    "kind": "flow",
+    "nodes": [
+      {
+        "title": "1 · Browser draft",
+        "body": "Amount + currency + annual period + expected version"
+      },
+      {
+        "title": "2 · API and domain",
+        "body": "Session/origin, validated JSON, exact decimal parsing"
+      },
+      {
+        "title": "3 · Conditional SQL",
+        "body": "UPDATE WHERE id AND version; increment version and server metadata"
+      },
+      {
+        "title": "4 · Outcome",
+        "body": "200: confirmed current salary · 409: review newer version · failure: keep draft"
+      },
+      {
+        "title": "5 · Refresh views",
+        "body": "Retain confirmed detail; invalidate pages, analyses and Dashboard"
+      }
+    ]
+  },
+  "cache": {
+    "title": "Read, cache and invalidation",
+    "description": "Memory reuse belongs to one authenticated browser scope. HTTP responses remain private/no-store and all fetches still require access.",
+    "kind": "flow",
+    "nodes": [
+      {
+        "title": "URL → exact query key",
+        "body": "Population, sort, page/page size, currency and access scope"
+      },
+      {
+        "title": "Fresh memory entry",
+        "body": "Return promptly; no forced skeleton or bulk page prefetch"
+      },
+      {
+        "title": "Visible stale or uncached",
+        "body": "Deduplicate request; authenticated API → purpose check → PostgreSQL"
+      },
+      {
+        "title": "Accepted response",
+        "body": "Correct key only; changed chart values update in place"
+      },
+      {
+        "title": "Edit / sign-out",
+        "body": "Edit invalidates salary keys and other tabs; sign-out/401 clears memory"
+      }
+    ]
+  },
+  "timeline": {
+    "title": "Recorded development progression",
+    "description": "Commits are real milestones, not a reconstructed test-first story. Public baseline commits link to GitHub; review-only commits remain explicitly unpublished.",
+    "kind": "timeline",
+    "nodes": [
+      {
+        "title": "Scope before code",
+        "body": "Requirements, architecture and verification plan",
+        "commit": "9e8af4f",
+        "published": true
+      },
+      {
+        "title": "Exact protected foundation",
+        "body": "Access boundary and pure salary rules",
+        "commit": "4cb120b",
+        "published": true
+      },
+      {
+        "title": "Seed and bounded reads",
+        "body": "Deterministic 10,000 rows and paging",
+        "commit": "8d754ab",
+        "published": true
+      },
+      {
+        "title": "Safe edits and analysis",
+        "body": "Version checks, preview and hosted workflow evidence",
+        "commit": "aca1ac9",
+        "published": true
+      },
+      {
+        "title": "Published baseline",
+        "body": "Verified deployment/redeployment and handoff",
+        "commit": "3c6ff79",
+        "published": true
+      },
+      {
+        "title": "Measured read/UI revision",
+        "body": "Query/cache work and scoped charts; local review",
+        "commit": "96b5a45",
+        "published": false
+      },
+      {
+        "title": "Chart lifecycle correction",
+        "body": "Runtime reproduction, first-failing regressions, stable instances",
+        "commit": "f9a20e0",
+        "published": false
+      }
+    ]
+  }
+}

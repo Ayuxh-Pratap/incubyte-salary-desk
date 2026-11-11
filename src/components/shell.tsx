@@ -13,15 +13,25 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Info,
+  BookOpen,
 } from "lucide-react";
 import { LinkPending } from "./link-pending";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-const navigation = [
+import { PRESENTATION_SECTIONS, presentationHref } from "@/lib/presentation";
+const workspace = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/employees", label: "Employees", icon: Users },
   { href: "/overview", label: "Salary overview", icon: ChartNoAxesColumn },
+];
+const navigation = [
+  ...workspace,
+  ...PRESENTATION_SECTIONS.map((section) => ({
+    href: presentationHref(section.slug),
+    label: section.title,
+    icon: BookOpen,
+  })),
 ];
 export function Shell({
   children,
@@ -105,7 +115,7 @@ export function Shell({
         <div className="flex min-h-14 items-center gap-1">
           <Link
             href="/dashboard"
-            prefetch={true}
+            prefetch={!pathname.startsWith("/presentation")}
             aria-label="Salary Desk dashboard"
             aria-hidden={collapsed || undefined}
             tabIndex={collapsed ? -1 : undefined}
@@ -158,28 +168,39 @@ export function Shell({
           >
             {navigation.map(({ href, label, icon: Icon }, i) => (
               <div key={href}>
-                {i === 1 && (
+                {(i === 0 || i === 3) && (
                   <p
                     className={cn(
                       "mt-5 mb-2 px-3 text-meta text-muted-foreground",
                       collapsed && "opacity-0",
                     )}
                   >
-                    Workspace
+                    {i === 0 ? "Workspace" : "Presentation"}
                   </p>
                 )}
                 <Link
                   href={href}
-                  prefetch={true}
+                  prefetch={!pathname.startsWith("/presentation")}
                   aria-label={label}
-                  aria-current={pathname === href ? "page" : undefined}
+                  aria-current={
+                    pathname === href ||
+                    (href !== "/presentation" &&
+                      pathname.startsWith(href + "/"))
+                      ? "page"
+                      : undefined
+                  }
                   title={collapsed ? label : undefined}
                   className={cn(
                     "relative isolate flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-4 text-ui font-medium text-foreground-2 transition-colors duration-fast hover:bg-inset hover:text-foreground",
-                    pathname === href && "text-foreground",
+                    (pathname === href ||
+                      (href !== "/presentation" &&
+                        pathname.startsWith(href + "/"))) &&
+                      "text-foreground",
                   )}
                 >
-                  {pathname === href && (
+                  {(pathname === href ||
+                    (href !== "/presentation" &&
+                      pathname.startsWith(href + "/"))) && (
                     <motion.span
                       layoutId="active"
                       aria-hidden
@@ -261,11 +282,19 @@ export function Shell({
           >
             <Layers className="size-5 text-primary" aria-hidden />
             Salary Desk
-            <span className="text-meta font-normal text-muted-foreground">
+            <span className="hidden text-meta font-normal text-muted-foreground sm:inline">
               ACME
             </span>
           </Link>
           <div className="flex shrink-0 items-center">
+            <Link
+              href="/presentation"
+              prefetch={false}
+              aria-label="Engineering presentation"
+              className="grid size-11 place-items-center rounded-lg hover:bg-inset"
+            >
+              <BookOpen className="size-4" aria-hidden />
+            </Link>
             <ThemeToggle compact side="bottom" />
             {logout(true)}
           </div>
@@ -276,14 +305,23 @@ export function Shell({
           </p>
         )}
         <nav aria-label="Main navigation" className="mt-1 flex gap-1 pb-2">
-          {navigation.map(({ href, label, icon: Icon }) => (
+          {workspace.map(({ href, label, icon: Icon }) => (
             <Link
               key={href}
-              aria-current={pathname === href ? "page" : undefined}
+              aria-current={
+                pathname === href ||
+                (href !== "/presentation" && pathname.startsWith(href + "/"))
+                  ? "page"
+                  : undefined
+              }
               href={href}
+              prefetch={!pathname.startsWith("/presentation")}
               className={cn(
                 "flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-lg px-1 text-meta font-medium text-foreground-2",
-                pathname === href && "bg-inset text-foreground",
+                (pathname === href ||
+                  (href !== "/presentation" &&
+                    pathname.startsWith(href + "/"))) &&
+                  "bg-inset text-foreground",
               )}
             >
               <Icon className="size-4 shrink-0" aria-hidden />

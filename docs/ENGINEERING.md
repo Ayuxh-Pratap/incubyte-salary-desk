@@ -118,3 +118,9 @@ Sources: [Incubyte website](https://incubyte.co/), [Neon plans](https://neon.com
 ## Final compact composition
 
 The two headcount cards share a 256px plot area and stretch equally in the desktop grid. Country legend/count links sit to the right of the doughnut; the former disclosure footers are removed. Theme segments use compact 28px controls within a 32px well; the remaining controls preserve their existing targets. Directory table headers have square inner edges beneath the result header. Salary Overview shows four financial cards: total, median, minimum and maximum. Population count remains visible above them and in the grouped analysis; no aggregate rule or API field was removed.
+
+## Protected engineering presentation (local review)
+
+Five server-rendered sections under `/presentation` expose an explicitly reviewed narrative, diagrams, source excerpts and an artifact index. The canonical narrative is `docs/PRESENTATION.md`; diagram text lives in `docs/presentation-diagrams.json`. The reader uses React Markdown/GFM on the server with no raw HTML/MDX execution. Exact source/artifact catalogs reject unknown keys; they never accept a filesystem path from a request. Selected files are explicitly included in Next's deployment trace. The same workspace layout enforces evaluator access. These routes do not call employee APIs or initialize Chart.js. Sidebar workspace prefetch is disabled while reading the Presentation, avoiding unrelated workspace asset loading.
+
+Public links identify the published baseline. Review-only source is inspectable through protected source routes instead of pretending unpublished GitHub commits are available. Historical evidence remains labeled. The current verification artifact is pending until actual final checks are recorded; the final narrated video remains pending.
