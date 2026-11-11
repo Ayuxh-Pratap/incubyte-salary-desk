@@ -1,36 +1,66 @@
-# Delivery and verification
+# Delivery, verification and demo
 
-## Implementation sequence
+Status: core implementation verified; final hosting/publication/video work in progress. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
 
-- [x] Read original assessment, supporting JD/notes/resume and approved scope.
-- [x] Inspect target/parent Git boundaries and selectively map the UI foundation.
-- [x] Record requirements and design before application implementation.
-- [x] Runnable protected Next application, theme/shell, database configuration and generated first migration.
-- [ ] Apply and verify the migration against hosted PostgreSQL after Neon login.
-- [ ] Deterministic seed and database-backed employee browsing.
-- [ ] Validated persistent salary edits and optimistic conflict handling.
-- [ ] Single-currency filtered statistics over the full population.
-- [ ] Explain-a-number drill-down and salary-change preview.
-- [ ] Unit, PostgreSQL integration, browser, accessibility/design and production checks.
-- [ ] Measured performance on the seeded dataset; deployment persistence verification.
-- [ ] Clean setup rehearsal, final checklist, video and publication readiness.
+## Completion checklist
 
-Use genuine test-first cycles for money and consequential server behavior. Capture a failing test, implement the smallest correct behavior, rerun and refactor. Commit coherent actual milestones; never manufacture history.
+- [x] Read assessment/supporting context; inspect independent Git boundary and UI reuse.
+- [x] Requirements and architecture committed before application code (fc8339e).
+- [x] Protected responsive UI, PostgreSQL migrations and deterministic synthetic seed.
+- [x] Bounded browsing, literal search, shared filters and stable sorting/pagination.
+- [x] Exact salary edits, preview, validation, retained drafts and optimistic conflicts.
+- [x] Full-population single-currency analysis, group drill-down and number explanations.
+- [x] 27 fast deterministic unit cases; 8 real hosted PostgreSQL cases; 6 production browser checks.
+- [x] Design/contrast, lint, type and production-build checks; Webpack development workflow verified.
+- [x] Seeded performance observations and EXPLAIN plans; fresh npm ci rehearsal.
+- [x] Separate development/test/demo/preview PostgreSQL databases, migrated and seeded explicitly.
+- [x] Final hardening browser rerun: six checks passed against a fresh production build.
+- [ ] Deployed persistence/redeployment check.
+- [ ] Working review deployment and persistent Neon ownership claim.
+- [ ] Public-repository review/push and first GitHub-hosted CI execution.
+- [ ] Candidate's final narrated video and user-sent submission.
 
-## Verification map
+The temporary Neon project expires **14 November 2026, 08:00 UTC** unless claimed into a free account. Do not submit an expiring database as permanent hosting. No paid upgrade is authorized. Source remains local until publication review.
 
-Money: decimal parsing, precision, positivity, bounds, unit compatibility, sum/min/max/odd-even median, half-up rounding and exact change percentages. Filters: invalid values, sort allowlist, stable pagination, zero matches. Database: migration constraints, exactly 10,000 seeded, repeat seed unchanged, rollback/conflict, complete-population aggregates. Access: UI/API unauthorized, malformed/tampered/expired sessions, origin checks and preview-write protection. UI: failed saves preserve input, success only after persistence, keyboard/dialog focus, responsive themes. E2E: authenticate -> filter -> open employee -> reject invalid salary -> save valid salary -> reload -> verify analysis.
+## Requirement to evidence
 
-Performance evidence will record method, machine/runtime, database region/tier, dataset, indexes, warm/cold state, query plans and actual timings. No benchmark claims yet.
+| Requirement / risk                         | Evidence                                                                           |
+| ------------------------------------------ | ---------------------------------------------------------------------------------- |
+| Product framing before build               | REQUIREMENTS.md, first Git commit                                                  |
+| Full backend/UI + relational DB            | App routes, domain rules, server queries, Drizzle schema/migrations                |
+| Exactly 10,000 synthetic employees         | Seed verifies count transactionally; hosted development/test/demo/preview runs     |
+| Repeat seed preserves edits                | Real PostgreSQL integration test; reset is a separate guarded command              |
+| Money precision and rounding               | money.test.ts; max-range SQL aggregate fixture; rational median explanation        |
+| Complete populations, matching drill-down  | Shared employeeWhere predicate; list/analysis intersection and aggregate tests     |
+| Lost-write protection                      | Use-case tests, conditional SQL update, actual simultaneous-write integration case |
+| Failure preserves input / no false success | Browser 503/409 interaction test; saved-success only on confirmed response         |
+| UI + API protected                         | Server layout/session checks, tampered-session and foreign-origin browser checks   |
+| 10,000-record behavior                     | Bounded page assertions; actual query plans/timings in performance.json            |
+| Reproducible delivery                      | Lockfile, env example, migration/seed/test commands and CI workflow                |
+| Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks         |
+| Deployed persistence / final video         | Pending final deployed check and candidate recording, not satisfied by a script    |
 
-## Handoff
+Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; hosted GitHub execution is pending publication, while the equivalent local commands have been exercised.
 
-README must include install/configuration, migrations, seed, guarded reset, tests, deployment and limitations. Final video is required, not replaced by this plan: record the HR problem, one correction, one filtered insight, calculation evidence and a design tradeoff in about 4 minutes. Review deployment, source publication and submission separately; no emails or assessment submission by the agent.
+## Remaining limitations and decisions
 
-## Current pending items
+- Working definitions await external clarification; use the impact map in Engineering before changing requirements, schema, parsing, queries, UI or tests.
+- One shared evaluator identity and current update metadata; full IAM and salary history are outside scope.
+- Descriptive compensation figures do not establish fairness, explain differences or represent market benchmarks. Seed ranges are illustrative.
+- The Windows/Turbopack development reload loop was reproduced; supported Webpack development and default production builds both passed the live workflow.
+- Production dependency audit has no advisories at the last check. Development tooling retains upstream moderate esbuild/minimatch advisories; no esbuild serve/studio endpoint is exposed. Automatic forced downgrade of Drizzle was rejected. ESLint 9 is retained for Next plugin peer compatibility; ESLint 10 conflicts with those current peer ranges.
+- Performance evidence distinguishes local WAN transaction timings from database execution. No production latency, cold-start or SLA claim yet.
 
-Hosted database/account configuration, external scope reply, actual deployment and video. No behavior is claimed implemented before verification. Target: strong first submission in 2-3 days, with correctness and deployment ahead of optional polish.
+## A four-minute demo
 
-Browsing slice: generator and protected SQL/API/UI are implemented. Unit tests (17), production build and access/browser checks (2) pass. Actual PostgreSQL migration, seed idempotence, queries and performance remain unverified until a hosted connection is available.
+1. **0:00–0:25 — Problem.** ACME has 10,000 people in multiple countries. HR needs careful current-pay corrections and answers for clearly defined comparable populations. Explain annual base salary and single-currency scope.
+2. **0:25–1:20 — Workflow.** Search an employee number; show country/department/currency context. Enter an invalid amount, then a valid amount. Explain the change preview, save, and reload to demonstrate persistence.
+3. **1:20–2:15 — Insight.** Select USD, group by country or department, and explain the median. Show filters, full population and matching employees. Point out small samples and no FX/fairness inference.
+4. **2:15–3:15 — Engineering.** Show the tiny architecture diagram. Trace decimal input -> BigInt minor units -> string API -> PostgreSQL; explain the version-checked update and a conflict.
+5. **3:15–4:00 — Evidence and tradeoff.** Show fast unit results, PostgreSQL concurrency/aggregate checks and actual performance observations. Explain selective UI reuse and one AI correction you reviewed. State the provisional business definitions and deliberate exclusions.
 
-Salary-edit slice: use-case, conditional SQL update, API and panel with preview/conflict review are implemented. Unit and transport-fixture browser tests pass; live database persistence/concurrency remains pending hosted PostgreSQL.
+## Recording and submission steps
+
+Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A silent automated walkthrough, if prepared, is reference footage rather than the candidate's completed narrated handoff.
+
+After final review: claim persistent free database ownership; publish the reviewed source; verify deployed UI/API access and edit persistence across redeploy; run hosted CI; record the actual video. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.

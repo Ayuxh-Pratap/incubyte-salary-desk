@@ -7,7 +7,9 @@ import {
   DEPARTMENTS,
   syntheticEmployees,
 } from "../../domain/seed";
-export async function seedDatabase(db: NodePgDatabase<typeof schema>) {
+export async function seedDatabase(
+  db: Pick<NodePgDatabase<typeof schema>, "transaction">,
+) {
   return db.transaction(async (tx) => {
     await tx
       .insert(schema.currencies)
@@ -30,14 +32,6 @@ export async function seedDatabase(db: NodePgDatabase<typeof schema>) {
       d.roles.map(([id, name]) => ({ id, name })),
     );
     await tx.insert(schema.roles).values(roles).onConflictDoNothing();
-    await tx
-      .insert(schema.departmentRoles)
-      .values(
-        DEPARTMENTS.flatMap((d) =>
-          d.roles.map(([id]) => ({ departmentId: d.id, roleId: id })),
-        ),
-      )
-      .onConflictDoNothing();
     const values = syntheticEmployees();
     for (let offset = 0; offset < values.length; offset += 500)
       await tx

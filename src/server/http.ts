@@ -2,7 +2,8 @@ import "server-only";
 import { SalaryError } from "../domain/salary-update";
 import { ZodError } from "zod";
 import { session } from "./auth";
-import { assertOrigin } from "./security";
+import { randomUUID } from "node:crypto";
+import { assertOrigin, trustedAppOrigins } from "./security";
 export class HttpError extends Error {
   constructor(
     public status: number,
@@ -22,11 +23,14 @@ export async function api(
     if (current.evaluator !== true)
       throw new HttpError(401, "Evaluator session required.");
     if (mutation) {
-      const origin = process.env.APP_ORIGIN;
-      if (!origin)
-        throw new HttpError(503, "Application origin is not configured.");
+      let origins: string[];
       try {
-        assertOrigin(request.headers.get("origin"), origin);
+        origins = trustedAppOrigins();
+      } catch {
+        throw new HttpError(503, "Application origin is not configured.");
+      }
+      try {
+        assertOrigin(request.headers.get("origin"), origins);
       } catch {
         throw new HttpError(403, "Request origin is not allowed.");
       }
@@ -56,8 +60,25 @@ export async function api(
         : error instanceof ZodError
           ? 400
           : 503;
+    const reference = status === 503 ? randomUUID() : undefined;
+    if (reference)
+      console.error("[salary-desk] request failed", {
+        reference,
+        method: request.method,
+        path: new URL(request.url).pathname,
+        type: error instanceof Error ? error.name : "unknown",
+        code:
+          typeof error === "object" &&
+          error &&
+          "code" in error &&
+          typeof error.code === "string" &&
+          /^[A-Z0-9]{5}$/.test(error.code)
+            ? error.code
+            : undefined,
+      });
     return Response.json(
       {
+        ...(reference ? { reference } : {}),
         error:
           error instanceof HttpError
             ? error.message

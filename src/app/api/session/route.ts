@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { session } from "@/server/auth";
-import { assertOrigin, validCredential } from "@/server/security";
+import {
+  assertOrigin,
+  validCredential,
+  trustedAppOrigins,
+} from "@/server/security";
 export const runtime = "nodejs";
 function origin(request: Request) {
-  const expected = process.env.APP_ORIGIN;
-  if (!expected) throw new Error("Application origin not configured");
-  assertOrigin(request.headers.get("origin"), expected);
+  assertOrigin(request.headers.get("origin"), trustedAppOrigins());
 }
 export async function POST(request: Request) {
   try {

@@ -128,6 +128,13 @@ export function FiltersForm({
                   }
                 </option>
               )}
+              {catalog &&
+                fields[name] &&
+                !options?.some((o) => o.value === fields[name]) && (
+                  <option value={fields[name]}>
+                    Unknown {label.toLowerCase()} ({fields[name]})
+                  </option>
+                )}
               {options?.map((o) => (
                 <option value={o.value} key={o.value}>
                   {o.label}

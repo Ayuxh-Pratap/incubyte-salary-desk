@@ -64,3 +64,16 @@ These are planned: follow one amount from decimal input to minor units; one list
 Measured 2026-11-11 on 10,000 synthetic employees, Node 24.19/Windows, client in India, Neon aws-us-east-2, TLS verified, pooled max 3, five sequential samples after ANALYZE. Median service transactions: name page 1,330.55 ms; USD salary page 1,204.66 ms; country/department page 1,202.63 ms; Unicode search 1,317.06 ms; full USD analysis 1,529.07 ms. These include WAN and transaction round trips and are not deployment latency or cold-start results. EXPLAIN execution observations: indexed currency/salary page 0.034 ms, name search 0.513 ms, overall analysis 2.086 ms. See [raw observations and plans](performance.json); run npm run perf:measure to reproduce. Five samples do not establish an SLA.
 
 Current schema indexes support name/id pagination, currency/salary/id ordering, country/department and department/role filters. Plans and data size support retaining this small set; no speculative search service or extra infrastructure.
+
+## Four interview walkthroughs
+
+- **One amount:** src/domain/money.ts parses INR 1200000.01 as 120000001n, rejecting excess precision rather than rounding user input. PostgreSQL stores BIGINT; JSON uses a string. Two middle values 101/102 USD minor units yield 203/2 minor units; display is USD 1.02 while the explanation retains USD 1.015.
+- **One query:** src/domain/filters.ts validates URL values. server/employees/queries.ts escapes literal search wildcards, builds one parameterized predicate, allowlists order expressions and adds employee id for stable ties. The list/count transaction and analysis CTE use the same predicate. The browser receives at most 100 employees.
+- **One API request:** PATCH app/api/employees/[id]/route.ts passes through server/http.ts: evaluator session, trusted origin, id/JSON validation, then domain/saveSalary. The service checks units and parses the amount. salary-repository.ts updates WHERE id AND version and increments the version in the same statement. No returned row means a conflict, never silent success.
+- **One save:** components/salary-editor.tsx keeps the draft separate from the current snapshot. It previews the exact difference, submits its version, and shows success only after a confirmed response. Errors retain the draft. A conflict shows the latest value and requires review before rebasing the retained proposal. Closing a dirty sheet requires a discard decision.
+
+## Final refinements
+
+The unused department/role junction was removed by a new migration: employee metadata is read-only, so a configurable compatibility relation served no workflow. The six remaining tables are employees, countries, currencies, departments, roles and the environment marker. Database connection settings bound connection/statement/query/idle-transaction waits. Unexpected API failures expose a reference while logging only method/path, error kind and sanitized database code; never SQL parameters or credentials.
+
+The design checker resolves the actual semantic token mappings in each theme, including text/action/status contrast and focus contrast. It also rejects undocumented palette literals in components. It does not generate CSS.

@@ -6,7 +6,7 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -23,7 +23,8 @@
     "check": "npm run lint && npm run typecheck && npm run design:check && npm test && npm run build",
     "test:prepare": "tsx scripts/prepare-test.ts",
     "test:e2e:live": "tsx scripts/run-live-e2e.ts",
-    "perf:measure": "tsx scripts/measure.ts"
+    "perf:measure": "tsx scripts/measure.ts",
+    "db:environment": "tsx scripts/with-environment.ts"
   },
   "dependencies": {
     "@animate-ui/react": "2.4.3",

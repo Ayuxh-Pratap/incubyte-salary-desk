@@ -6,7 +6,7 @@ import * as schema from "../../src/server/db/schema";
 import { seedDatabase } from "../../src/server/db/seed";
 import { syntheticEmployees } from "../../src/domain/seed";
 import { parseFilters } from "../../src/domain/filters";
-import { summarize } from "../../src/domain/money";
+import { summarize, MAX_MINOR, salaryInput } from "../../src/domain/money";
 import { listEmployees, getEmployee } from "../../src/server/employees/queries";
 import { salaryAnalysis } from "../../src/server/analysis/queries";
 import { salaryRepository } from "../../src/server/employees/salary-repository";
@@ -32,7 +32,7 @@ async function rollback(
 ) {
   try {
     await db.transaction(async (tx) => {
-      await work(tx as unknown as typeof db);
+      await work(tx);
       throw new Rollback();
     });
   } catch (error) {
@@ -141,4 +141,90 @@ it("enforces database constraints and atomic version updates without losing the 
     expect(await repo.compareAndSwap(1, original.version, 999n)).toBeNull();
     expect((await getEmployee(tx, 1))?.salaryMinor).toBe(winner.salaryMinor);
   });
+});
+
+it("shares country, department, role and currency intersections between list and overview", async () => {
+  const f = parseFilters({
+    country: "IN",
+    department: "engineering",
+    role: "engineer",
+    currency: "USD",
+  });
+  const expected = syntheticEmployees().filter(
+    (e) =>
+      e.country === "IN" &&
+      e.department === "engineering" &&
+      e.role === "engineer" &&
+      e.currency === "USD",
+  );
+  const page = await listEmployees(db, f),
+    analysis = await salaryAnalysis(db, f);
+  expect(page.total).toBe(expected.length);
+  expect(analysis.summary).toEqual(
+    summarize(expected.map((e) => e.salaryMinor.toString())),
+  );
+  expect(
+    page.employees.every(
+      (e) =>
+        e.country === "IN" && e.role === "engineer" && e.currency === "USD",
+    ),
+  ).toBe(true);
+});
+
+it("keeps aggregate and even-median values exact beyond BIGINT sum range", async () => {
+  await rollback(async (tx) => {
+    await tx
+      .update(schema.employees)
+      .set({
+        name: "Exact Monetary Fixture",
+        currency: "USD",
+        salaryMinor: MAX_MINOR,
+      })
+      .where(sql`${schema.employees.id} in (1,2)`);
+    const result = await salaryAnalysis(
+      tx,
+      parseFilters({ q: "Exact Monetary Fixture", currency: "USD" }),
+    );
+    expect(result.summary).toEqual({
+      count: 2,
+      total: "18000000000000000000",
+      min: MAX_MINOR.toString(),
+      max: MAX_MINOR.toString(),
+      median: { numerator: "18000000000000000000", denominator: 2 },
+    });
+  });
+});
+it("allows exactly one of two simultaneous writes with the same version", async () => {
+  const id = 9999,
+    repo = salaryRepository(db),
+    original = (await repo.find(id))!;
+  const amounts = [
+    (BigInt(original.salaryMinor) + 1n).toString(),
+    (BigInt(original.salaryMinor) + 2n).toString(),
+  ];
+  try {
+    const outcomes = await Promise.allSettled(
+      amounts.map((amount) =>
+        saveSalary(repo, id, {
+          amount: salaryInput(amount, original.currency),
+          currency: original.currency,
+          period: "annual",
+          version: original.version,
+        }),
+      ),
+    );
+    expect(outcomes.filter((o) => o.status === "fulfilled")).toHaveLength(1);
+    expect(outcomes.filter((o) => o.status === "rejected")).toHaveLength(1);
+    const winner = (await repo.find(id))!;
+    expect(winner.version).toBe(original.version + 1);
+    expect(amounts).toContain(winner.salaryMinor);
+  } finally {
+    const latest = (await repo.find(id))!;
+    if (amounts.includes(latest.salaryMinor))
+      await repo.compareAndSwap(
+        id,
+        latest.version,
+        BigInt(original.salaryMinor),
+      );
+  }
 });

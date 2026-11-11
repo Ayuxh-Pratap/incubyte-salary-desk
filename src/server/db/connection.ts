@@ -14,6 +14,9 @@ export function connection() {
       max: 3,
       idleTimeoutMillis: 10000,
       connectionTimeoutMillis: 10000,
+      statement_timeout: 8000,
+      query_timeout: 10000,
+      idle_in_transaction_session_timeout: 10000,
       application_name: "salary-desk",
     });
   if (!globals.salaryPool) {

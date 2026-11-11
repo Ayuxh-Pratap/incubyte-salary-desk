@@ -40,3 +40,23 @@ it("explains even medians without hiding half a minor unit", () => {
   );
   expect(METRICS.median.definition).toContain("middle");
 });
+
+it("never labels an active population filter as All when lookup options fail", async () => {
+  const { describePopulation } = await import("./analysis");
+  const labels = Object.fromEntries(
+    describePopulation(
+      parseFilters({
+        currency: "USD",
+        country: "IN",
+        department: "engineering",
+        role: "engineer",
+      }),
+    ),
+  );
+  expect(labels).toMatchObject({
+    Country: "IN",
+    Department: "engineering",
+    Role: "engineer",
+    Currency: "USD",
+  });
+});

@@ -7,7 +7,6 @@ import {
   timestamp,
   check,
   index,
-  primaryKey,
 } from "drizzle-orm/pg-core";
 export const environment = pgTable(
   "salary_desk_environment",
@@ -40,18 +39,6 @@ export const roles = pgTable("roles", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
 });
-export const departmentRoles = pgTable(
-  "department_roles",
-  {
-    departmentId: text("department_id")
-      .notNull()
-      .references(() => departments.id),
-    roleId: text("role_id")
-      .notNull()
-      .references(() => roles.id),
-  },
-  (t) => [primaryKey({ columns: [t.departmentId, t.roleId] })],
-);
 export const employees = pgTable(
   "employees",
   {

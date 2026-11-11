@@ -15,3 +15,7 @@ next-env.d.ts
 
 # Local hosted-project metadata and provisioning output
 .neon*
+
+.vercel
+.env*
+artifacts/

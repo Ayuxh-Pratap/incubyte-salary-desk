@@ -1,0 +1,47 @@
+name: Verify Salary Desk
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: salary_desk_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # Disposable CI-only credentials; never used in any deployed environment.
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/salary_desk_unused_dev
+      DATABASE_DIRECT_URL: postgresql://postgres:postgres@localhost:5432/salary_desk_unused_dev
+      DATABASE_PURPOSE: development
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/salary_desk_test
+      TEST_DATABASE_PURPOSE: test
+      SESSION_SECRET: ci-only-ephemeral-session-key-at-least-32-characters
+      EVALUATOR_PASSWORD: ci-only-ephemeral-evaluator-passphrase
+      APP_ORIGIN: http://localhost:3100
+      E2E_LIVE_DATABASE: "true"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run lint && npm run typecheck && npm run design:check && npm test
+      - run: npm run test:prepare && npm run test:integration
+      # Playwright builds and starts the production server against the test DB.
+      - run: npm run test:e2e

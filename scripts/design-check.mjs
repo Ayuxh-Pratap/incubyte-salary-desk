@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 const doc = fs.readFileSync("DESIGN.md", "utf8"),
   css = fs.readFileSync("src/app/globals.css", "utf8");
 const palette = Object.fromEntries(
-  [...doc.matchAll(/^  ([a-z-]+): "(#[0-9a-f]{6})"/gm)].map((x) => [
+  [...doc.matchAll(/^  ([a-z0-9-]+): "(#[0-9a-f]{6})"/gm)].map((x) => [
     x[1],
     x[2],
   ]),
@@ -40,32 +40,61 @@ function contrast(a, b) {
     y = luminance(b);
   return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
 }
-const pairs = [
-  ["paper", "brand-green"],
-  ["brand-green", "brand-lime"],
-  ["foreground", "canvas"],
-  ["secondary-text", "paper"],
-  ["muted-text", "surface"],
-  ["dark-text", "dark-paper"],
-  ["dark-muted", "dark-surface"],
-  ["success", "paper"],
-  ["warning", "paper"],
-  ["danger", "paper"],
-  ["dark-success", "dark-paper"],
-  ["dark-warning", "dark-paper"],
-  ["dark-danger", "dark-paper"],
-];
-for (const [foreground, background] of pairs) {
-  const ratio = contrast(palette[foreground], palette[background]);
-  assert(
-    ratio >= 4.5,
-    foreground +
-      "/" +
-      background +
-      " contrast " +
-      ratio.toFixed(2) +
-      " below 4.5",
+const baseBlock = css.match(/:root\s*\{([\s\S]*?)\}/)?.[1],
+  darkBlock = css.match(/\.dark\s*\{([\s\S]*?)\}/)?.[1];
+assert(baseBlock && darkBlock, "Both themes are required");
+const properties = (block) =>
+  Object.fromEntries(
+    [...block.matchAll(/--([a-z0-9-]+):\s*([^;]+);/g)].map((match) => [
+      match[1],
+      match[2].trim(),
+    ]),
   );
+const root = properties(baseBlock),
+  dark = { ...root, ...properties(darkBlock) };
+function resolve(name, theme, seen = new Set()) {
+  assert(!seen.has(name), "Cyclic token " + name);
+  seen.add(name);
+  const raw = theme[name];
+  assert(raw, "Missing token " + name);
+  const ref = raw.match(/^var\(--([a-z0-9-]+)\)$/);
+  return ref ? resolve(ref[1], theme, seen) : raw;
+}
+const pairs = [
+  ["primary-foreground", "primary"],
+  ["foreground", "background"],
+  ["foreground-2", "card"],
+  ["muted-foreground", "muted"],
+  ["success", "card"],
+  ["warning", "card"],
+  ["destructive", "card"],
+];
+for (const [name, theme] of [
+  ["light", root],
+  ["dark", dark],
+]) {
+  for (const [foreground, background] of pairs) {
+    const ratio = contrast(
+      resolve(foreground, theme),
+      resolve(background, theme),
+    );
+    assert(
+      ratio >= 4.5,
+      name +
+        " " +
+        foreground +
+        "/" +
+        background +
+        " contrast " +
+        ratio.toFixed(2) +
+        " below 4.5",
+    );
+  }
+  for (const surface of ["background", "card"])
+    assert(
+      contrast(resolve("ring", theme), resolve(surface, theme)) >= 3,
+      name + " focus ring contrast below 3",
+    );
 }
 function walk(dir) {
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -86,6 +115,6 @@ function walk(dir) {
 walk("src");
 console.log(
   "Design tokens, " +
-    pairs.length +
+    pairs.length * 2 +
     " light/dark contrast pairs and semantic source colors passed.",
 );

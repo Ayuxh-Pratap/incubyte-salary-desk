@@ -16,9 +16,9 @@ const { db, pool } = await database();
 try {
   await db.transaction(async (tx) => {
     await tx.execute(
-      sql`truncate employees,department_roles,roles,departments,countries,currencies`,
+      sql`truncate employees,roles,departments,countries,currencies`,
     );
-    await seedDatabase(tx as unknown as typeof db);
+    await seedDatabase(tx);
   });
   console.log(
     "Synthetic " + purpose + " environment reset to 10000 employees.",

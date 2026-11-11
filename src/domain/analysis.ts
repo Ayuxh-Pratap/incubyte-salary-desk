@@ -1,3 +1,4 @@
+import type { Catalog } from "./employee";
 import { parseFilters, type Filters } from "./filters";
 import {
   currencyPrecision,
@@ -66,4 +67,33 @@ export function exactMedian(value: RationalMinor, currency: string): string {
     formatMoney((n / d).toString(), currency) +
     (n % d ? (currencyPrecision(currency) ? "5" : ".5") : "")
   );
+}
+
+export function describePopulation(
+  filters: Filters,
+  catalog?: Catalog,
+): [string, string][] {
+  return [
+    ["Search", filters.q || "Any name or employee number"],
+    [
+      "Country",
+      catalog?.countries.find((c) => c.code === filters.country)?.name ||
+        filters.country ||
+        "All countries",
+    ],
+    [
+      "Department",
+      catalog?.departments.find((c) => c.id === filters.department)?.name ||
+        filters.department ||
+        "All departments",
+    ],
+    [
+      "Role",
+      catalog?.roles.find((c) => c.id === filters.role)?.name ||
+        filters.role ||
+        "All roles",
+    ],
+    ["Currency", filters.currency || "Multiple currencies"],
+    ["Period", "Annual base salary"],
+  ];
 }

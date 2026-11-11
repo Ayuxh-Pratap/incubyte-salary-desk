@@ -7,3 +7,5 @@ The reference foundation uses shadcn/ui and Base UI, with Animate UI primitives,
 Incubyte website colors are presentation references only. No employer logo or private assessment input is redistributed.
 
 Actual retained license texts are in licenses/. Animate UI uses MIT + Commons Clause (not plain MIT); used here as part of an application, not redistributed as a component package. Base UI MIT, Geist SIL Open Font License, and Lucide ISC notices are retained from the installed releases. Job Desk supplied the reviewed visual foundation and selected wrapper patterns by the candidate’s explicit instruction; no domain data or history was imported.
+
+The shadcn/ui MIT license is retained in licenses/shadcn.txt, retrieved from its official repository. Components here are adapted wrappers, not an unmodified copied application.

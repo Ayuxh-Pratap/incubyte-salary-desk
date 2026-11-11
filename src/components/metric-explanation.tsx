@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Info } from "lucide-react";
 import {
   METRICS,
+  describePopulation,
   filterQuery,
   exactMedian,
   type Metric,
@@ -22,25 +23,7 @@ export function MetricExplanation({
   catalog?: Catalog;
 }) {
   const filters = analysis.filters;
-  const labels = [
-    ["Search", filters.q || "Any name or employee number"],
-    [
-      "Country",
-      catalog?.countries.find((c) => c.code === filters.country)?.name ||
-        "All countries",
-    ],
-    [
-      "Department",
-      catalog?.departments.find((c) => c.id === filters.department)?.name ||
-        "All departments",
-    ],
-    [
-      "Role",
-      catalog?.roles.find((c) => c.id === filters.role)?.name || "All roles",
-    ],
-    ["Currency", analysis.currency],
-    ["Period", "Annual base salary"],
-  ];
+  const labels = describePopulation(filters, catalog);
   return (
     <Sheet
       open={!!metric}
