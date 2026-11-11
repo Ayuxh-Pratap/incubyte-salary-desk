@@ -68,16 +68,13 @@ After the ownership claim, old PostgreSQL authentication failed. Refreshed curre
 
 After the user confirmed the Free project claim, verified all four database purposes still contained 10,000 employees and refreshed the rotated credentials without reseeding. Deployed source commit `18dbc94` to a new protected preview and verified application-level anonymous rejection, secure evaluator session, bounded browsing, invalid input rejection, optimistic conflict rejection, persistent save/reload, exact filtered analysis reflecting the edit, and restoration of the original synthetic salary. The first private verification helper used the wrong cookie name; corrected the helper to the configured `salary-desk-session` and reran successfully. No application fix was required. Updated the review URL and committed sanitized observations; publication and candidate narration remain pending review.
 
-
 ### Approved public publication
 
 The user explicitly approved public GitHub publication and Vercel production deployment. Published the reviewed incremental history on main after checking known credentials/private paths and noreply metadata. GitHub SSH authentication failed; used the existing authenticated HTTPS credential helper per invocation without changing global Git settings. Hosted CI https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770 passed lint, types, design checks, 27 unit cases, eight PostgreSQL cases and six production-browser checks. Configured only production DATABASE_URL, DATABASE_PURPOSE=demo, and fresh distinct evaluator/session secrets via stdin; checked demo purpose and exactly 10,000 rows first. Production is reachable without Vercel account access and enforces application evaluator access. Verified bounded browsing, validation, conflict rejection, persistent save/reload, full-population analysis, login navigation and 320px dark UI. The private HTTP helper initially expected only an HTTP redirect; corrected it for Next.js streamed redirect semantics and verified actual browser navigation to login. No product change was needed. A synthetic edit is checkpointed for the subsequent production-redeployment verification and restoration. No email/submission was sent.
 
-
 ### Production redeployment and final handoff
 
 Production source `5ba7488` redeployed successfully to the canonical public URL. The previously saved synthetic amount survived; filtered analysis still matched, the evaluator session remained valid, and the original amount was restored with a version-checked update. Verified the restored value and 10,000-row bounded directory afterward. Recorded sanitized evidence in deployment-checks.json. Prepared an ignored evaluator-access note with only the application code and instructions, separate from database/session secrets. The candidate-narrated video and candidate-sent assessment submission remain pending; the agent has not emailed or submitted anything.
-
 
 ### Visual-quality review — baseline and approved foundation
 
@@ -86,7 +83,6 @@ User requested a local review branch, five paired palettes, Job Desk shell/filte
 Implemented neutral semantic surfaces, adjacent focus, non-self-referencing elevation tokens, compact/collapsible shell and honest logout errors. Browser regression first failed at the baseline right edge (1912 instead of 1920); shell test then passed including collapse and failed logout. The first alert locator also matched Next’s route announcer; scoped it to the actual error. Corrected a private shell quoting error using a file-based helper; no secrets were exposed.
 
 Dashboard adds one grouped headcount query and reuses exact salaryAnalysis in a repeatable-read snapshot. New helper tests failed before the module existed, then passed; PostgreSQL test failed before the query existed, then verified all headcount partitions and USD/JPY/KWD summaries against the seeded reference. Browser test first proved the old root route still landed on Employees, then passed the new default Dashboard/currency/drill-down behavior. A first cold dev/WAN fetch exceeded the test’s 5-second assumption; a bounded 20-second data assertion passed without adding application delays. Charts convert only bounded dimensionless ratios to Number, never monetary amounts. Existing backend architecture/auth/purpose checks stay intact. Narrated candidate video remains unproven.
-
 
 ### Responsive workspace and pending-state slice
 
@@ -104,12 +100,18 @@ A generic chart placeholder had different row/header geometry from the actual co
 
 At 768px Salary Overview, the table was intentionally scrollable but a screen-reader-only absolute header label used a containing block outside that scroller and increased document width to 991px. The main panel and mobile header stayed bounded, which is why a body/main-only visual assumption would have been misleading. Added a failing 768px document-width assertion to the analysis browser case, then positioned both table scroll wrappers relatively. The case passed, and a 16-toggle appearance probe no longer reproduced the overflow. No negative margin, page-level clipping workaround or focus removal was added. The final viewport sweep and production rerun follow this correction.
 
-
 ### Final visual inspection
 
 Captured all three routes at 320/390/768/1366/1920 in both themes: 30 combinations passed document/main/header width checks with no page errors; anonymous Dashboard navigation reached login. Inspected representative phone/tablet/laptop/wide screens in both themes, plus median comparisons and employee detail. The Dashboard action card stretched to the median chart’s height; changed only its grid alignment to keep it compact. Rechecking the final build/browser suite and captures after this visual correction.
 
-
 ### Reproducible visual evidence command
 
 Formalized the already exercised viewport sweep as an opt-in Playwright matrix plus npm run ui:capture, reusing the existing production webServer and isolated-test URL guards. It authenticates deliberately, verifies the test-purpose response and 10,000 count before captures, exercises three routes/five sizes/two themes, checks width/error states and distinct table treatments, and never edits employee data. Normal CI skips this slower evidence sweep while keeping the 15 workflow checks enabled. No new dependency or backend service was introduced.
+
+### Review handoff evidence
+
+Final application source 3a78def passed the production-browser suite and final 30-case viewport sweep after the last visual correction. Verified header/default/hover/active row colors are distinct, captured matching unfiltered before/after populations, and inspected representative screens in both themes. Read-only checks confirmed public main stays at 3c6ff79 and production deployment ID is unchanged; health is reachable and anonymous employee data is rejected. Project video search found only the baseline silent WebM and raw clips, so final explained-video readiness remains pending. Updated internal scorecards to 91 engineering / 90 UI with per-dimension evidence, confidence and gaps, explicitly separate from Incubyte’s criteria. No push, deployment or assessment submission was performed in this review pass.
+
+### Final sidebar motion correction
+
+A direct frame-by-frame probe found navigation icons briefly drifting sideways during sidebar collapse (up to 32px in the first-failing browser assertion). Kept the header row, navigation padding and Workspace-label space stable while panel width/text animate. The regression now samples 22 animation frames and passes within one pixel; the follow-up probe measured x=24px throughout. Re-ran lint/types/design checks and all 15 production-browser workflows successfully (43.5s, opt-in visual case skipped). The final capture matrix also passed: 30 combinations, 59.3s, no page errors or document/main/header overflow. No backend or monetary changes.

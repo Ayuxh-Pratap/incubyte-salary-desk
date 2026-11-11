@@ -2,6 +2,8 @@
 
 Status: core implementation verified; public source and production published with candidate approval; hosted CI passed; candidate narrated video pending. Scope is candidate-approved pending Incubyte clarification. No assessment email has been sent by the agent.
 
+**Current review branch:** Dashboard/P1/workspace changes are locally verified (30 unit / 9 PostgreSQL / 15 production-browser; 30 theme/viewport captures) and intentionally not published/deployed. [UI review](UI_REVIEW.md) holds both scorecards, evidence and release gates. The published handoff below still describes main’s baseline.
+
 ## Completion checklist
 
 - [x] Read assessment/supporting context; inspect independent Git boundary and UI reuse.
@@ -27,29 +29,29 @@ Review preview: https://incubyte-salary-desk-o18vhwryg-ayuxh-prataps-projects.ve
 
 - Application: https://incubyte-salary-desk.vercel.app (application evaluator code required; no Vercel account).
 - Repository: https://github.com/Ayuxh-Pratap/incubyte-salary-desk (public, main branch, genuine incremental commits).
-- Hosted verification: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770.
+- Hosted verification: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517.
 - Owner access: ignored .vercel/evaluator-access.md contains only the production application code and login instructions. The underlying value is EVALUATOR_PASSWORD in ignored .env.production.local. Share only the application code privately; never share database/session credentials or publish either private file. Production and preview codes are distinct.
 - Video: the silent reference exists; the candidate’s final narration and shareable recording link remain pending.
 
 ## Requirement to evidence
 
-| Requirement / risk                         | Evidence                                                                           |
-| ------------------------------------------ | ---------------------------------------------------------------------------------- |
-| Product framing before build               | REQUIREMENTS.md, first Git commit                                                  |
-| Full backend/UI + relational DB            | App routes, domain rules, server queries, Drizzle schema/migrations                |
-| Exactly 10,000 synthetic employees         | Seed verifies count transactionally; hosted development/test/demo/preview runs     |
-| Repeat seed preserves edits                | Real PostgreSQL integration test; reset is a separate guarded command              |
-| Money precision and rounding               | money.test.ts; max-range SQL aggregate fixture; rational median explanation        |
-| Complete populations, matching drill-down  | Shared employeeWhere predicate; list/analysis intersection and aggregate tests     |
-| Lost-write protection                      | Use-case tests, conditional SQL update, actual simultaneous-write integration case |
-| Failure preserves input / no false success | Browser 503/409 interaction test; saved-success only on confirmed response         |
-| UI + API protected                         | Server layout/session checks, tampered-session and foreign-origin browser checks   |
-| 10,000-record behavior                     | Bounded page assertions; actual query plans/timings in performance.json            |
-| Reproducible delivery                      | Lockfile, env example, migration/seed/test commands and CI workflow                |
-| Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks         |
+| Requirement / risk                         | Evidence                                                                                                |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| Product framing before build               | REQUIREMENTS.md, first Git commit                                                                       |
+| Full backend/UI + relational DB            | App routes, domain rules, server queries, Drizzle schema/migrations                                     |
+| Exactly 10,000 synthetic employees         | Seed verifies count transactionally; hosted development/test/demo/preview runs                          |
+| Repeat seed preserves edits                | Real PostgreSQL integration test; reset is a separate guarded command                                   |
+| Money precision and rounding               | money.test.ts; max-range SQL aggregate fixture; rational median explanation                             |
+| Complete populations, matching drill-down  | Shared employeeWhere predicate; list/analysis intersection and aggregate tests                          |
+| Lost-write protection                      | Use-case tests, conditional SQL update, actual simultaneous-write integration case                      |
+| Failure preserves input / no false success | Browser 503/409 interaction test; saved-success only on confirmed response                              |
+| UI + API protected                         | Server layout/session checks, tampered-session and foreign-origin browser checks                        |
+| 10,000-record behavior                     | Bounded page assertions; actual query plans/timings in performance.json                                 |
+| Reproducible delivery                      | Lockfile, env example, migration/seed/test commands and CI workflow                                     |
+| Intentional AI collaboration               | AI_COLLABORATION.md records real prompts/decisions, corrections and checks                              |
 | Deployed persistence / final video         | deployment-checks.json verifies reload/redeploy; silent reference recorded; candidate narration pending |
 
-Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; [Hosted GitHub CI passed](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770), including all 27 unit, eight PostgreSQL and six production-browser checks.
+Unit cases run without DB/network. Hosted integration cases use only a purpose-marked isolated test database and rollback fixtures or restore known amounts. UI transport fixtures deliberately simulate failures; they are not presented as database proof. The live browser case verifies its test-environment response header **before any salary write** and restores its amount. CI uses disposable PostgreSQL 17; [Hosted GitHub CI passed](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517), including all 27 unit, eight PostgreSQL and six production-browser checks.
 
 ## Remaining limitations and decisions
 
@@ -62,16 +64,18 @@ Unit cases run without DB/network. Hosted integration cases use only a purpose-m
 
 ## A four-minute demo
 
-1. **0:00–0:25 — Problem.** ACME has 10,000 people in multiple countries. HR needs careful current-pay corrections and answers for clearly defined comparable populations. Explain annual base salary and single-currency scope.
+1. **0:00–0:25 — Problem.** ACME has 10,000 people in multiple countries. HR needs careful current-pay corrections and answers for clearly defined comparable populations. Explain annual base salary and single-currency scope. Show Dashboard’s global headcount versus its selected-currency compensation, then enter the workspace.
 2. **0:25–1:20 — Workflow.** Search an employee number; show country/department/currency context. Enter an invalid amount, then a valid amount. Explain the change preview, save, and reload to demonstrate persistence.
 3. **1:20–2:15 — Insight.** Select USD, group by country or department, and explain the median. Show filters, full population and matching employees. Point out small samples and no FX/fairness inference.
 4. **2:15–3:15 — Engineering.** Show the tiny architecture diagram. Trace decimal input -> BigInt minor units -> string API -> PostgreSQL; explain the version-checked update and a conflict.
 5. **3:15–4:00 — Evidence and tradeoff.** Show fast unit results, PostgreSQL concurrency/aggregate checks and actual performance observations. Explain selective UI reuse and one AI correction you reviewed. State the provisional business definitions and deliberate exclusions.
 
+Record this visual-quality version only after its approved release; the existing silent clip shows the baseline.
+
 ## Recording and submission steps
 
 Open the deployed app in a clean browser at approximately 1440 × 900, close unrelated tabs and notifications, and authenticate **before** recording so the access code stays private. Capture the browser with microphone narration, follow the story above, and avoid real candidate correspondence or environment files. Keep text legible at normal playback. Stop, replay the entire video, confirm audio and reload/persistence are visible, export a shareable video and verify the link in a private browser. A completed silent reference walkthrough is at artifacts/salary-desk-silent-walkthrough.webm. It is labelled AI-recorded reference footage and remains separate from the candidate’s narrated handoff.
 
-Source and production publication are complete, with hosted CI passing. Complete the candidate-narrated video and replay it before submission. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
+Published baseline source and production are complete, with hosted CI passing. The visual-quality review remains local until its separate review/CI/release gates in UI_REVIEW.md are completed. Complete the candidate-narrated video against the approved release and replay it before submission. The candidate replies to the original assessment thread with repository, deployment/evaluator-access instructions and video links. The agent does not send or submit it.
 
 Windows recording: authenticate first; press Win + Shift + R, select the browser area, choose Start and enable microphone narration if offered. Follow the four-minute story, stop and replay the saved MP4. If your recorder lacks microphone input, use a recorder with screen-plus-microphone support. See [Microsoft’s recording instructions](https://support.microsoft.com/en-us/windows/apps/use-snipping-tool-to-capture-screenshots).

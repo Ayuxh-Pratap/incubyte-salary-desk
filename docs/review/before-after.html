@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Salary Desk — before and after review</title
+  ><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f3f3f3;
+      color: #222;
+      font:
+        15px/1.5 system-ui,
+        sans-serif;
+    }
+    header,
+    section {
+      padding: 24px 32px;
+      border-bottom: 1px solid #ccc;
+    }
+    h1,
+    h2 {
+      letter-spacing: -0.025em;
+      margin: 0 0 12px;
+    }
+    p {
+      max-width: 1100px;
+      color: #555;
+    }
+    a {
+      color: #254c37;
+    }
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .pair figure {
+      margin: 0;
+      min-width: 0;
+    }
+    figcaption {
+      padding: 8px 0;
+      font-weight: 600;
+    }
+    .pair img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+    }
+    .frame {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+    }
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      border: 0;
+    }
+    .tablet {
+      aspect-ratio: 3/4;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+    }
+    small {
+      display: block;
+      color: #666;
+    }
+    summary {
+      cursor: pointer;
+      padding: 12px 0;
+    }
+    footer {
+      padding: 24px 32px;
+    }
+    @media (max-width: 800px) {
+      .pair,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      header,
+      section {
+        padding: 20px 14px;
+      }
+    }
+  </style>
+  <header>
+    <h1>Salary Desk · visual-quality review</h1>
+    <p>
+      P1 Graphite + Lime selected by the candidate. Local branch
+      <b>codex/visual-quality</b>; main and production unchanged. Screens
+      contain only synthetic test data. This review board compares framing and
+      interaction design; it is not a performance comparison.
+    </p>
+    <a href="palette-comparison.html">All five paired palette options</a> ·
+    <a href="verification.json">Verification record</a>
+  </header>
+  <section>
+    <h2>Employees · same 10,000-person unfiltered population</h2>
+    <p>
+      Neutral surfaces, flush-right content panel, adjacent filters, compact
+      sidebar footer, aligned salary columns, distinct header/row treatments and
+      stable pagination. Before images are full-page captures shown at the
+      matching first-viewport crop; click any image for the original.
+    </p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before · 1920px · dark</figcaption>
+        <a href="evidence/before-employees-dark-1920.png"
+          ><div class="frame">
+            <img
+              alt="Before: green canvas and panels, centered table and horizontal filters"
+              src="evidence/before-employees-dark-1920.png"
+            /></div
+        ></a>
+      </figure>
+      <figure>
+        <figcaption>After · 1920px · dark</figcaption>
+        <a href="evidence/after-employees-all-dark-1920.png"
+          ><div class="frame">
+            <img
+              alt="After: neutral full-width workspace and adjacent filter rail"
+              src="evidence/after-employees-all-dark-1920.png"
+            /></div
+        ></a>
+      </figure>
+    </div>
+  </section>
+  <section>
+    <h2>Salary Overview · USD · 768px · light</h2>
+    <p>
+      Same selected currency/population. Filters move into a labelled sheet;
+      table scrolling is intentional and keyboard accessible. The viewport sweep
+      found and fixed an absolute accessible-label overflow rather than
+      concealing it with negative margins or page clipping.
+    </p>
+    <div class="pair">
+      <figure>
+        <figcaption>Before</figcaption>
+        <a href="evidence/before-overview-light-768.png"
+          ><div class="frame tablet">
+            <img
+              alt="Before: horizontal filters occupy the tablet analysis page"
+              src="evidence/before-overview-light-768.png"
+            /></div
+        ></a>
+      </figure>
+      <figure>
+        <figcaption>After</figcaption>
+        <a href="evidence/after-overview-light-768.png"
+          ><div class="frame tablet">
+            <img
+              alt="After: compact filter access and consistent salary metric cards"
+              src="evidence/after-overview-light-768.png"
+            /></div
+        ></a>
+      </figure>
+    </div>
+  </section>
+  <section>
+    <h2>Dashboard · current data, explicit populations</h2>
+    <p>
+      Global headcounts are separate from annual-base money in one selected pay
+      currency. Bars represent current country/department headcounts and exact
+      department medians; no invented history, targets or mixed-currency total.
+    </p>
+    <div class="gallery">
+      <a href="evidence/after-dashboard-dark-1920.png"
+        ><img
+          alt="Dashboard dark wide desktop"
+          src="evidence/after-dashboard-dark-1920.png" /></a
+      ><a href="evidence/after-dashboard-light-390.png"
+        ><img
+          alt="Dashboard light phone with compact headcount cards"
+          src="evidence/after-dashboard-light-390.png"
+      /></a>
+    </div>
+    <details>
+      <summary>Department medians and employee editor</summary>
+      <div class="pair">
+        <img
+          alt="Current departmental median comparison with sample sizes and exact values"
+          src="evidence/after-dashboard-medians-dark-1366.png"
+        /><img
+          alt="Protected employee compensation panel and current salary editor"
+          src="evidence/after-employee-detail-dark-1366.png"
+        />
+      </div>
+    </details>
+  </section>
+  <section>
+    <h2>Pending regions · controlled response gates</h2>
+    <p>
+      These are labelled transport-fixture checks, not database or performance
+      evidence. Requests are held by the browser tests; the application adds no
+      artificial delay. Headers, tracks, metrics and pagination remain present;
+      old results are hidden.
+    </p>
+    <div class="pair">
+      <img
+        alt="Employee pending skeleton retains table tracks and pagination"
+        src="evidence/pending-employees.png"
+      /><img
+        alt="Salary analysis pending skeleton retains metrics and table structure"
+        src="evidence/pending-analysis.png"
+      />
+    </div>
+  </section>
+  <footer>
+    Reviewed application source: dfb8c75. 30 unit / 9 PostgreSQL / 15
+    production-browser checks passed. Thirty viewport/theme captures passed
+    width checks. Full screen-reader/cross-browser audit and the candidate’s
+    narrated video remain unverified. See docs/UI_REVIEW.md for weighted
+    scorecards and release gates.
+  </footer>
+</html>

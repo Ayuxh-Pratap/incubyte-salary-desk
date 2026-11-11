@@ -2,11 +2,13 @@
 
 A focused salary workspace for an HR Manager at fictional **ACME**: find employees, safely correct current annual base salary, and understand a defined compensation population. This is an independent assessment concept, not an Incubyte internal system.
 
-**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. [Live application](https://incubyte-salary-desk.vercel.app) · [Public repository](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [Passing hosted CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42995364770). Enter the privately shared evaluator code; no Vercel account is required. The core product, deployed persistence and production-browser workflow are verified. The candidate’s final narrated video remains pending; see [Delivery](docs/DELIVERY.md).
+**Working scope is candidate-approved and pending Incubyte clarification.** Only synthetic data is permitted. [Live application](https://incubyte-salary-desk.vercel.app) · [Public repository](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [Passing hosted CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/42996069517). Enter the privately shared evaluator code; no Vercel account is required. The core product, deployed persistence and production-browser workflow are verified. The candidate’s final narrated video remains pending; see [Delivery](docs/DELIVERY.md).
+
+**Local visual-quality review:** codex/visual-quality adds the approved P1 neutral shell, responsive filter workspaces and default HR Dashboard. These changes are locally verified and intentionally unpublished; the live link/main CI above remain the published baseline. See [review, scorecards and release gates](docs/UI_REVIEW.md) and the [before/after board](docs/review/before-after.html).
 
 ## Try the workflow
 
-1. Enter the privately shared evaluator code. Browse 10,000 employees using search, country/department/role/currency filters, stable sorting and bounded pages.
+1. Enter the privately shared evaluator code. Dashboard separates global headcounts from current annual-base pay in one currency, with graphical comparisons and workspace links. Open Employees to browse 10,000 employees using search, country/department/role/currency filters, stable sorting and bounded pages.
 2. Open an employee. Enter a positive annual base amount; review the exact amount and percentage change before saving. A stale version requires review rather than overwriting another edit. Failed saves retain input.
 3. Open Salary overview, select one currency and define a population. Inspect totals, extremes and median across **all** matching employees. Explain a number or drill into a group without changing filter semantics.
 

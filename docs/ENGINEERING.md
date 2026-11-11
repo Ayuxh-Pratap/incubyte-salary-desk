@@ -25,6 +25,8 @@ flowchart LR
  Domain --> Adapter[Versioned salary repository]
  Adapter --> DB[(PostgreSQL on Neon)]
  Queries --> DB
+ API --> Dashboard[Dashboard grouped headcounts + reused analysis]
+ Dashboard --> DB
  Seed[Explicit synthetic seed command] --> DB
 ```
 
@@ -75,6 +77,14 @@ Official incubyte.co styling inspected 2026-11-11 repeatedly used green #014d43 
 Measured 2026-11-11: 10,000 employees; Node 24.19/Windows; client in India; Neon US East; TLS verified, pooled max 3; five sequential samples after ANALYZE. Median transactions: name page 1,330.55 ms; USD salary page 1,204.66 ms; country/department page 1,202.63 ms; Unicode search 1,317.06 ms; full USD analysis 1,529.07 ms. These include WAN and transaction round trips, not deployment latency or cold starts. EXPLAIN execution: indexed currency/salary page 0.034 ms, name search 0.513 ms, overall analysis 2.086 ms. Raw observations/plans are in performance.json. Five samples do not establish an SLA.
 
 Indexes cover name/id, currency/salary/id, country/department and department/role. Retain this small set based on the measured workload; no external search service, replicas or speculative infrastructure.
+
+## Visual-quality review read model and UI state
+
+The local review branch adds GET /api/dashboard behind the same session/API boundary. One GROUPING SETS query returns country/department/currency headcounts; headcount is the country partition sum, never the sum of all dimensions. salaryAnalysis supplies single-currency financial metrics/department medians in the same repeatable-read snapshot. No schema change, extra service or browser-side employee index. Two tiny chart helpers keep median comparisons exact and convert only bounded dimensionless percentages to Number.
+
+Draft controls apply together. A React navigation transition covers the server-route phase; the URL+revision-keyed abortable fetch covers the data phase. Accepted submission snapshots protect newer typing from an older route completion. Previous data is used only for structural pagination metadata and unfiltered Dashboard headcounts, never old filtered rows or salary metrics under new labels. Matching skeletons retain semantic headers/tracks and concise busy announcements. Positioned table scroll wrappers contain their absolute screen-reader labels; no negative-margin workaround.
+
+Full local review checks: 30 unit, nine PG and 15 production-browser cases, plus 30 viewport/theme captures. Current source/main deployment separation, before/after scorecards, screenshots and remaining gaps are documented in [UI review](UI_REVIEW.md). Published main/production remain the earlier baseline until release approval.
 
 ## Four interview walkthroughs
 
