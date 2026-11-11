@@ -57,5 +57,20 @@
     "No hosted timing claim for this unpublished revision",
     "Physical devices, non-Chromium and complete assistive-technology/forced-colors/zoom coverage remain unverified",
     "Candidate-approved business definitions await external clarification"
-  ]
+  ],
+  "caseStudyRevision": {
+    "source": "39f40eb0bf4f327b8ea316aa9b8030888d1e49b7",
+    "recordedAt": "2026-11-11T17:15:24.500Z",
+    "status": "Verified locally; unpublished",
+    "checks": {
+      "unit": "42 passed, including 3 first-failing graph-integrity regressions",
+      "fullBrowser": "31 passed plus one optional matrix skipped at 8ac9e06",
+      "finalCaseStudyBrowser": "6 passed on final desktop-fit revision",
+      "responsive": "8 combinations: 390, 768, 1366, 1920; light and dark",
+      "static": "lint, types, 216-value design check and credential-free production build passed"
+    },
+    "isolation": "No salary API reads, canvas or Chart.js chunk during case-study-only capture",
+    "unchanged": "Domain, API/query, database and cache policy untouched",
+    "evidence": "docs/review/case-study/visual-verification.json"
+  }
 }

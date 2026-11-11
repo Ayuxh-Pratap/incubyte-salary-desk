@@ -1,0 +1,136 @@
+{
+  "source": "39f40eb0bf4f327b8ea316aa9b8030888d1e49b7",
+  "recordedAt": "2026-11-11T17:14:25.167Z",
+  "environment": "Local production build",
+  "records": [
+    {
+      "width": 390,
+      "theme": "light",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "verified"
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "verified"
+    },
+    {
+      "width": 768,
+      "theme": "light",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "verified"
+    },
+    {
+      "width": 768,
+      "theme": "dark",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "verified"
+    },
+    {
+      "width": 1366,
+      "theme": "light",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "not needed"
+    },
+    {
+      "width": 1366,
+      "theme": "dark",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "not needed"
+    },
+    {
+      "width": 1920,
+      "theme": "light",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "not needed"
+    },
+    {
+      "width": 1920,
+      "theme": "dark",
+      "fullWidth": true,
+      "noDocumentOverflow": true,
+      "diagramKeyboardScroll": "not needed"
+    }
+  ],
+  "apiReads": [],
+  "pageErrors": [],
+  "loadedChartFiles": [],
+  "decodedResources": [
+    {
+      "name": "/_next/static/media/GeistMono_Variable.p.2vtemngyy8z-u.woff2",
+      "bytes": 71212
+    },
+    {
+      "name": "/_next/static/media/Geist_Variable-s.p.43azbxi7zpibd.woff2",
+      "bytes": 69488
+    },
+    {
+      "name": "/_next/static/chunks/22gbw4j131fdl.css",
+      "bytes": 45936
+    },
+    {
+      "name": "/_next/static/chunks/0-o38y6wyw0u1.js",
+      "bytes": 13402
+    },
+    {
+      "name": "/_next/static/chunks/2rv5jvl35qh22.js",
+      "bytes": 30356
+    },
+    {
+      "name": "/_next/static/chunks/turbopack-077hmtqrhcoji.js",
+      "bytes": 11199
+    },
+    {
+      "name": "/_next/static/chunks/2c7fqfns8tiv2.js",
+      "bytes": 160170
+    },
+    {
+      "name": "/_next/static/chunks/05ad7rj6pslxy.js",
+      "bytes": 229288
+    },
+    {
+      "name": "/_next/static/chunks/0_shif7rxv2nv.js",
+      "bytes": 27722
+    },
+    {
+      "name": "/_next/static/chunks/27nrbqkhzz-mh.js",
+      "bytes": 16578
+    },
+    {
+      "name": "/_next/static/chunks/1gekrcd97yjr7.js",
+      "bytes": 12399
+    },
+    {
+      "name": "/_next/static/chunks/1bvhuho7qqb1-.js",
+      "bytes": 27797
+    },
+    {
+      "name": "/_next/static/chunks/3f04pdq23_cr5.js",
+      "bytes": 27489
+    },
+    {
+      "name": "/_next/static/chunks/1bylbj9vf95kl.js",
+      "bytes": 24944
+    },
+    {
+      "name": "/_next/static/chunks/1kpjzzzgpnjh6.js",
+      "bytes": 221105
+    },
+    {
+      "name": "/dashboard",
+      "bytes": 278
+    },
+    {
+      "name": "/dashboard",
+      "bytes": 1048
+    }
+  ]
+}
