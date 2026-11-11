@@ -108,3 +108,8 @@ At 768px Salary Overview, the table was intentionally scrollable but a screen-re
 ### Final visual inspection
 
 Captured all three routes at 320/390/768/1366/1920 in both themes: 30 combinations passed document/main/header width checks with no page errors; anonymous Dashboard navigation reached login. Inspected representative phone/tablet/laptop/wide screens in both themes, plus median comparisons and employee detail. The Dashboard action card stretched to the median chart’s height; changed only its grid alignment to keep it compact. Rechecking the final build/browser suite and captures after this visual correction.
+
+
+### Reproducible visual evidence command
+
+Formalized the already exercised viewport sweep as an opt-in Playwright matrix plus npm run ui:capture, reusing the existing production webServer and isolated-test URL guards. It authenticates deliberately, verifies the test-purpose response and 10,000 count before captures, exercises three routes/five sizes/two themes, checks width/error states and distinct table treatments, and never edits employee data. Normal CI skips this slower evidence sweep while keeping the 15 workflow checks enabled. No new dependency or backend service was introduced.

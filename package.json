@@ -26,7 +26,8 @@
     "perf:measure": "tsx scripts/measure.ts",
     "db:environment": "tsx scripts/with-environment.ts",
     "build:verify": "node scripts/verify-build.mjs",
-    "demo:record": "tsx scripts/record-demo.ts"
+    "demo:record": "tsx scripts/record-demo.ts",
+    "ui:capture": "tsx scripts/capture-ui.ts"
   },
   "dependencies": {
     "@animate-ui/react": "2.4.3",

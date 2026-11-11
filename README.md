@@ -47,6 +47,7 @@ npm run build:verify         # build without runtime secrets
 npm run test:prepare         # only the explicitly isolated test DB
 npm run test:integration     # real PostgreSQL; seeds test DB, never demo
 npm run test:e2e:live        # production build, real HR workflow, isolated test DB
+npm run ui:capture           # opt-in 30-case live test-DB visual matrix
 npm run test:e2e             # access and controlled UI-failure tests; live case skips unless enabled
 npm run perf:measure         # actual development query timings and plans
 ```
