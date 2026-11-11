@@ -43,6 +43,7 @@ npm test                    # fast deterministic rules; no database required
 npm run lint
 npm run typecheck
 npm run design:check
+npm run build:verify         # build without runtime secrets
 npm run test:prepare         # only the explicitly isolated test DB
 npm run test:integration     # real PostgreSQL; seeds test DB, never demo
 npm run test:e2e:live        # production build, real HR workflow, isolated test DB
