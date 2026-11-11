@@ -29,7 +29,7 @@ export function AnalysisTable({
   return (
     <>
       <div
-        className="hidden overflow-x-auto md:block"
+        className="relative hidden overflow-x-auto md:block"
         role="region"
         aria-label="Salary analysis table, scroll horizontally if needed"
         tabIndex={0}

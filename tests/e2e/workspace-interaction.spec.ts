@@ -529,6 +529,12 @@ test("analysis keeps metric/table geometry while pending and labels empty values
     await expect(
       page.getByRole("button", { name: "Explain Median annual base" }),
     ).toContainText("INR");
+    await page.setViewportSize({ width: 768, height: 1024 });
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
     await page.getByLabel("Search employees").fill("none");
     await page
       .getByRole("button", { name: "Apply filters", exact: true })
