@@ -226,7 +226,7 @@ export function DashboardScreen({ currency }: { currency: string }) {
                     7
                   }
                 />
-                <aside className="flex min-w-0 flex-col rounded-xl border bg-card p-5 shadow-panel">
+                <aside className="flex min-w-0 flex-col self-start rounded-xl border bg-card p-5 shadow-panel">
                   <h3 className="text-heading font-medium">
                     From insight to action
                   </h3>

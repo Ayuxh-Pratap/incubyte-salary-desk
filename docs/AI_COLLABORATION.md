@@ -103,3 +103,8 @@ A generic chart placeholder had different row/header geometry from the actual co
 ### Viewport sweep caught an overflow missed by workflow checks
 
 At 768px Salary Overview, the table was intentionally scrollable but a screen-reader-only absolute header label used a containing block outside that scroller and increased document width to 991px. The main panel and mobile header stayed bounded, which is why a body/main-only visual assumption would have been misleading. Added a failing 768px document-width assertion to the analysis browser case, then positioned both table scroll wrappers relatively. The case passed, and a 16-toggle appearance probe no longer reproduced the overflow. No negative margin, page-level clipping workaround or focus removal was added. The final viewport sweep and production rerun follow this correction.
+
+
+### Final visual inspection
+
+Captured all three routes at 320/390/768/1366/1920 in both themes: 30 combinations passed document/main/header width checks with no page errors; anonymous Dashboard navigation reached login. Inspected representative phone/tablet/laptop/wide screens in both themes, plus median comparisons and employee detail. The Dashboard action card stretched to the median chart’s height; changed only its grid alignment to keep it compact. Rechecking the final build/browser suite and captures after this visual correction.
