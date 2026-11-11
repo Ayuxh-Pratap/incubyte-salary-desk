@@ -315,6 +315,9 @@ test("compact filters preserve controls, focus is adjacent, and desktop rails re
     .click();
   await page.keyboard.press("Escape");
   await expect(
+    page.getByRole("dialog", { name: "Employee filters", exact: true }),
+  ).toHaveCount(0);
+  await expect(
     page.getByRole("button", { name: "Open filters, 3 active", exact: true }),
   ).toBeFocused();
   const input = page.getByLabel("Search employees"),
@@ -577,12 +580,21 @@ test("Dashboard preserves a newer currency draft while an accepted snapshot is l
       await route.continue();
     } else await route.fallback();
   });
+  const chart = page.getByRole("region", {
+    name: "Department median comparison",
+    exact: true,
+  });
+  const chartBefore = await chart.boundingBox();
   try {
     await page.getByLabel("Dashboard pay currency").selectOption("USD");
     await page
       .getByRole("button", { name: "Apply currency", exact: true })
       .click();
     await started.promise;
+    const chartPending = await chart.boundingBox();
+    expect(Math.abs(chartPending!.height - chartBefore!.height)).toBeLessThan(
+      1,
+    );
     await page.getByLabel("Dashboard pay currency").selectOption("JPY");
     await expect(page.getByTestId("global-headcount")).toContainText("10,000");
     held.release();

@@ -219,6 +219,12 @@ export function DashboardScreen({ currency }: { currency: string }) {
                 <DashboardMedians
                   compensation={compensation}
                   catalog={catalog.data}
+                  currency={currency}
+                  rows={
+                    data.previousData?.compensation.groups.length ||
+                    catalog.data?.departments.length ||
+                    7
+                  }
                 />
                 <aside className="flex min-w-0 flex-col rounded-xl border bg-card p-5 shadow-panel">
                   <h3 className="text-heading font-medium">

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Globe, Building2, ArrowUpRight } from "lucide-react";
 import type { Catalog } from "@/domain/employee";
 import { barPercent, type Dashboard } from "@/domain/dashboard";
-import { ChartSkeleton } from "./skeletons";
+import { Skeleton } from "./skeletons";
 export function DashboardPopulation({
   population: global,
   catalog,
@@ -10,33 +10,44 @@ export function DashboardPopulation({
   population?: Dashboard["population"];
   catalog?: Catalog;
 }) {
-  if (!global)
-    return (
-      <div className="mt-5 grid gap-5 xl:grid-cols-2">
-        <ChartSkeleton />
-        <ChartSkeleton />
-      </div>
-    );
-  const countries = global.countries,
-    departments = global.departments;
+  const countries = global?.countries,
+    departments = global?.departments;
   const countryName = (key: string) =>
     catalog?.countries.find((c) => c.code === key)?.name || key;
   const departmentName = (key: string) =>
     catalog?.departments.find((d) => d.id === key)?.name || key;
   return (
     <div className="mt-5 grid gap-5 xl:grid-cols-2">
-      <section className="rounded-xl border bg-card p-5 shadow-panel">
+      <section
+        aria-busy={!global}
+        className="rounded-xl border bg-card p-5 shadow-panel"
+      >
         <div className="mb-5 flex items-start justify-between gap-3">
           <div>
             <h2 className="text-heading font-medium">People by country</h2>
             <p className="mt-1 text-meta text-muted-foreground">
               Employment country · All{" "}
-              {global.headcount.toLocaleString("en-US")} employees
+              {global ? global.headcount.toLocaleString("en-US") : "…"}{" "}
+              employees
             </p>
           </div>
           <Globe className="size-4 text-muted-foreground" aria-hidden />
         </div>
-        {countries.length ? (
+        {!countries ? (
+          <ul className="space-y-2" aria-hidden>
+            {Array.from({ length: catalog?.countries.length || 6 }, (_, n) => (
+              <li key={n}>
+                <div className="block px-1 py-2">
+                  <div className="flex h-[21px] items-center justify-between gap-4">
+                    <Skeleton className="h-3 w-24" />
+                    <Skeleton className="h-3 w-28" />
+                  </div>
+                  <Skeleton className="mt-2 h-1.5 w-full" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : countries.length ? (
           <ul className="space-y-2">
             {countries.map((group) => (
               <li key={group.key}>
@@ -79,7 +90,10 @@ export function DashboardPopulation({
           </p>
         )}
       </section>
-      <section className="rounded-xl border bg-card p-5 shadow-panel">
+      <section
+        aria-busy={!global}
+        className="rounded-xl border bg-card p-5 shadow-panel"
+      >
         <div className="mb-5 flex items-start justify-between gap-3">
           <div>
             <h2 className="text-heading font-medium">People by department</h2>
@@ -89,7 +103,25 @@ export function DashboardPopulation({
           </div>
           <Building2 className="size-4 text-muted-foreground" aria-hidden />
         </div>
-        {departments.length ? (
+        {!departments ? (
+          <ul className="space-y-2" aria-hidden>
+            {Array.from(
+              { length: catalog?.departments.length || 7 },
+              (_, n) => (
+                <li key={n}>
+                  <div className="flex min-h-11 items-center justify-between gap-4 px-1 py-2">
+                    <Skeleton className="h-3 w-24" />
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="hidden h-1.5 w-28 sm:block" />
+                      <Skeleton className="h-3 w-12" />
+                      <Skeleton className="size-3.5" />
+                    </div>
+                  </div>
+                </li>
+              ),
+            )}
+          </ul>
+        ) : departments.length ? (
           <ul className="space-y-2">
             {departments.map((group) => (
               <li key={group.key}>

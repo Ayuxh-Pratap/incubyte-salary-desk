@@ -66,19 +66,6 @@ export function MetricSkeleton({ className }: { className?: string }) {
     </div>
   );
 }
-export function ChartSkeleton() {
-  return (
-    <div className="min-h-80 rounded-xl border bg-card p-5" aria-hidden>
-      <Skeleton className="h-4 w-1/3" />
-      {[1, 2, 3, 4, 5, 6].map((n) => (
-        <div key={n} className="mt-5">
-          <Skeleton className="h-2.5 w-1/3" />
-          <Skeleton className="mt-2 h-2 w-4/5" />
-        </div>
-      ))}
-    </div>
-  );
-}
 export function DetailSkeleton() {
   return (
     <div aria-hidden>
