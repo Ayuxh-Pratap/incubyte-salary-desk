@@ -6,17 +6,18 @@ export function SubmissionVideo() {
     <section
       id="video-demo"
       aria-labelledby="video-demo-title"
-      className="my-8 scroll-mt-6 rounded-xl bg-inset p-5 md:p-6"
+      className="my-6 scroll-mt-6 border-b pb-4"
     >
-      <h2 id="video-demo-title" className="text-heading font-medium">
-        Watch the recorded walkthrough
-      </h2>
-      <p className="mt-2 text-ui leading-relaxed text-foreground-2">
-        {DEMO_VIDEO.duration} · Product workflows, salary validation and
-        persistence, analysis, architecture and verification.
-      </p>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 id="video-demo-title" className="text-heading font-medium">
+          Recorded walkthrough
+        </h2>
+        <p className="text-meta text-muted-foreground">
+          {DEMO_VIDEO.duration} · Video demo
+        </p>
+      </div>
       <video
-        className="mt-5 aspect-video w-full rounded-lg bg-card"
+        className="mt-3 aspect-video w-full rounded-md border bg-card"
         controls
         playsInline
         preload="none"
@@ -26,7 +27,7 @@ export function SubmissionVideo() {
         <source src={DEMO_VIDEO.url} type="video/mp4" />
         Your browser can open the recording using the download link below.
       </video>
-      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-meta">
+      <div className="mt-1 flex flex-wrap gap-x-5 text-meta">
         <a
           className="inline-flex min-h-11 items-center gap-2 text-foreground underline underline-offset-4"
           href={DEMO_VIDEO.url}
@@ -44,10 +45,6 @@ export function SubmissionVideo() {
           <ArrowUpRight aria-hidden className="size-3.5" />
         </a>
       </div>
-      <p className="mt-1 text-meta text-muted-foreground">
-        Playback starts when you press Play. The recording is hosted separately
-        from the application; both viewing and download links are available.
-      </p>
     </section>
   );
 }
