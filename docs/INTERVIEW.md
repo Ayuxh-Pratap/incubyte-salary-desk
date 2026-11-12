@@ -86,4 +86,4 @@ A paginated query can take longer than its SQL execution because of browser rout
 - Read the salary repository and money tests, then explain the update and median examples aloud.
 - Inspect `git log --reverse --oneline`: distinguish original build, revisions, verification and final documentation. Preserve the actual sequence.
 - Study historical performance sources and sample limits. Say what was measured, not an invented percentile or reliability promise.
-- Rehearse the four-minute demonstration in [DELIVERY.md](DELIVERY.md). The final video remains the candidate's recording task.
+- Review the completed demonstration linked in [DELIVERY.md](DELIVERY.md), and use [the recording script](DEMO_SCRIPT.md) as a rehearsal aid.

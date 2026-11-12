@@ -11,7 +11,7 @@ This is the current delivery checklist. Older UI/performance reports are histori
 
 ## Requirement-to-evidence checklist
 
-The original brief requires **any video demo**, not specifically narration. The candidate has chosen a final narrated walkthrough; it is **not recorded and has no shareable URL**, confirmed in the release conversation. Earlier silent reference footage and a script are not labeled as the final submission video.
+The original brief requires **any video demo**. The candidate supplied the completed **6:07 recording with audio**, now available in the [Presentation player](https://incubyte-salary-desk.vercel.app/presentation#video-demo), as a [public MP4](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/releases/download/assessment-demo/video_submission.mp4) and on [Google Drive](https://drive.google.com/file/d/1FGpzW7rgdZh1LGN2pIOwVDh4gqT9HyEY/view?usp=sharing). Local media decoded without errors; native playback and HTTP range access were verified in a new signed-out browser. This is the final recording, distinct from earlier silent reference footage and the planning script.
 
 | Deliverable | Evidence | Completion / limitation |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ The original brief requires **any video demo**, not specifically narration. The 
 | Approach and AI artifacts | [ENGINEERING](ENGINEERING.md), [PRESENTATION](PRESENTATION.md), [AI_COLLABORATION](AI_COLLABORATION.md), design and source-labeled measurements | Committed selected artifacts; private inputs excluded |
 | Deployed working application and public source | Links above, release revision and CI | Operational release verification recorded in handoff/current evidence |
 | Reviewer access | Private evaluator code protects UI and API | Code belongs in private email/access note only |
-| Video demonstration | Recording instructions below | **Submission blocker: record, review and share the final video** |
+| Video demonstration | [Completed 6:07 recording](https://incubyte-salary-desk.vercel.app/presentation#video-demo); public MP4 and Drive copy | Complete; signed-out playback verified |
 
 Dashboard, Explain a Number, salary-change preview, session cache and the Presentation report are useful enhancements, not separately invented mandatory assessment requirements.
 
@@ -44,7 +44,7 @@ Historical performance: the focused pass measured three samples per representati
 
 ## Internal readiness review
 
-This is **our review rubric, not Incubyte's official score**. It evaluates demonstrated implementation and its limits; a high total cannot complete the missing video.
+This is **our review rubric, not Incubyte's official score**. It evaluates demonstrated implementation and its limits; the scores do not replace the requirement-to-evidence checklist.
 
 | Engineering dimension | Score | Evidence; remaining gap | Confidence |
 | --- | --- | --- | --- |
@@ -68,9 +68,9 @@ This is **our review rubric, not Incubyte's official score**. It evaluates demon
 
 The relevant JD signals are readable TypeScript backend ownership, meaningful tests, explicit tradeoffs and intentional AI collaboration. The implementation provides inspectable evidence for these. An assessment application is not proof of every production-scale scenario or of unrelated AI-platform experience.
 
-## Record the final demonstration
+## Recording procedure (reference; final recording completed)
 
-Use the [word-for-word narration and action script](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/blob/main/docs/DEMO_SCRIPT.md) for the planned 5–6 minute take. The shorter outline below remains a quick reference.
+The final recording is published above. The instructions below remain a reference for a future recording, not outstanding work. Use the [word-for-word narration and action script](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/blob/main/docs/DEMO_SCRIPT.md) for the planned 5–6 minute take. The shorter outline below remains a quick reference.
 
 1. Start the released application for read-only orientation, and your own local development/test environment for any salary write demonstration. Follow [LOCAL_SETUP.md](LOCAL_SETUP.md); do not reset the public demo.
 2. Authenticate **before recording** so the evaluator code is not captured. Close terminals, environment files, private tabs and notifications. Use a readable browser size around 1440 by 900 and increase text if needed.
@@ -92,4 +92,4 @@ Use the [word-for-word narration and action script](https://github.com/Ayuxh-Pra
 
 ## Verdict
 
-The application release and written engineering handoff are published and operational; hosted checks and source-labeled read-only production evidence are recorded in release-verification.json. **The final assessment submission is not ready to send until the candidate records, reviews and shares the final video.** No further feature or redesign is required for this release. External clarification remains a documented policy limitation, not implied approval.
+The application release and written engineering handoff are published and operational; hosted checks and source-labeled read-only production evidence are recorded in release-verification.json. **The required video is complete and publicly playable. The assessment is ready for the candidate to submit manually using the prepared private email.** No further feature or redesign is required for this release. External clarification remains a documented policy limitation, not implied approval.

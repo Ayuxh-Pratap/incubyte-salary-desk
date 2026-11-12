@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-11-12T06:47:52.757Z",
+  "candidateSupplied": true,
+  "durationSeconds": 366.883,
+  "sizeBytes": 303577027,
+  "localFileDecodedWithoutErrors": true,
+  "audio": {
+    "codec": "AAC",
+    "nonSilent": true,
+    "meanVolumeDb": -31.1,
+    "maxVolumeDb": -16.9
+  },
+  "videoCodec": "H.264",
+  "publicPlayback": {
+    "publicWithoutSignIn": true,
+    "rangeStatus": 206,
+    "contentType": "application/octet-stream",
+    "contentRange": "bytes 0-1023/303577027",
+    "url": "https://github.com/Ayuxh-Pratap/incubyte-salary-desk/releases/download/assessment-demo/video_submission.mp4",
+    "size": 303577027,
+    "media": {
+      "duration": 366.883,
+      "readyState": 4,
+      "currentTime": 1.639382,
+      "paused": false,
+      "error": null
+    }
+  },
+  "driveCopy": "https://drive.google.com/file/d/1FGpzW7rgdZh1LGN2pIOwVDh4gqT9HyEY/view?usp=sharing",
+  "driveStatusAtInitialCheck": "Public file viewer opened without sign-in; streaming preview initially still processing. Independent MP4/native playback verified.",
+  "binaryExcludedFromGitAndDeployment": true,
+  "reviewScope": "Full decode, sampled images, audio-level analysis and anonymous browser playback. Not a word-for-word transcript or full human listening audit."
+}

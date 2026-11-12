@@ -32,7 +32,7 @@ export const PRESENTATION_SECTIONS = [
     title: "Verification and delivery",
     navLabel: "Verification",
     summary:
-      "Requirement evidence, tests, measured performance, limitations and outstanding deliverables.",
+      "Requirement evidence, tests, measured performance, limitations and submission evidence.",
   },
 ] as const;
 export function presentationHref(slug: string) {

@@ -3,7 +3,7 @@
   "applicationSource": "8c45db062f8c06fcff21d812ca57f740a2bc5e55",
   "applicationFilesSha256": "e846e0cc088ad4ebdd7ea256b3df2c633b85e9f514e270a6b570cf66b626da32",
   "recordedAt": "2026-11-11T19:13:01.228Z",
-  "status": "Approved application published and operational. This evidence-only follow-up preserves the verified application source; its own exact-commit checks are available in hosted CI. Final video remains pending.",
+  "status": "Application released; final video supplied and publicly playable. Source-specific engineering checks below retain their recorded revisions; latest exact-commit results are available in CI.",
   "environment": "Windows, Node 24.19.0, npm 11.17.0; production-build Chromium suite against isolated hosted test PostgreSQL. Demo untouched.",
   "checks": {
     "lint": "Passed; no warnings",
@@ -16,7 +16,7 @@
     "links": "34 local Markdown links resolved; reviewed app artifact/source GitHub links asserted",
     "productionBefore": "Public evaluator login without Vercel account; anonymous API 401; demo purpose, 10000 population, 25-row page; read-only salary/version checkpoint",
     "hosted": "Passed at 8c45db0: https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/runs/43084420801 (42 unit, 12 PostgreSQL, 31 browser; one optional screenshot matrix skipped). Follow-up commits have separate runs in the same workflow.",
-    "video": "Candidate confirmed not recorded; final recording and share URL remain the submission blocker",
+    "video": "Complete: 6:07 MP4 with audio, full local decode without errors, anonymous native playback and HTTP 206 range support verified; recording linked in README and protected Presentation.",
     "production": "Read-only live verification passed at 8c45db0: all Workspace/report areas, protected access, exact 10000 count, bounded pages, full-population analysis, unchanged salary/version across deployment and no browser errors.",
     "localRehearsal": "Documented Node --env-file=.env.local production start verified: development marker, authenticated 10000 count and 25-row response; no mutation",
     "packaging": "Actual Vercel dry-run manifest verified required protected routes/documents and excluded private env/operator files/generated recordings. Unanchored artifacts ignore corrected to root /artifacts/.",
@@ -103,5 +103,21 @@
     "privateEnvOperatorAndRecordingsExcluded": true,
     "method": "Vercel CLI 65.14.0 deploy --dry --json; assert actual file paths",
     "note": "Initial deployed build omitted artifacts route because unanchored artifacts ignore matched nested route. Root-anchored /artifacts/ corrects packaging."
+  },
+  "submissionVideo": {
+    "url": "https://github.com/Ayuxh-Pratap/incubyte-salary-desk/releases/download/assessment-demo/video_submission.mp4",
+    "driveUrl": "https://drive.google.com/file/d/1FGpzW7rgdZh1LGN2pIOwVDh4gqT9HyEY/view?usp=sharing",
+    "presentationUrl": "https://incubyte-salary-desk.vercel.app/presentation#video-demo",
+    "durationSeconds": 366.883,
+    "sizeBytes": 303577027,
+    "codecs": [
+      "H.264",
+      "AAC"
+    ],
+    "localDecodeErrors": 0,
+    "anonymousPlayback": true,
+    "rangeResponse": 206,
+    "storage": "GitHub release attachment and supplied Drive copy; binary excluded from Git and Vercel",
+    "review": "Sampled frames, decoded full media, checked non-silent audio track and public browser playback; no claim of a word-for-word transcript audit."
   }
 }

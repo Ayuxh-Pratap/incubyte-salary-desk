@@ -1,5 +1,7 @@
 # Salary Desk — recording script
 
+The final 6:07 recording has been completed: [watch it in Presentation](https://incubyte-salary-desk.vercel.app/presentation#video-demo). This script is retained as the planning/rehearsal artifact, not an outstanding deliverable or a verbatim transcript.
+
 Target: **about 5–6 minutes**, spoken at a comfortable pace. Read only the quoted narration; the action lists are your cues. Pause while a result loads. Use your normal voice, not a presenter voice; contractions and short pauses are fine. This is a demonstration of an AI-assisted assessment, not a claim that every line was written manually.
 
 ## Before recording

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { DEMO_VIDEO } from "../../src/lib/submission";
 import {
   PRESENTATION_SECTIONS,
   presentationHref,
@@ -213,4 +214,48 @@ test("assessment report uses separate full-width pages with scoped content and c
   await expect(salary.getByRole("img")).toBeVisible();
   await expect(salary).toContainText("409 conflict");
   await expect(salary).toContainText("200 confirmed");
+});
+
+test("recording stays on demand and its public links are available without salary reads", async ({
+  page,
+}) => {
+  await signIn(page);
+  const reads: string[] = [],
+    media: string[] = [];
+  page.on("request", (request) => {
+    if (new URL(request.url()).pathname.startsWith("/api/"))
+      reads.push(request.url());
+    if (request.url() === DEMO_VIDEO.url) media.push(request.url());
+  });
+  await page.route(DEMO_VIDEO.url, (route) => route.fulfill({ status: 404 }));
+  await page.goto("/presentation");
+  await expect(
+    page.getByRole("link", { name: "Download MP4" }),
+  ).toHaveAttribute("href", DEMO_VIDEO.url);
+  await expect(
+    page.getByRole("link", { name: "Google Drive copy" }),
+  ).toHaveAttribute("href", DEMO_VIDEO.driveUrl);
+  const video = page.getByLabel("Salary Desk video demonstration", {
+    exact: true,
+  });
+  await expect(video).toBeVisible();
+  expect(media).toEqual([]);
+  // Exercise the browser's real media request boundary; provider playback is checked separately.
+  await video.evaluate((element: HTMLVideoElement) => {
+    void element.play().catch(() => {});
+  });
+  await expect.poll(() => media.length).toBeGreaterThan(0);
+  await expect(page.getByRole("link", { name: "Download MP4" })).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "Presentation sections" })
+    .getByRole("link", { name: "Architecture and implementation", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: "Architecture and implementation",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.locator("video")).toHaveCount(0);
+  expect(reads).toEqual([]);
 });

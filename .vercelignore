@@ -12,3 +12,6 @@ tmp
 .agents
 .codex
 skills-lock.json
+
+# Recording is hosted on Drive, not in source or deployment bundles.
+/video_submission.mp4

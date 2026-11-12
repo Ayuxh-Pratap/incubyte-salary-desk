@@ -4,6 +4,10 @@ Employee salary management for an HR Manager at fictional **ACME**. Find a perso
 
 [Live application](https://incubyte-salary-desk.vercel.app/) · [Assessment report](https://incubyte-salary-desk.vercel.app/presentation) · [Public source](https://github.com/Ayuxh-Pratap/incubyte-salary-desk) · [CI](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/actions/workflows/ci.yml)
 
+**▶ [Watch the completed video demonstration · 6:07](https://incubyte-salary-desk.vercel.app/presentation#video-demo)**
+
+[Download the MP4](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/releases/download/assessment-demo/video_submission.mp4) · [Google Drive copy](https://drive.google.com/file/d/1FGpzW7rgdZh1LGN2pIOwVDh4gqT9HyEY/view?usp=sharing) · [Recording script](docs/DEMO_SCRIPT.md) · [Submission checklist](docs/DELIVERY.md). The video includes audio and is hosted separately; the large recording is not committed to source or bundled into Vercel.
+
 ## Evaluator entry point
 
 1. Open the live application and enter the evaluator code supplied privately in the submission email. **No Vercel account is needed.** The code is deliberately absent from this repository. If it was omitted, request it from the candidate.
@@ -11,8 +15,6 @@ Employee salary management for an HR Manager at fictional **ACME**. Find a perso
 3. Preview a salary correction. Only a confirmed, version-checked save shows success; stale edits require review and failed saves retain the draft.
 4. Salary Overview summarizes **every matching employee**, across all pages. Explain a number and follow its matching population.
 5. Presentation is the assessment report: scope, connected architecture/data/update/cache diagrams, actual code, decisions, AI collaboration and versioned evidence. Its appendix/source views link to canonical files on GitHub.
-
-**Video: final recording/share link pending.** Earlier silent reference footage is not represented as the final narrated demo. The brief permits any video demo; the candidate's final planned demonstration still needs recording and sharing. [Exact recording script](docs/DEMO_SCRIPT.md) · [Submission checklist](docs/DELIVERY.md).
 
 ## Documentation map
 

@@ -23,7 +23,7 @@ This report separates scope, implementation, decisions and verification so an as
 3. [Decisions and AI collaboration](/presentation/decisions): recorded alternatives, corrections, tradeoffs and real commit progression.
 4. [Verification and delivery](/presentation/quality): requirement-to-evidence mapping, tests, measured performance, limitations and submission status.
 
-The approved application and this report are included in the public release. Final verification is source-labeled below. The candidate has confirmed that the final video is not recorded; recording and a shareable link remain the submission blocker.
+The approved application and this report are included in the public release. Final verification is source-labeled below. The [completed 6:07 video demonstration](/presentation#video-demo) is available above, with [MP4 download](https://github.com/Ayuxh-Pratap/incubyte-salary-desk/releases/download/assessment-demo/video_submission.mp4) and [Google Drive](https://drive.google.com/file/d/1FGpzW7rgdZh1LGN2pIOwVDh4gqT9HyEY/view?usp=sharing) copies.
 
 ### Assessment context
 
@@ -174,9 +174,9 @@ timeline
 | Persistence and concurrent-edit protection        | PostgreSQL/live browser evidence, version-checked update                   | Verified on recorded sources                        |
 | Genuine development and AI evidence               | Incremental commits, decision notes, AI collaboration record               | Available; no reconstructed history                 |
 | Deployed application and repository               | Public repository, deployment and source-specific hosted CI                                | See current release verification and CI           |
-| Video demonstration                               | Script and silent reference recording                                      | Candidate-narrated video and share link pending     |
+| Video demonstration | [Completed 6:07 recording](/presentation#video-demo), MP4 download and Drive copy | Complete; public playback verified |
 
-Technical verification is separate from submission completion. Passing tests does not complete the missing final video. See the [delivery checklist](/presentation/artifacts/delivery) and [local-running guide](/presentation/artifacts/local-setup).
+All mandatory deliverable categories now have supporting evidence, including the completed recording. See the [delivery checklist](/presentation/artifacts/delivery) and [local-running guide](/presentation/artifacts/local-setup).
 
 ### Measure the waiting, then change the cause
 
@@ -202,7 +202,7 @@ current
 
 ### Be clear about what remains
 
-The approved source and application are released, with current checks and remaining limits recorded separately. The brief permits any video demo; the candidate's planned final narrated video and shareable link are still pending. Historical silent reference footage and a script are not labeled as that final artifact. The agent does not email or submit the assessment.
+The approved source and application are released, with current checks and limitations recorded separately. The candidate supplied the completed 6:07 recording; its native playback and public MP4 download were verified without sign-in. [Watch the demonstration](/presentation#video-demo). The assessment is prepared for the candidate's manual submission. No email or assessment submission has been sent by the agent.
 
 Physical devices, non-Chromium browsers, full assistive-technology/forced-colors/zoom review, production load and controlled cold starts remain limited or unverified. External business clarification is also pending. The following selected records make those limits inspectable without exposing credentials, private correspondence or operational logs.
 

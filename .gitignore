@@ -26,3 +26,6 @@ skills-lock.json
 # Reviewed protected route, not generated demo recordings
 !src/app/(workspace)/presentation/artifacts/
 !src/app/(workspace)/presentation/artifacts/**
+
+# Recording is hosted on Drive, not in source or deployment bundles.
+/video_submission.mp4

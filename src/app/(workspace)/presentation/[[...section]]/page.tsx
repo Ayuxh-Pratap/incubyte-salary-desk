@@ -11,6 +11,7 @@ import { readPresentation } from "@/server/presentation/content";
 import { REPOSITORY, repositoryFile } from "@/server/presentation/catalog";
 import { PresentationBody } from "@/components/presentation/content";
 import { ReportSheet } from "@/components/presentation/report-sheet";
+import { SubmissionVideo } from "@/components/presentation/submission-video";
 import { LinkPending } from "@/components/link-pending";
 export default async function PresentationPage({
   params,
@@ -97,9 +98,10 @@ export default async function PresentationPage({
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-meta text-muted-foreground">
             <span>Organization: Fictional ACME</span>
             <span>Data: Synthetic</span>
-            <span>Status: Released application · Final video pending</span>
+            <span>Status: Released application · Video available</span>
           </div>
         </header>
+        {index === 0 && <SubmissionVideo />}
         <PresentationBody content={markdownSection(narrative, section.title)} />
         <footer className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t pt-5 text-meta text-muted-foreground">
           <p>
